@@ -1,11 +1,69 @@
 {
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.ttf": {
+    "file": "assets/fa-brands-400-DtZKBM2a.ttf",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.ttf"
+  },
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2": {
+    "file": "assets/fa-brands-400-C99Yv4gD.woff2",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2"
+  },
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.ttf": {
+    "file": "assets/fa-regular-400-BMFokQJ2.ttf",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.ttf"
+  },
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2": {
+    "file": "assets/fa-regular-400-OOsPf1xj.woff2",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2"
+  },
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf": {
+    "file": "assets/fa-solid-900-DM0teJdg.ttf",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf"
+  },
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2": {
+    "file": "assets/fa-solid-900-DAI24fNt.woff2",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2"
+  },
+  "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff": {
+    "file": "assets/bootstrap-icons-BOrJxbIo.woff",
+    "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff"
+  },
+  "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2": {
+    "file": "assets/bootstrap-icons-BtvjY1KL.woff2",
+    "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
+  },
+  "resources/css/bookings-style.css": {
+    "file": "assets/bookings-style-Bpemd-ei.css",
+    "src": "resources/css/bookings-style.css",
+    "isEntry": true
+  },
+  "resources/css/main-style.css": {
+    "file": "assets/main-style-DMK6iQUg.css",
+    "src": "resources/css/main-style.css",
+    "isEntry": true
+  },
   "resources/js/app.js": {
-    "file": "assets/app-DFMGEaK5.js",
+    "file": "assets/app-Z97gIrT1.js",
     "src": "resources/js/app.js",
+    "isEntry": true,
+    "css": [
+      "assets/app-B2_SLc7X.css"
+    ],
+    "assets": [
+      "assets/fa-brands-400-C99Yv4gD.woff2",
+      "assets/fa-brands-400-DtZKBM2a.ttf",
+      "assets/fa-regular-400-OOsPf1xj.woff2",
+      "assets/fa-regular-400-BMFokQJ2.ttf",
+      "assets/fa-solid-900-DAI24fNt.woff2",
+      "assets/fa-solid-900-DM0teJdg.ttf"
+    ]
+  },
+  "resources/js/bookings/index.js": {
+    "file": "assets/index-CM6EsjGQ.js",
+    "src": "resources/js/bookings/index.js",
     "isEntry": true
   },
   "resources/sass/app.scss": {
-    "file": "assets/app-D-sv12UV.css",
+    "file": "assets/app-DySRb4RP.css",
     "src": "resources/sass/app.scss",
     "isEntry": true
   }
