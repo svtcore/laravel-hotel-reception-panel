@@ -12,10 +12,10 @@
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="content-container text-center">
-                        <h4>Search Orders</h4>
+                        <h4>Search form</h4>
 
-                        <!-- Форма для поиска -->
-                        <form id="searchForm">
+                        <form id="searchForm" method="POST" action="{{ route('admin.booking.search') }}">
+                            @csrf
                             <div class="row mt-5">
                                 <div class="col-md-4">
                                     <label class="toggle">
@@ -63,21 +63,21 @@
                                 </div>
                                 <div class="col-md-3 pt-2">
                                     <label for="phoneNumber"></label>
-                                    <button type="button" class="btn btn-primary w-100"
-                                        onclick="searchOrders()">Search</button>
+                                    <button type="submit" class="btn btn-primary w-100">Search</button>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <div class="mt-3">
-                        <label>Last 50 bookings</label>
+                    <div class="mt-4 text-center">
+                        <h4><b>Search results</b></h4>
                     </div>
                     <div id="chat-container">
-                        <table id="check-in-table" class="table table-bordered table-striped">
+                        <table id="result-table" class="table table-bordered table-striped">
                             <thead>
-                                <tr>
-                                    <th>Room №</th>
+                                <tr class="text-center">
+                                    <th class="text-center">Room №</th>
                                     <th>Guest name</th>
+                                    <th>Room type</th>
                                     <th>Persons</th>
                                     <th>Phone number</th>
                                     <th>Price</th>
@@ -87,44 +87,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><a href="#">#123</a></td>
-                                    <td>John Doe</td>
-                                    <td>2</td>
-                                    <td>380921122333</td>
-                                    <td>1700</td>
-                                    <td>2024-02-01</td>
-                                    <td>2024-02-07</td>
+                                @foreach ($result as $booking)
+                                <tr class="text-center">
+                                    <td class="text-center"><a href="#">{{ $booking->rooms->door_number }}</a></td>
+                                    <td class="text-center">{{ $booking->guests[0]->first_name }} {{ $booking->guests[0]->last_name }} {{ $booking->guests[0]->middlename }}</td>
+                                    <td class="text-center">{{ ucfirst($booking->rooms->type) }}</td>
+                                    <td class="text-center">{{ $booking->adult_amount }} @if ($booking->children_amount > 0) + {{ $booking->children_amount }}@endif</td>
+                                    <td class="text-center">{{ $booking->guests[0]->phone_number }}</td>
+                                    <td class="text-center">{{ $booking->total_cost }}</td>
+                                    <td class="text-center">{{ \Carbon\Carbon::parse($booking->check_in_date)->format('Y-m-d')}}</td>
+                                    <td class="text-center">{{ \Carbon\Carbon::parse($booking->check_out_date)->format('Y-m-d') }}</td>
                                     <td class="text-center">
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
-                                            <button type="button" class="btn btn-secondary"><i
-                                                    class="fas fa-address-card"></i></button>
-                                            <button type="button" class="btn btn-secondary"><i
-                                                    class="fas fa-pen"></i></button>
-                                            <button type="button" class="btn btn-secondary"><i
-                                                    class="fas fa-ban"></i></button>
+                                            <button type="button" class="btn btn-secondary w-100">Details</button>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td><a href="#">#123</a></td>
-                                    <td>John Green</td>
-                                    <td>2</td>
-                                    <td>380921122333</td>
-                                    <td>1250</td>
-                                    <td>2024-02-01</td>
-                                    <td>2024-02-07</td>
-                                    <td class="text-center">
-                                        <div class="btn-group mr-2" role="group" aria-label="First group">
-                                            <button type="button" class="btn btn-secondary"><i
-                                                    class="fas fa-address-card"></i></button>
-                                            <button type="button" class="btn btn-secondary"><i
-                                                    class="fas fa-pen"></i></button>
-                                            <button type="button" class="btn btn-secondary"><i
-                                                    class="fas fa-ban"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -134,7 +113,6 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-                    <!-- Здесь может быть ваш контент с результатами поиска -->
                 </div>
             </section>
             <!-- /.content -->
@@ -143,6 +121,6 @@
     </div>
     <!-- /.content -->
 @section('custom-scripts')
-@vite(['resources/js/bookings/index.js'])
+@vite(['resources/js/booking/search.js'])
 @endsection
 @endsection

@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Auth;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/test', function () {
-    return view('test');
-});
-
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,3 +25,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//Route::middleware(['role:manager,admin,super-admin'])->group(function () {
+    Route::namespace('admin')->group(function () {
+        Route::prefix('booking')->group(function () {
+            Route::post('/search', 'BookingController@searchByParams')->name('admin.booking.search');
+            Route::get('/', 'BookingController@index')->name('admin.booking.index');
+            Route::get('/{id}', 'BookingController@show')->name('admin.booking.show')->where('id', '[0-9]+');
+        });
+    });
+//}

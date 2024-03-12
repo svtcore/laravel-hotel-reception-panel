@@ -57,9 +57,14 @@
       "assets/fa-solid-900-DM0teJdg.ttf"
     ]
   },
-  "resources/js/bookings/index.js": {
-    "file": "assets/index-CM6EsjGQ.js",
-    "src": "resources/js/bookings/index.js",
+  "resources/js/booking/index.js": {
+    "file": "assets/index-D2ow0N4E.js",
+    "src": "resources/js/booking/index.js",
+    "isEntry": true
+  },
+  "resources/js/booking/search.js": {
+    "file": "assets/search-D6aChrDh.js",
+    "src": "resources/js/booking/search.js",
     "isEntry": true
   },
   "resources/sass/app.scss": {

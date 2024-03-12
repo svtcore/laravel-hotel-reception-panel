@@ -24,7 +24,7 @@ $("#check-in-table").DataTable({
     "ordering": true,
     "info": false,
     "order": [
-        [4, 'asc']
+        [5, 'asc']
     ]
 });
 $("#check-out-table").DataTable({
@@ -36,13 +36,6 @@ $("#check-out-table").DataTable({
     "ordering": true,
     "info": false,
     "order": [
-        [4, 'asc']
+        [5, 'asc']
     ]
-});
-
-$('#myTabs a').on('shown.bs.tab', function (e) {
-    $.fn.dataTable.tables({
-        visible: true,
-        api: true
-    }).columns.adjust();
 });
