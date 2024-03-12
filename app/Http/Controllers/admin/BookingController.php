@@ -5,8 +5,12 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Http\Classes\Bookings;
 use App\Http\Requests\booking\SearchRequest;
+use App\Http\Requests\booking\ShowRequest;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BookingController extends Controller
 {
@@ -47,12 +51,24 @@ class BookingController extends Controller
 
     /**
      * Display the specified resource.
+     * ID validation through routes
      */
-    public function show(string $id)
+    public function show($id)
     {
-        return view('booking.show')->with([
-            'booking_data' => $this->booking->getById($id) ?? array()
-        ]);
+        try {
+            $booking_data = $this->booking->getById($id);
+            if ($booking_data === null) {
+                return abort(404);
+            } else {
+                return view('booking.show')->with([
+                    'booking_data' => $booking_data
+                ]);
+            }
+        } catch (NotFoundHttpException $e) {
+            abort(404);
+        } catch (Exception $e) {
+            return abort(500);
+        }
     }
 
     /**
@@ -89,12 +105,11 @@ class BookingController extends Controller
             if ($validatedData === null) {
                 return response()->json(['errors' => 'Validation failed.'], 422);
             }
-            
+
             $searchResult = $this->booking->searchByParams($validatedData);
             if (is_countable($searchResult) > 0) {
                 return view('booking.search')->with(['result' => $searchResult]);
-            }
-            else return abort(404);
+            } else return abort(404);
         } catch (ValidationException $e) {
             return response()->json(['errors' => $e->errors()], 422);
         }

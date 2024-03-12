@@ -110,13 +110,17 @@
                                             <td class="text-center">{{ \Carbon\Carbon::parse($booking->check_out_date)->format('Y-m-d') }}</td>
                                             <td class="text-center">
                                                 <div class="btn-group mr-2" role="group" aria-label="First group">
-                                                    <button type="button" class="btn btn-secondary"><a href="{{ route('admin.booking.show', $booking->id) }}"><i
-                                                            class="fas fa-address-card"></i> Details</a></button>
-                                                    <button type="button" class="btn btn-warning"><i
-                                                            class="fas fa-pen"></i></button>
-                                                    <button type="button" class="btn btn-danger"><i
-                                                            class="fas fa-ban"></i></button>
+                                                    <a href="{{ route('admin.booking.show', $booking->id) }}" class="btn btn-secondary">
+                                                        <i class="fas fa-address-card"></i> Details
+                                                    </a>
+                                                    <button type="button" class="btn btn-warning">
+                                                        <i class="fas fa-pen"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger">
+                                                        <i class="fas fa-ban"></i>
+                                                    </button>
                                                 </div>
+                                                
                                             </td>
                                         </tr>
                                         @endforeach

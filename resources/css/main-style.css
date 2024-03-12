@@ -55,3 +55,7 @@ body {
 .paginate_button:hover {
     border: 1px solid white !important;
 }
+
+a {
+    text-decoration: none !important;
+}

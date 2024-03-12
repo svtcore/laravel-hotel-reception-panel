@@ -117,7 +117,7 @@ class Bookings
                 'guests',
                 'additional_services'
             ])->where('id', $id)->first();
-            if ($booking->count() > 0) {
+            if ($booking && $booking->count() > 0) {
                 return $booking;
             } else {
                 return null;
