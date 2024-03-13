@@ -32,6 +32,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
             Route::post('/search', 'BookingController@searchByParams')->name('admin.booking.search');
             Route::get('/', 'BookingController@index')->name('admin.booking.index');
             Route::get('/{id}', 'BookingController@show')->name('admin.booking.show')->where('id', '^[1-9][0-9]{0,9}$');
+            Route::get('/{id}/edit', 'BookingController@edit')->name('admin.booking.edit')->where('id', '^[1-9][0-9]{0,9}$');
         });
     });
 //}

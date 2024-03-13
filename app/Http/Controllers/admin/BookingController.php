@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Classes\Bookings;
+use App\Http\Classes\AdditionalServices;
 use App\Http\Requests\booking\SearchRequest;
 use App\Http\Requests\booking\ShowRequest;
 use Exception;
@@ -16,10 +17,12 @@ class BookingController extends Controller
 {
 
     private $booking = NULL;
+    private $additional_services = NULL;
 
     public function __construct()
     {
         $this->booking = new Bookings();
+        $this->additional_services = new AdditionalServices();
     }
 
     /**
@@ -65,7 +68,7 @@ class BookingController extends Controller
                 ]);
             }
         } catch (NotFoundHttpException $e) {
-            abort(404);
+            return abort(404);
         } catch (Exception $e) {
             return abort(500);
         }
@@ -76,7 +79,10 @@ class BookingController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('booking.edit')->with([
+            'booking_data' => $this->booking->getById($id) ?? array(),
+            'avaliable_services' => $this->additional_services->getAvaliable() ?? array()
+        ]);
     }
 
     /**
