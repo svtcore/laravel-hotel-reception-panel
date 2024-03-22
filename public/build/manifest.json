@@ -37,7 +37,7 @@
     "isEntry": true
   },
   "resources/css/main-style.css": {
-    "file": "assets/main-style-BkCNqCDP.css",
+    "file": "assets/main-style-RdW7jLW9.css",
     "src": "resources/css/main-style.css",
     "isEntry": true
   },
@@ -65,6 +65,11 @@
   "resources/js/booking/search.js": {
     "file": "assets/search-D6aChrDh.js",
     "src": "resources/js/booking/search.js",
+    "isEntry": true
+  },
+  "resources/js/booking/show.js": {
+    "file": "assets/show-CZVqwxeF.js",
+    "src": "resources/js/booking/show.js",
     "isEntry": true
   },
   "resources/sass/app.scss": {

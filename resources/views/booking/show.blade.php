@@ -90,25 +90,30 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">Booking Controls</h5>
-                                    <!-- Кнопки управления бронированием -->
                                     <div class="mb-3">
                                         <label for="statusSelect" class="form-label float-right">Change Status</label>
-                                        <select class="form-select" id="statusSelect" name="status">
-                                            <option value="confirmed"
-                                                {{ $booking_data->status === 'reserved' ? 'selected' : '' }}>Reserved
-                                            </option>
-                                            <option value="canceled"
-                                                {{ $booking_data->status === 'canceled' ? 'selected' : '' }}>Canceled
-                                            </option>
-                                            <option value="active"
-                                                {{ $booking_data->status === 'active' ? 'selected' : '' }}>Active</option>
-                                            <option value="expired"
-                                                {{ $booking_data->status === 'expired' ? 'selected' : '' }}>Expired
-                                            </option>
-                                            <option value="completed"
-                                                {{ $booking_data->status === 'completed' ? 'selected' : '' }}>Completed
-                                            </option>
-                                        </select>
+                                        <form id="statusForm" name="statusForm"
+                                            action="{{ route('admin.booking.status', $booking_data->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <select class="form-select" id="statusSelect" name="status">
+                                                <option value="reserved"
+                                                    {{ $booking_data->status === 'reserved' ? 'selected' : '' }}>Reserved
+                                                </option>
+                                                <option value="canceled"
+                                                    {{ $booking_data->status === 'canceled' ? 'selected' : '' }}>Canceled
+                                                </option>
+                                                <option value="active"
+                                                    {{ $booking_data->status === 'active' ? 'selected' : '' }}>Active
+                                                </option>
+                                                <option value="expired"
+                                                    {{ $booking_data->status === 'expired' ? 'selected' : '' }}>Expired
+                                                </option>
+                                                <option value="completed"
+                                                    {{ $booking_data->status === 'completed' ? 'selected' : '' }}>Completed
+                                                </option>
+                                            </select>
+                                        </form>
                                     </div>
                                     <div class="mb-3">
                                         <a href="{{ route('admin.booking.edit', $booking_data->id) }}"
@@ -165,6 +170,6 @@
     </div>
     <!-- /.container-fluid -->
 @section('custom-scripts')
-    @vite(['resources/js/booking/search.js'])
+    @vite(['resources/js/booking/show.js'])
 @endsection
 @endsection

@@ -142,7 +142,7 @@ class BookingController extends Controller
                 return response()->json(['errors' => 'Validation failed.'], 422);
             }
             if ($this->booking->changeStatus($validatedData['status'], $id)){
-                return redirect()->back()->with('success', 'Booking successful completed');
+                return redirect()->back()->with('success', 'Booking status successful updated');
             }else return redirect()->back()->withErrors(['errors' => 'Failed to change status']);
         }
         catch(Exception $e){

@@ -10,7 +10,8 @@ export default defineConfig({
                 'resources/css/main-style.css',
                 'resources/css/bookings-style.css',
                 'resources/js/booking/index.js',
-                'resources/js/booking/search.js'
+                'resources/js/booking/search.js',
+                'resources/js/booking/show.js'
             ],
             refresh: true,
         }),

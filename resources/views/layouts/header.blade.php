@@ -34,15 +34,6 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 
     <div class="wrapper">
-
-        <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-dark navbar-primary">
-            <input class="form-control w-100 navbar-search" type="search" placeholder="Search" aria-label="Search">
-            <ul class="navbar-nav ml-auto">
-            </ul>
-        </nav>
-        <!-- /.navbar -->
-
         <!-- Sidebar -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->

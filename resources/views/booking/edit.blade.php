@@ -85,10 +85,10 @@
                                                 <label for="paymentType" class="form-label">Payment type</label>
                                                 <select class="form-select" id="payment_type" name="payment_type">
                                                     <option value="credit_card"
-                                                        {{ $booking_data->status == 'credit_card' ? 'selected' : '' }}>
+                                                        {{ $booking_data->payment_type == 'credit_card' ? 'selected' : '' }}>
                                                         Credit Card</option>
                                                     <option value="cash"
-                                                        {{ $booking_data->status == 'cash' ? 'selected' : '' }}>Cash
+                                                        {{ $booking_data->payment_type == 'cash' ? 'selected' : '' }}>Cash
                                                     </option>
                                                 </select>
                                             </div>
@@ -225,6 +225,6 @@
         <!-- /.content-container -->
     </div>
 @section('custom-scripts')
-    @vite(['resources/js/booking/search.js'])
+    
 @endsection
 @endsection
