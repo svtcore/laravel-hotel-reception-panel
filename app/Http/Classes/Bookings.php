@@ -6,6 +6,10 @@ namespace App\Http\Classes;
 use Exception;
 use Illuminate\Support\Carbon;
 use App\Models\Booking;
+use App\Http\Classes\Rooms;
+use App\Http\Classes\AdditionalServices;
+use DateTime;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class Bookings
 {
@@ -124,6 +128,102 @@ class Bookings
             }
         } catch (Exception $e) {
             return null;
+        }
+    }
+
+    public function update($validatedData, $id):?bool
+    {
+        try{
+            $adults = $validatedData['adult_amount'];
+            $children = $validatedData['children_amount'];
+            $check_in_date = $validatedData['check_in_date'];
+            $check_out_date = $validatedData['check_out_date'];
+            $payment_type = $validatedData['payment_type'];
+            $note = $validatedData['note'];
+            $status = $validatedData['status'];
+            if (isset($validatedData['services'])) {
+                $additional_services_ids = $validatedData['services'];
+            } else $additional_services_ids = [];
+
+            $booking = Booking::findOrFail($id);
+            $days = $this->diffDate($check_in_date, $check_out_date);
+            $total_price = $this->calculatePrice($booking->room_id, $additional_services_ids, $days);
+            $result = $booking->update([
+                'adult_amount' => $adults,
+                'children_amount' => $children,
+                'total_cost' => $total_price,
+                'payment_type' => $payment_type,
+                'check_in_date' => $check_in_date,
+                'check_out_date' => $check_out_date,
+                'status' => $status,
+                'note' => $note,
+            ]);
+            $booking->additional_services()->detach();
+            $booking->additional_services()->attach($additional_services_ids);
+            return $result;
+        }
+        catch(Exception $e){
+            return null;
+        }
+    }
+
+    public function calculatePrice($room_id, $ids, $days):?float
+    {
+        try{
+            $rooms_obj = new Rooms();
+            $additional_services_obj = new AdditionalServices();
+            $room_price = ($rooms_obj->getById($room_id))->price;
+            $services_price = $additional_services_obj->calculateSelected($ids, $days);
+            $total_price = ($room_price * $days) + $services_price;
+            if ($total_price > 0) return $total_price;
+            else return 0;
+        }
+        catch(Exception $e){
+            return null;
+        }
+    }
+
+    public function diffDate($check_in_date, $check_out_date):?int
+    {
+        try{
+            $dateTime1 = new DateTime($check_in_date);
+            $dateTime2 = new DateTime($check_out_date);
+
+            $interval = $dateTime1->diff($dateTime2);
+            $daysDiff = $interval->days;
+            if ($daysDiff < 0) $daysDiff = 0;
+            elseif ($daysDiff == 0) $daysDiff = 1;
+            return $daysDiff;
+        }
+        catch(Exception $e){
+            return 0;
+        }
+    }
+
+    public function deleteById($id): bool
+    {
+        try {
+            $booking = Booking::findOrFail($id);
+            $booking->additional_services()->detach();
+            $booking->guests()->detach();
+            $result = $booking->delete();
+            return $result ? true : false;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public function changeStatus($status, $id):bool
+    {
+        try{
+            $booking = Booking::findOrFail($id);
+            $booking->update([
+                'status' => $status,
+            ]);
+            return true;
+        }
+        catch(Exception $e){
+            return false;
         }
     }
 }

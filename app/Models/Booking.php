@@ -9,6 +9,17 @@ class Booking extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'adult_amount',
+        'children_amount',
+        'total_cost',
+        'payment_type',
+        'check_in_date',
+        'check_out_date',
+        'note',
+        'status',
+    ];
+
     public function additional_services(){
         return $this->belongsToMany(AdditionalService::class, 'additional_services_bookings');
     }

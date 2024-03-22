@@ -9,6 +9,20 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <!-- Reservation details -->
                     <div class="row">
                         <!-- Reservation -->
@@ -44,8 +58,10 @@
                                         <tr>
                                             <th>Additional Services</th>
                                             <td colspan="3">
-                                                @foreach ($booking_data->additional_services as $service)
-                                                    {{ $service->name }},
+                                                @foreach ($booking_data->additional_services as $key => $service)
+                                                    {{ $service->name }}@if (!$loop->last)
+                                                        ,
+                                                    @endif
                                                 @endforeach
                                             </td>
                                         </tr>
@@ -57,7 +73,13 @@
                                             <th>Total cost</th>
                                             <td>{{ $booking_data->total_cost }}</td>
                                             <th>Payment type</th>
-                                            <td>{{ $booking_data->payment_type }}</td>
+                                            <td>{{ ucfirst(str_replace('_', ' ', $booking_data->payment_type)) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Note</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">{{ $booking_data->note }}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -71,17 +93,34 @@
                                     <!-- Кнопки управления бронированием -->
                                     <div class="mb-3">
                                         <label for="statusSelect" class="form-label float-right">Change Status</label>
-                                        <select class="form-select" id="statusSelect">
-                                            <option value="confirmed">Confirmed</option>
-                                            <option value="pending">Pending</option>
-                                            <option value="cancelled">Cancelled</option>
+                                        <select class="form-select" id="statusSelect" name="status">
+                                            <option value="confirmed"
+                                                {{ $booking_data->status === 'reserved' ? 'selected' : '' }}>Reserved
+                                            </option>
+                                            <option value="canceled"
+                                                {{ $booking_data->status === 'canceled' ? 'selected' : '' }}>Canceled
+                                            </option>
+                                            <option value="active"
+                                                {{ $booking_data->status === 'active' ? 'selected' : '' }}>Active</option>
+                                            <option value="expired"
+                                                {{ $booking_data->status === 'expired' ? 'selected' : '' }}>Expired
+                                            </option>
+                                            <option value="completed"
+                                                {{ $booking_data->status === 'completed' ? 'selected' : '' }}>Completed
+                                            </option>
                                         </select>
                                     </div>
                                     <div class="mb-3">
-                                        <button class="btn btn-primary w-100">Edit Reservation</button>
+                                        <a href="{{ route('admin.booking.edit', $booking_data->id) }}"
+                                            class="btn btn-primary w-100">Edit Reservation</a>
                                     </div>
                                     <div class="mb-3">
-                                        <button class="btn btn-danger w-100">Delete Reservation</button>
+                                        <form action="{{ route('admin.booking.delete', $booking_data->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger w-100" type="submit">Delete Reservation</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -93,19 +132,22 @@
                                     <h5 class="card-title">Guests</h5>
                                     <table class="table">
                                         <tr>
-                                            <td class="text-center"><b>{{ $booking_data->guests[0]->first_name }} {{ $booking_data->guests[0]->last_name }}</b></td>
-                                                @if (count($booking_data->guests) > 1)
-                                                    <td class="text-center">
-                                                        {{ $booking_data->guests[1]->first_name }} {{ $booking_data->guests[1]->last_name }}
-                                                    </td>
-                                                @endif
+                                            <td class="text-center"><b>{{ $booking_data->guests[0]->first_name }}
+                                                    {{ $booking_data->guests[0]->last_name }}</b></td>
+                                            @if (count($booking_data->guests) > 1)
+                                                <td class="text-center">
+                                                    {{ $booking_data->guests[1]->first_name }}
+                                                    {{ $booking_data->guests[1]->last_name }}
+                                                </td>
+                                            @endif
                                         </tr>
                                         @if (count($booking_data->guests) > 2)
                                             @foreach ($booking_data->guests as $index => $guest)
                                                 @if ($index >= 2)
                                                     <tr>
                                                         <td></td>
-                                                        <td class="text-center">{{ $guest->first_name }} {{ $guest->last_name }}</td>
+                                                        <td class="text-center">{{ $guest->first_name }}
+                                                            {{ $guest->last_name }}</td>
                                                     </tr>
                                                 @endif
                                             @endforeach

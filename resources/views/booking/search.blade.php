@@ -1,16 +1,29 @@
 @extends('layouts.header')
 @section('dashboard_navbar_state', 'active')
 @section('additional_style')
-@vite(['resources/css/bookings-style.css'])
+    @vite(['resources/css/bookings-style.css'])
 @endsection
 @section('content')
     <!-- Main content -->
     <div class="container-fluid mt-3">
-
         <div class="content-container">
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <div class="content-container text-center">
                         <h4>Search form</h4>
 
@@ -88,21 +101,31 @@
                             </thead>
                             <tbody>
                                 @foreach ($result as $booking)
-                                <tr class="text-center">
-                                    <td class="text-center"><a href="#">{{ $booking->rooms->door_number }}</a></td>
-                                    <td class="text-center">{{ $booking->guests[0]->first_name }} {{ $booking->guests[0]->last_name }} {{ $booking->guests[0]->middlename }}</td>
-                                    <td class="text-center">{{ ucfirst($booking->rooms->type) }}</td>
-                                    <td class="text-center">{{ $booking->adult_amount }} @if ($booking->children_amount > 0) + {{ $booking->children_amount }}@endif</td>
-                                    <td class="text-center">{{ $booking->guests[0]->phone_number }}</td>
-                                    <td class="text-center">{{ $booking->total_cost }}</td>
-                                    <td class="text-center">{{ \Carbon\Carbon::parse($booking->check_in_date)->format('Y-m-d')}}</td>
-                                    <td class="text-center">{{ \Carbon\Carbon::parse($booking->check_out_date)->format('Y-m-d') }}</td>
-                                    <td class="text-center">
-                                        <div class="btn-group mr-2" role="group" aria-label="First group">
-                                            <button type="button" class="btn btn-secondary w-100">Details</button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                    <tr class="text-center">
+                                        <td class="text-center"><a href="#">{{ $booking->rooms->door_number }}</a>
+                                        </td>
+                                        <td class="text-center">{{ $booking->guests[0]->first_name }}
+                                            {{ $booking->guests[0]->last_name }} {{ $booking->guests[0]->middlename }}</td>
+                                        <td class="text-center">{{ ucfirst($booking->rooms->type) }}</td>
+                                        <td class="text-center">{{ $booking->adult_amount }} @if ($booking->children_amount > 0)
+                                                + {{ $booking->children_amount }}
+                                            @endif
+                                        </td>
+                                        <td class="text-center">{{ $booking->guests[0]->phone_number }}</td>
+                                        <td class="text-center">{{ $booking->total_cost }}</td>
+                                        <td class="text-center">
+                                            {{ \Carbon\Carbon::parse($booking->check_in_date)->format('Y-m-d') }}</td>
+                                        <td class="text-center">
+                                            {{ \Carbon\Carbon::parse($booking->check_out_date)->format('Y-m-d') }}</td>
+                                        <td class="text-center">
+                                            <div class="btn-group mr-2" role="group" aria-label="First group">
+                                                <a href="{{ route('admin.booking.show', $booking->id) }}"
+                                                    class="btn btn-secondary">
+                                                    <i class="fas fa-address-card"></i> Details
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -121,6 +144,6 @@
     </div>
     <!-- /.content -->
 @section('custom-scripts')
-@vite(['resources/js/booking/search.js'])
+    @vite(['resources/js/booking/search.js'])
 @endsection
 @endsection

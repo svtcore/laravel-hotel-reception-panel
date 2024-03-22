@@ -1,16 +1,29 @@
 @extends('layouts.header')
 @section('dashboard_navbar_state', 'active')
 @section('additional_style')
-@vite(['resources/css/bookings-style.css'])
+    @vite(['resources/css/bookings-style.css'])
 @endsection
 @section('content')
     <!-- Main content -->
     <div class="container-fluid mt-3">
-
         <div class="content-container">
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <div class="content-container text-center">
                         <h4>Search form</h4>
 
@@ -74,17 +87,26 @@
                     <div id="chat-container">
                         <ul class="nav nav-tabs" id="myTabs" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link active" id="checkIn-tab" data-bs-toggle="tab" href="#checkIn" role="tab"
-                                   aria-controls="checkIn" aria-selected="true">Check-In</a>
+                                <a class="nav-link active" id="checkIn-tab" data-bs-toggle="tab" href="#checkIn"
+                                    role="tab" aria-controls="checkIn" aria-selected="true">Check-In
+                                    @if (count($check_in_bookings) > 0)
+                                        <span class="badge bg-primary">{{ count($check_in_bookings) }}</span>
+                                    @endif
+                                </a>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link" id="checkOut-tab" data-bs-toggle="tab" href="#checkOut" role="tab"
-                                   aria-controls="checkOut" aria-selected="false">Check-Out</a>
+                                    aria-controls="checkOut" aria-selected="false">Check-Out
+                                    @if (count($check_out_bookings) > 0)
+                                        <span class="badge bg-primary">{{ count($check_out_bookings) }}</span>
+                                    @endif
+                                </a>
                             </li>
                         </ul>
 
                         <div class="tab-content mt-2">
-                            <div class="tab-pane fade show active" id="checkIn" role="tabpanel" aria-labelledby="checkIn-tab">
+                            <div class="tab-pane fade show active" id="checkIn" role="tabpanel"
+                                aria-labelledby="checkIn-tab">
                                 <table id="check-in-table" class="table table-bordered table-striped">
                                     <thead>
                                         <tr class="text-center">
@@ -100,29 +122,46 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($check_in_bookings as $booking)
-                                        <tr class="text-center">
-                                            <td class="text-center"><a href="#">{{ $booking->rooms->door_number }}</a></td>
-                                            <td class="text-center">{{ $booking->guests[0]->first_name }} {{ $booking->guests[0]->last_name }} {{ $booking->guests[0]->middlename }}</td>
-                                            <td class="text-center">{{ $booking->adult_amount }} @if ($booking->children_amount > 0) + {{ $booking->children_amount }}@endif</td>
-                                            <td class="text-center">{{ $booking->guests[0]->phone_number }}</td>
-                                            <td class="text-center">{{ $booking->total_cost }}</td>
-                                            <td class="text-center">{{ \Carbon\Carbon::parse($booking->check_in_date)->format('Y-m-d')}}</td>
-                                            <td class="text-center">{{ \Carbon\Carbon::parse($booking->check_out_date)->format('Y-m-d') }}</td>
-                                            <td class="text-center">
-                                                <div class="btn-group mr-2" role="group" aria-label="First group">
-                                                    <a href="{{ route('admin.booking.show', $booking->id) }}" class="btn btn-secondary">
-                                                        <i class="fas fa-address-card"></i> Details
-                                                    </a>
-                                                    <button type="button" class="btn btn-warning">
-                                                        <i class="fas fa-pen"></i>
-                                                    </button>
-                                                    <button type="button" class="btn btn-danger">
-                                                        <i class="fas fa-ban"></i>
-                                                    </button>
-                                                </div>
-                                                
-                                            </td>
-                                        </tr>
+                                            <tr class="text-center">
+                                                <td class="text-center"><a
+                                                        href="#">{{ $booking->rooms->door_number }}</a></td>
+                                                <td class="text-center">{{ $booking->guests[0]->first_name }}
+                                                    {{ $booking->guests[0]->last_name }}
+                                                    {{ $booking->guests[0]->middlename }}</td>
+                                                <td class="text-center">{{ $booking->adult_amount }} @if ($booking->children_amount > 0)
+                                                        + {{ $booking->children_amount }}
+                                                    @endif
+                                                </td>
+                                                <td class="text-center">{{ $booking->guests[0]->phone_number }}</td>
+                                                <td class="text-center">{{ $booking->total_cost }}</td>
+                                                <td class="text-center">
+                                                    {{ \Carbon\Carbon::parse($booking->check_in_date)->format('Y-m-d') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ \Carbon\Carbon::parse($booking->check_out_date)->format('Y-m-d') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    <form action="{{ route('admin.booking.delete', $booking->id) }}"
+                                                        method="POST">
+                                                        <div class="btn-group mr-2" role="group"
+                                                            aria-label="First group">
+                                                            <a href="{{ route('admin.booking.show', $booking->id) }}"
+                                                                class="btn btn-secondary">
+                                                                <i class="fas fa-address-card"></i> Details
+                                                            </a>
+                                                            <a href="{{ route('admin.booking.edit', $booking->id) }}"
+                                                                type="button" class="btn btn-warning">
+                                                                <i class="fas fa-pen"></i>
+                                                            </a>
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger">
+                                                                <i class="fas fa-ban"></i>
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -142,20 +181,38 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($check_out_bookings as $booking)
-                                        <tr>
-                                            <td class="text-center"><a href="#">{{ $booking->rooms->door_number }}</a></td>
-                                            <td class="text-center">{{ $booking->guests[0]->first_name }} {{ $booking->guests[0]->last_name }} {{ $booking->guests[0]->middlename }}</td>
-                                            <td class="text-center">{{ $booking->adult_amount }} @if ($booking->children_amount > 0) + {{ $booking->children_amount }}@endif</td>
-                                            <td class="text-center">{{ $booking->guests[0]->phone_number }}</td>
-                                            <td class="text-center">{{ $booking->total_cost }}</td>
-                                            <td class="text-center">{{ \Carbon\Carbon::parse($booking->check_out_date)->format('Y-m-d') }}</td>
-                                            <td class="text-center">
-                                                <div class="btn-group mr-2" role="group" aria-label="First group">
-                                                    <button type="button" class="btn btn-success">Complete check-out</i></button>
-                                                    <button type="button" class="btn btn-warning"><i class="fas fa-pen"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr>                                        
+                                            <tr>
+                                                <td class="text-center"><a
+                                                        href="#">{{ $booking->rooms->door_number }}</a></td>
+                                                <td class="text-center">{{ $booking->guests[0]->first_name }}
+                                                    {{ $booking->guests[0]->last_name }}
+                                                    {{ $booking->guests[0]->middlename }}</td>
+                                                <td class="text-center">{{ $booking->adult_amount }} @if ($booking->children_amount > 0)
+                                                        + {{ $booking->children_amount }}
+                                                    @endif
+                                                </td>
+                                                <td class="text-center">{{ $booking->guests[0]->phone_number }}</td>
+                                                <td class="text-center">{{ $booking->total_cost }}</td>
+                                                <td class="text-center">
+                                                    {{ \Carbon\Carbon::parse($booking->check_out_date)->format('Y-m-d') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    <form action="{{ route('admin.booking.status', $booking->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <div class="btn-group mr-2" role="group"
+                                                            aria-label="First group">
+                                                            <input type="hidden" value="completed" name="status" />
+                                                            <button type="submit" class="btn btn-success">Complete
+                                                                check-out</i></button>
+                                                            <a href="{{ route('admin.booking.edit', $booking->id) }}"
+                                                                type="submit" class="btn btn-warning"><i
+                                                                    class="fas fa-pen"></i></a>
+                                                        </div>
+                                                    </form>
+                                                </td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -182,6 +239,6 @@
     </div>
     <!-- /.content -->
 @section('custom-scripts')
-@vite(['resources/js/booking/index.js'])
+    @vite(['resources/js/booking/index.js'])
 @endsection
 @endsection

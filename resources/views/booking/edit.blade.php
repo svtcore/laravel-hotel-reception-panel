@@ -9,6 +9,20 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <!-- Reservation details -->
                     <div class="row">
                         <!-- Reservation -->
@@ -16,8 +30,9 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">Reservation Details</h5><br /><br />
-                                    <form action="/update_booking" method="POST">
+                                    <form action="{{ route('admin.booking.update', $booking_data->id) }}" method="POST">
                                         @csrf
+                                        @method('PUT')
                                         <input type="hidden" name="booking_id" value="{{ $booking_data->id }}">
                                         <div class="row mb-3 ml-2 mr-2">
                                             <div class="col-sm-12">
@@ -80,10 +95,13 @@
                                             <div class="col-sm-6">
                                                 <label for="totalCost" class="form-label">Total cost</label>
                                                 <input type="text" class="form-control" id="totalCost" name="total_cost"
-                                                    value="{{ $booking_data->total_cost }}">
+                                                    value="{{ $booking_data->total_cost }}" disabled>
                                             </div>
                                         </div>
                                         <div class="row mb-3 ml-2 mr-2">
+                                            <div class="col-sm-12">
+                                                <textarea class="form-control" name="note">{{ $booking_data->note }}</textarea>
+                                            </div>
                                             <div class="col-sm-6">
                                                 <label for="status" class="form-label">Status</label>
                                                 <select class="form-select" id="status" name="status">
@@ -111,7 +129,6 @@
                                                 <button type="submit" class="btn btn-primary w-100">Save Changes</button>
                                             </div>
                                         </div>
-                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -198,6 +215,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
