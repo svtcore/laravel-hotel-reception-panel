@@ -8,15 +8,32 @@ use Illuminate\Support\Carbon;
 use App\Models\Room;
 use PhpParser\Node\Expr;
 
-class Rooms{
+class Rooms
+{
 
-    public function getById($id):?object
+
+    public function getFree(): ?iterable
     {
-        try{
+        try 
+        {
+            $rooms = Room::where('status', 'free')->get();
+            if ($rooms->count() > 0) {
+                return $rooms;
+            } else {
+                return null;
+            }
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
+    public function getById($id): ?object
+    {
+        try 
+        {
             $room = Room::findOrFail($id);
             return $room;
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             return null;
         }
     }

@@ -57,13 +57,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link nav-custom @yield('bookings_navbar_state')">
+                            <a href="{{ route('admin.booking.index') }}" class="nav-link nav-custom @yield('booking_navbar_state')">
                                 <i class="nav-icon fas fa-bed"></i>
-                                <p>Bookings</p>
+                                <p>Booking</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link nav-custom @yield('rooms_navbar_state')">
+                            <a href="{{ route('admin.rooms.index') }}" class="nav-link nav-custom @yield('rooms_navbar_state')">
                                 <i class="nav-icon fas fa-utensils"></i>
                                 <p>Rooms</p>
                             </a>

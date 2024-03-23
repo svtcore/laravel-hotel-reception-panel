@@ -1,5 +1,5 @@
 @extends('layouts.header')
-@section('dashboard_navbar_state', 'active')
+@section('booking_navbar_state', 'active')
 @section('additional_style')
     @vite(['resources/css/bookings-style.css'])
 @endsection

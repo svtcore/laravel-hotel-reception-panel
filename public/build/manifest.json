@@ -37,8 +37,13 @@
     "isEntry": true
   },
   "resources/css/main-style.css": {
-    "file": "assets/main-style-RdW7jLW9.css",
+    "file": "assets/main-style-DaVfwwHe.css",
     "src": "resources/css/main-style.css",
+    "isEntry": true
+  },
+  "resources/css/rooms-style.css": {
+    "file": "assets/rooms-style-CIaP4PFI.css",
+    "src": "resources/css/rooms-style.css",
     "isEntry": true
   },
   "resources/js/app.js": {
@@ -70,6 +75,11 @@
   "resources/js/booking/show.js": {
     "file": "assets/show-CZVqwxeF.js",
     "src": "resources/js/booking/show.js",
+    "isEntry": true
+  },
+  "resources/js/rooms/index.js": {
+    "file": "assets/index-D-kVAkpS.js",
+    "src": "resources/js/rooms/index.js",
     "isEntry": true
   },
   "resources/sass/app.scss": {

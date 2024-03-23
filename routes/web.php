@@ -37,5 +37,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
             Route::put('/{id}/edit/status', 'BookingController@changeStatus')->name('admin.booking.status')->where('id', '^[1-9][0-9]{0,9}$');
             Route::delete('/{id}', 'BookingController@destroy')->name('admin.booking.delete')->where('id', '^[1-9][0-9]{0,9}$');
         });
+        Route::prefix('rooms')->group(function () {
+            Route::get('/', 'RoomController@index')->name('admin.rooms.index');
+            Route::post('/search', 'BookingController@searchByParams')->name('admin.rooms.search');
+        });
     });
 //}

@@ -32,7 +32,7 @@ class BookingController extends Controller
      */
     public function index()
     {
-        return view('booking.index')->with([
+        return view('admin.booking.index')->with([
             'check_in_bookings' => $this->booking->getLastCheckInOrders() ?? array(),
             'check_out_bookings' => $this->booking->getLastCheckOutOrders() ?? array(),
         ]);
@@ -65,7 +65,7 @@ class BookingController extends Controller
             if ($booking_data === null) {
                 return abort(404);
             } else {
-                return view('booking.show')->with([
+                return view('admin.booking.show')->with([
                     'booking_data' => $booking_data
                 ]);
             }
@@ -81,7 +81,7 @@ class BookingController extends Controller
      */
     public function edit(string $id)
     {
-        return view('booking.edit')->with([
+        return view('admin.booking.edit')->with([
             'booking_data' => $this->booking->getById($id) ?? abort(404),
             'avaliable_services' => $this->additional_services->getAvaliable() ?? array()
         ]);
@@ -126,7 +126,7 @@ class BookingController extends Controller
 
             $searchResult = $this->booking->searchByParams($validatedData);
             if (is_countable($searchResult) > 0) {
-                return view('booking.search')->with(['result' => $searchResult]);
+                return view('admin.booking.search')->with(['result' => $searchResult]);
             } else return redirect()->back()->withErrors(['errors' => 'There is no records found']);
         } catch (ValidationException $e) {
             return response()->json(['errors' => $e->errors()], 422);

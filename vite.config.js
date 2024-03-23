@@ -9,9 +9,11 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/css/main-style.css',
                 'resources/css/bookings-style.css',
+                'resources/css/rooms-style.css',
                 'resources/js/booking/index.js',
                 'resources/js/booking/search.js',
-                'resources/js/booking/show.js'
+                'resources/js/booking/show.js',
+                'resources/js/rooms/index.js',
             ],
             refresh: true,
         }),
