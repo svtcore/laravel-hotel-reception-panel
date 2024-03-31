@@ -136,12 +136,12 @@
                                                 <h6 class="mb-0">Room properties</h6>
                                             </div>
                                             @foreach ($room_properties as $property)
-                                                <div class="form-check form-check-inline m-3">
-                                                    <input class="form-check-input mt-1" type="checkbox"
+                                                <div class="form-check form-check-inline m-3 font-weight-bold">
+                                                    <input class="form-check-input mt-1 mr-2" type="checkbox"
                                                         id="property_{{ $property->id }}" value="{{ $property->id }}"
                                                         name="properties[]">
                                                     <label class="form-check-label"
-                                                        for="property_{{ $property->id }}">{{ $property->name }}</label>
+                                                        for="property_{{ $property->id }}">{{ strtoupper($property->name) }}</label>
                                                 </div>
                                             @endforeach
                                         </div>

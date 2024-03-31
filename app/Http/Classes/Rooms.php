@@ -37,4 +37,14 @@ class Rooms
             return null;
         }
     }
+
+    public function searchByParams($validatednData): ?object
+    {
+        try{
+
+        }
+        catch(Exception $e){
+            return null;
+        }
+    }
 }
