@@ -6,6 +6,7 @@ use App\Http\Classes\RoomProperties;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Classes\Rooms;
+use App\Http\Requests\admin\rooms\SearchRequest;
 use Illuminate\Validation\ValidationException;
 
 class RoomController extends Controller
@@ -77,7 +78,7 @@ class RoomController extends Controller
 
     //
 
-    public function searchByParams(Request $request)
+    public function searchByParams(SearchRequest $request)
     {
         try {
             $validatedData = $request->validated();
@@ -87,9 +88,9 @@ class RoomController extends Controller
             }
 
             $searchResult = $this->rooms->searchByParams($validatedData);
-            if (is_countable($searchResult) > 0) {
-                return view('admin.booking.search')->with(['result' => $searchResult]);
-            } else return redirect()->back()->withErrors(['errors' => 'There is no records found']);
+            if ($searchResult != null) {
+                return view('admin.rooms.search')->with(['result' => $searchResult ?? array(), 'room_properties' => $this->room_properties->getAll() ?? array(), 'inputData' => $validatedData]);
+            } else return redirect()->route('admin.rooms.index')->withErrors(['errors' => 'There is no records found']);
         } catch (ValidationException $e) {
             return response()->json(['errors' => $e->errors()], 422);
         }

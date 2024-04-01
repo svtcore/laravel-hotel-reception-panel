@@ -54,7 +54,7 @@
                                     <input type="text" class="form-control text-center" id="guestName" name="guestName"
                                         placeholder="Guest name" disabled required>
                                 </div>
-                                <div class="col-md-6 mt-2" id="searchTopBlock">
+                                <div class="col-md-6 mt-2 d-none" id="searchTopBlock">
                                     <label for="searchTopBlock"></label>
                                     <button type="submit" class="btn btn-primary w-100" name="searchTopBlock"
                                         id="searchTopBlock">Search</button>
@@ -76,25 +76,30 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-2 pt-2">
-                                        <label for="roomType"></label>
+                                        <label for="roomType">Type</label>
                                         <select class="form-select text-center" id="roomType" name="roomType" required>
-                                            <option value="standart" selected>Standart</option>
+                                            <option value="0">Any</option>
+                                            <option value="standart">Standart</option>
                                             <option value="comfort">Comfort</option>
                                             <option value="premium">Premium</option>
                                             <option value="king">King</option>
                                         </select>
                                     </div>
                                     <div class="col-md-2 pt-2">
-                                        <label for="roomStatus"></label>
+                                        <label for="roomStatus">Status</label>
                                         <select class="form-select text-center" id="roomStatus" name="roomStatus" required>
-                                            <option value="free" selected>Free</option>
+                                            <option value="0">Any</option>
+                                            <option value="free">Free</option>
                                             <option value="busy">Busy</option>
+                                            <option value="maintence">Maintence</option>
+                                            <option value="reserved">Reserved</option>
                                         </select>
                                     </div>
                                     <div class="col-md-2 pt-2">
-                                        <label for="roomAdult"></label>
+                                        <label for="roomAdult">Adults</label>
                                         <select class="form-select text-center" id="roomAdult" name="roomAdult" required>
-                                            <option value="1" selected>1 person</option>
+                                            <option value="0" selected>Any</option>
+                                            <option value="1">1 person</option>
                                             <option value="2">2 persons</option>
                                             <option value="3">3 persons</option>
                                             <option value="4">4 persons</option>
@@ -107,10 +112,11 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2 pt-2">
-                                        <label for="roomChildren"></label>
+                                        <label for="roomChildren">Child bed</label>
                                         <select class="form-select text-center" id="roomChildren" name="roomChildren"
                                             required>
-                                            <option value="0" selected>NO CHILD BED</option>
+                                            <option value="-1" selected>Any</option>
+                                            <option value="0">NO CHILD BED</option>
                                             <option value="1">1 child bed</option>
                                             <option value="2">2 child bed</option>
                                             <option value="3">3 child bed</option>
@@ -123,7 +129,7 @@
                                             <option value="10">10 child bed</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-4 pt-2" id="searchBlock">
+                                    <div class="col-md-4 pt-3" id="searchBlock">
                                         <label for="searchButton"></label>
                                         <button type="submit" class="btn btn-primary w-100" name="searchButton"
                                             id="searchButton">Search</button>
@@ -153,18 +159,16 @@
                     <div class="mt-4 text-center">
                         <h4><b>Avaliable rooms</b></h4>
                     </div>
-                    <div id="chat-container">
-                        <table id="free-rooms-table" class="table table-bordered table-striped">
+                    <div id="main-container">
+                        <table id="free-rooms-table" class="table table-bordered">
                             <thead>
                                 <tr class="text-center">
                                     <th class="text-center">Room №</th>
-                                    <th>Type</th>
-                                    <th>Floor</th>
-                                    <th>Rooms</th>
-                                    <th>Beds(A)</th>
-                                    <th>Beds(C)</th>
-                                    <th>Price</th>
-                                    <th>Action</th>
+                                    <th class="text-center">Type</th>
+                                    <th class="text-center">Floor</th>
+                                    <th class="text-center">Beds</th>
+                                    <th class="text-center">Price/per night</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -172,25 +176,22 @@
                                     <tr>
                                         <td class="text-center">{{ $room->door_number }}</td>
                                         <td class="text-center">{{ strtoupper($room->type) }}</td>
-                                        <td class="text-center font-weight-bold">{{ $room->floor }}</td>
-                                        <td class="text-center font-weight-bold">{{ $room->room_amount }}</td>
-                                        <td class="text-center font-weight-bold">{{ $room->bed_amount }}</td>
-                                        <td class="text-center font-weight-bold">{{ $room->children_bed_amount }}</td>
-                                        <td class="text-center">{{ $room->price }}</td>
                                         <td class="text-center">
-                                            <form action="#" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="btn-group mr-2" role="group" aria-label="First group">
-                                                    <input type="hidden" value="#" name="status" />
-                                                    <button type="submit" class="btn btn-success">Book room</button>
-                                                    <input type="hidden" value="#" name="status" />
-                                                    <button type="submit" class="btn btn-warning"><i
-                                                            class="fas fa-pen"></i></button>
-                                                    <a href="#" type="submit" class="btn btn-danger"><i
-                                                            class="fas fa-ban"></i></a>
-                                                </div>
-                                            </form>
+                                            {{ $room->floor }}
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge badge-primary badge-big">{{ $room->bed_amount }}</span>
+                                            @if ($room->children_bed_amount > 0)
+                                            <span class="badge badge-success badge-big"><i class="fa-solid fa-baby"></i></span> 
+                                        @endif
+                                        </td>
+                                        <td class="text-center"><b>{{ $room->price }} ₴</b></td>
+                                        <td class="text-center">
+                                            <div class="btn-group" role="group" aria-label="Room actions">
+                                                <button type="button" class="btn btn-primary">Details</button>
+                                                <button type="button" class="btn btn-warning">Edit</button>
+                                                <button type="button" class="btn btn-danger">Delete</button>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -26,12 +26,12 @@ class DatabaseSeeder extends Seeder
     {
         $config = [
             'user' => 10,
-            'rooms' => 100,
+            'rooms' => 50,
             'room_properties' => 10,
             'staff' => 20,
             'cleaning_logs' => 100,
-            'guests' => 300,
-            'bookings' => 350,
+            'guests' => 150,
+            'bookings' => 100,
             'additional_services' => 5,
         ];
         $roles_list = ['admin', 'receptionist'];

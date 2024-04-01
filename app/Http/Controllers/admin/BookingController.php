@@ -123,10 +123,9 @@ class BookingController extends Controller
             if ($validatedData === null) {
                 return response()->withErrors(['errors' => 'Validation failed']);
             }
-
             $searchResult = $this->booking->searchByParams($validatedData);
             if (is_countable($searchResult) > 0) {
-                return view('admin.booking.search')->with(['result' => $searchResult]);
+                return view('admin.booking.search')->with(['result' => $searchResult, 'inputData' => $validatedData]);
             } else return redirect()->back()->withErrors(['errors' => 'There is no records found']);
         } catch (ValidationException $e) {
             return response()->json(['errors' => $e->errors()], 422);

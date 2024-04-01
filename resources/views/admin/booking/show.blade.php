@@ -45,10 +45,10 @@
                                         </tr>
                                         <tr>
                                             <th>Check-in Date</th>
-                                            <td>{{ \Carbon\Carbon::parse($booking_data->check_in_date)->format('Y-m-d') }}
+                                            <td>{{ \Carbon\Carbon::parse($booking_data->check_in_date)->format('d-m-Y') }}
                                             </td>
                                             <th>Check-out Date</th>
-                                            <td>{{ \Carbon\Carbon::parse($booking_data->check_out_date)->format('Y-m-d') }}
+                                            <td>{{ \Carbon\Carbon::parse($booking_data->check_out_date)->format('d-m-Y') }}
                                             </td>
                                         </tr>
                                         <tr>

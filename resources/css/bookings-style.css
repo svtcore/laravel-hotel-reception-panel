@@ -65,3 +65,8 @@ body {
     position: relative;
     top: 2px;
 }
+.badge-big {
+    padding: 6px 9px;
+    font-size: 14px;
+    border-radius: 5px;
+}

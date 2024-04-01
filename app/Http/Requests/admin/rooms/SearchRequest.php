@@ -11,7 +11,7 @@ class SearchRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,15 @@ class SearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'roomNumber' => 'nullable|integer|min:1',
+            'guestName' => 'nullable|string|max:255', 
+            'startDate' => 'nullable|date',
+            'endDate' => 'nullable|date|after_or_equal:startDate',
+            'roomType' => 'nullable|string',
+            'roomStatus' => 'nullable|string',
+            'roomAdult' => 'nullable|integer|min:0|max:10',
+            'roomChildren' => 'nullable|integer|min:-1|max:10',
+            'properties.*' => 'nullable|integer'
         ];
     }
 }

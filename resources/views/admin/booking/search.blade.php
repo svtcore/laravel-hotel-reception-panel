@@ -57,21 +57,25 @@
                                 <div class="col-md-2 mb-2 date-block">
                                     <label for="startDate">Start date</label>
                                     <input type="date" class="form-control" id="startDate" name="startDate" disabled
+                                        @if (isset($inputData['startDate'])) value="{{ $inputData['startDate'] }})" @else value="{{ \Carbon\Carbon::now()->toDateString() }}" @endif
                                         required>
                                 </div>
                                 <div class="col-md-2 mb-2 date-block">
                                     <label for="endDate">End date</label>
                                     <input type="date" class="form-control" id="endDate" name="endDate" disabled
+                                        @if (isset($inputData['endDate'])) value="{{ $inputData['endDate'] }})" @else value="{{ \Carbon\Carbon::now()->toDateString() }}" @endif
                                         required>
                                 </div>
                                 <div class="col-md-3 pt-2">
                                     <label for="guestName"></label>
                                     <input type="text" class="form-control" id="guestName" name="guestName"
+                                        @if (isset($inputData['guestName'])) value="{{ $inputData['guestName'] }}" @endif
                                         placeholder="Full name" required>
                                 </div>
                                 <div class="col-md-2 pt-2">
                                     <label for="phoneNumber"></label>
                                     <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                                        @if (isset($inputData['phoneNumber'])) value="{{ $inputData['phoneNumber'] }}" @endif
                                         placeholder="Phone number" disabled required>
                                 </div>
                                 <div class="col-md-3 pt-2">
@@ -91,11 +95,11 @@
                                     <th class="text-center">Room №</th>
                                     <th>Guest name</th>
                                     <th>Room type</th>
-                                    <th>Persons</th>
                                     <th>Phone number</th>
                                     <th>Price</th>
                                     <th>Check-In</th>
                                     <th>Check-Out</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -105,18 +109,24 @@
                                         <td class="text-center"><a href="#">{{ $booking->rooms->door_number }}</a>
                                         </td>
                                         <td class="text-center">{{ $booking->guests[0]->first_name }}
-                                            {{ $booking->guests[0]->last_name }} {{ $booking->guests[0]->middlename }}</td>
-                                        <td class="text-center">{{ ucfirst($booking->rooms->type) }}</td>
-                                        <td class="text-center">{{ $booking->adult_amount }} @if ($booking->children_amount > 0)
-                                                + {{ $booking->children_amount }}
-                                            @endif
+                                            {{ $booking->guests[0]->last_name }} {{ $booking->guests[0]->middlename }}
                                         </td>
+                                        <td class="text-center">{{ ucfirst($booking->rooms->type) }}</td>
                                         <td class="text-center">{{ $booking->guests[0]->phone_number }}</td>
                                         <td class="text-center">{{ $booking->total_cost }}</td>
                                         <td class="text-center">
-                                            {{ \Carbon\Carbon::parse($booking->check_in_date)->format('Y-m-d') }}</td>
+                                            {{ \Carbon\Carbon::parse($booking->check_in_date)->format('d-m-Y') }}</td>
                                         <td class="text-center">
-                                            {{ \Carbon\Carbon::parse($booking->check_out_date)->format('Y-m-d') }}</td>
+                                            {{ \Carbon\Carbon::parse($booking->check_out_date)->format('d-m-Y') }}</td>
+                                        <td class="text-center">
+                                            @if ($booking->status == 'active' || $booking->status == 'completed')
+                                                <span class="badge badge-success badge-big">{{ $booking->status }}</span>
+                                            @elseif ($booking->status == 'canceled')
+                                                <span class="badge badge-danger badge-big">{{ $booking->status }}</span>
+                                            @else
+                                                <span class="badge badge-secondary badge-big">{{ $booking->status }}</span>
+                                            @endif
+                                        </td>
                                         <td class="text-center">
                                             <div class="btn-group mr-2" role="group" aria-label="First group">
                                                 <a href="{{ route('admin.booking.show', $booking->id) }}"

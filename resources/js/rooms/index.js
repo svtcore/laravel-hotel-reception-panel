@@ -1,20 +1,19 @@
 
 $(document).ready(function () {
-    $('#searchTopBlock').hide();
     $("#switch-by-number").change(function () {
         var isChecked = $(this).is(":checked");
         $("#roomNumber").prop("disabled", !isChecked);
         if (isChecked) {
             $("#startDate, #endDate, #roomType, #roomStatus, #roomAdult, #roomChildren, #guestName, #switch-by-guest, #searchButton").prop("disabled", true);
             $("[id^='property_']").prop("disabled", true);
-            $("#baseSearch").hide();
-            $('#searchTopBlock').show();
+            $("#baseSearch").addClass("d-none");
+            $('#searchTopBlock').removeClass("d-none");
         } else {
             $("#startDate, #endDate, #roomType, #roomStatus, #roomAdult, #roomChildren, #switch-by-guest, #searchButton").prop("disabled", false);
             $("[id^='property_']").prop("disabled", false);
             $("#roomNumber").val("");
-            $("#baseSearch").show();
-            $('#searchTopBlock').hide();
+            $("#baseSearch").removeClass("d-none");
+            $('#searchTopBlock').addClass("d-none");
         }
     });
     $("#switch-by-guest").change(function () {
@@ -23,14 +22,14 @@ $(document).ready(function () {
         if (isChecked) {
             $("#startDate, #endDate, #roomType, #roomStatus, #roomAdult, #roomChildren, #roomNumber, #switch-by-number, #searchButton").prop("disabled", true);
             $("[id^='property_']").prop("disabled", true);
-            $("#baseSearch").hide();
-            $('#searchTopBlock').show();
+            $("#baseSearch").addClass("d-none");
+            $('#searchTopBlock').removeClass("d-none");
         } else {
             $("#startDate, #endDate, #roomType, #roomStatus, #roomAdult, #roomChildren, #switch-by-number, #searchButton").prop("disabled", false);
             $("[id^='property_']").prop("disabled", false);
             $("#guestName").val("");
-            $("#baseSearch").show();
-            $('#searchTopBlock').hide();
+            $("#baseSearch").removeClass("d-none");
+            $('#searchTopBlock').addClass("d-none");
         }
     });
 
@@ -45,5 +44,12 @@ $(document).ready(function () {
         "order": [
             [5, 'asc']
         ]
+    });
+    $('#free-rooms-table tbody').on('mouseenter', 'tr', function() {
+        $(this).addClass('highlight');
+    });
+    
+    $('#free-rooms-table tbody').on('mouseleave', 'tr', function() {
+        $(this).removeClass('highlight');
     });
 });

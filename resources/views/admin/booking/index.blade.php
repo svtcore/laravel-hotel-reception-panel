@@ -57,12 +57,12 @@
                                 <div class="col-md-2 mb-2 date-block">
                                     <label for="startDate">Start date</label>
                                     <input type="date" class="form-control" id="startDate" name="startDate" disabled
-                                        required>
+                                        value="{{ \Carbon\Carbon::now()->toDateString() }}" required>
                                 </div>
                                 <div class="col-md-2 mb-2 date-block">
                                     <label for="endDate">End date</label>
                                     <input type="date" class="form-control" id="endDate" name="endDate" disabled
-                                        required>
+                                        value="{{ \Carbon\Carbon::now()->toDateString() }}" required>
                                 </div>
                                 <div class="col-md-3 pt-2">
                                     <label for="guestName"></label>

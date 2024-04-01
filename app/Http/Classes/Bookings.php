@@ -84,6 +84,7 @@ class Bookings
                     $startDate = $startDate . " 00:00:00";
                     $endDate = $endDate . " 23:59:59";
                     $query->whereBetween('check_in_date', [$startDate, $endDate]);
+                    $query->orWhereBetween('check_out_date', [$startDate, $endDate]);
                 }
 
                 // by guests

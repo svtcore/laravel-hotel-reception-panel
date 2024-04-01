@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedInteger('bed_amount');
             $table->unsignedInteger('children_bed_amount');
             $table->unsignedFloat('price');
-            $table->enum('status', ['busy', 'free', 'maintence']);
+            $table->enum('status', ['busy', 'free', 'maintence', 'reserved']);
             $table->timestamps();
         });
     }
