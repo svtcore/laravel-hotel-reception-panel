@@ -65,12 +65,17 @@ class Rooms
                 //get busy rooms but free after input date booking will be over
                 $rooms = Room::with('bookings')->where('status', 'busy')
                     ->where(function ($query) use ($roomType, $roomAdult, $roomChildren) {
-                        if (!empty($roomType) && $roomType != 0)
+                        if ($roomType != "0")
                             $query->where('type', $roomType);
-                        if (!empty($roomAdult) && $roomAdult != 0)
-                            $query->where('bed_amount', $roomAdult);
-                        if (!empty($roomChildren) && $roomChildren != -1)
-                            $query->where('children_bed_amount', $roomChildren);
+                        if ($roomAdult != "0")
+                            $query->where('bed_amount', '>=', $roomAdult);
+                        if ($roomChildren != "-1")
+                        {
+                            if ($roomChildren == "0")
+                                $query->where('children_bed_amount', $roomChildren);
+                            else
+                                $query->where('children_bed_amount', '>=', $roomChildren);
+                        }
                     })
                     ->where(function ($subQuery) use ($properties) {
                         if (!empty($properties)) {
@@ -86,12 +91,17 @@ class Rooms
                     });
                     $freeRooms = Room::where('status', 'free')
                     ->where(function ($query) use ($roomType, $roomAdult, $roomChildren) {
-                        if (!empty($roomType) && $roomType != 0)
+                        if ($roomType != "0")
                             $query->where('type', $roomType);
-                        if (!empty($roomAdult) && $roomAdult != 0)
-                            $query->where('bed_amount', $roomAdult);
-                        if (!empty($roomChildren) && $roomChildren != -1)
-                            $query->where('children_bed_amount', $roomChildren);
+                        if ($roomAdult != "0")
+                            $query->where('bed_amount', '>=', $roomAdult);
+                        if ($roomChildren != "-1")
+                        {
+                            if ($roomChildren == "0")
+                                $query->where('children_bed_amount', $roomChildren);
+                            else
+                                $query->where('children_bed_amount', '>=', $roomChildren);
+                        }
                     })
                     ->where(function ($subQuery) use ($properties) {
                         if (!empty($properties)) {
@@ -105,13 +115,18 @@ class Rooms
                 $startDate = $startDate . " 00:00:00";
                 $endDate = $endDate . " 23:59:59";
                 $rooms = Room::with('bookings')->where(function ($query) use ($roomType, $roomAdult, $roomChildren, $roomStatus) {
-                    if (!empty($roomType) && $roomType != 0)
+                    if ($roomType != "0")
                         $query->where('type', $roomType);
-                    if (!empty($roomAdult) && $roomAdult != 0)
-                        $query->where('bed_amount', $roomAdult);
-                    if (!empty($roomChildren) && $roomChildren != -1)
-                        $query->where('children_bed_amount', $roomChildren);
-                    if (!empty($roomStatus) && $roomStatus != 0)
+                    if ($roomAdult != "0")
+                        $query->where('bed_amount', '>=', $roomAdult);
+                    if ($roomChildren != "-1")
+                    {
+                        if ($roomChildren == "0")
+                            $query->where('children_bed_amount', $roomChildren);
+                        else
+                            $query->where('children_bed_amount', '>=', $roomChildren);
+                    }
+                    if ($roomStatus != "0")
                         $query->where('status', $roomStatus);
                 })
                     ->whereHas('bookings', function ($query) use ($startDate, $endDate) {
@@ -127,13 +142,18 @@ class Rooms
             }
             else if ($roomStatus != "free" || $roomStatus != "busy"){
                 $rooms = Room::where(function ($query) use ($roomType, $roomAdult, $roomChildren, $roomStatus) {
-                    if (!empty($roomType) && $roomType != 0)
+                    if ($roomType != "0")
                         $query->where('type', $roomType);
-                    if (!empty($roomAdult) && $roomAdult != 0)
-                        $query->where('bed_amount', $roomAdult);
-                    if (!empty($roomChildren) && $roomChildren != -1)
-                        $query->where('children_bed_amount', $roomChildren);
-                    if (!empty($roomStatus) && $roomStatus != 0)
+                    if ($roomAdult != "0")
+                        $query->where('bed_amount', '>=', $roomAdult);
+                    if ($roomChildren != "-1")
+                    {
+                        if ($roomChildren == "0")
+                            $query->where('children_bed_amount', $roomChildren);
+                        else
+                            $query->where('children_bed_amount', '>=', $roomChildren);
+                    }
+                    if ($roomStatus != "0")
                         $query->where('status', $roomStatus);
                 })->get();
             }

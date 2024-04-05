@@ -22,8 +22,8 @@ class RoomFactory extends Factory
             'type' => $this->faker->randomElement(['standart','comfort','premium','king']),
             'area' => $this->faker->randomFloat(1, 10, 250),
             'room_amount' => $this->faker->numberBetween(1, 10),
-            'bed_amount' =>  $this->faker->numberBetween(1, 10),
-            'children_bed_amount' => $this->faker->numberBetween(1,5),
+            'bed_amount' =>  $this->faker->randomElement([1, 2, 4, 10]),
+            'children_bed_amount' => $this->faker->numberBetween(0,3),
             'price' => $this->faker->randomFloat(1, 100, 5000),
             'status' => $this->faker->randomElement(['busy', 'free', 'maintence', 'reserved']),
         ];
