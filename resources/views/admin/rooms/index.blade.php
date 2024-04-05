@@ -188,7 +188,7 @@
                                         <td class="text-center"><b>{{ $room->price }} ₴</b></td>
                                         <td class="text-center">
                                             <div class="btn-group" role="group" aria-label="Room actions">
-                                                <button type="button" class="btn btn-primary">Details</button>
+                                                <a href="{{ route('admin.rooms.show', $room->id) }}" class="btn btn-primary">Details</a>
                                                 <button type="button" class="btn btn-warning">Edit</button>
                                                 <button type="button" class="btn btn-danger">Delete</button>
                                             </div>

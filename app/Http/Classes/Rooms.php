@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Support\Carbon;
 use App\Models\Room;
 use PhpParser\Node\Expr;
+use App\Http\Classes\Bookings;
 
 class Rooms
 {
@@ -29,8 +30,12 @@ class Rooms
     public function getById($id): ?object
     {
         try {
-            $room = Room::findOrFail($id);
-            return $room;
+            $room = Room::with('room_properties')->where('id', $id)->first();
+            if ($room->count() > 0) {
+                return $room;
+            } else {
+                return null;
+            }
         } catch (Exception $e) {
             return null;
         }

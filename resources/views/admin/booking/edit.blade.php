@@ -29,7 +29,7 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Reservation Details</h5><br /><br />
+                                    <h4 class="card-title pl-4"><b>Reservation Details</b></h4><br /><br />
                                     <form action="{{ route('admin.booking.update', $booking_data->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
@@ -136,7 +136,7 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Additional Services</h5>
+                                    <h4 class="card-title pl-4"><b>Additional Services</b></h4>
                                     <br /><br />
                                     <div class="row">
                                         @php $count = 0 @endphp
@@ -178,7 +178,7 @@
 
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title mb-4">Guests</h5>
+                                    <h4 class="card-title mb-4 pl-4"><b>Guests</b></h4>
                                     <br /><br />
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-12">

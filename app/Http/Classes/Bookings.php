@@ -227,4 +227,22 @@ class Bookings
             return false;
         }
     }
+
+    public function getByRoomId($room_id): ?iterable
+    {
+        try{
+            $booking = Booking::with('guests')
+            ->where('room_id', $room_id)
+            ->whereHas('guests')
+            ->get();
+            if ($booking->count() > 0) {
+                return $booking;
+            } else {
+                return null;
+            }
+        }
+        catch(Exception){
+            return null;
+        }
+    }
 }

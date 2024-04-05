@@ -40,6 +40,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
         Route::prefix('rooms')->group(function () {
             Route::get('/', 'RoomController@index')->name('admin.rooms.index');
             Route::post('/search', 'RoomController@searchByParams')->name('admin.rooms.search');
+            Route::get('/{id}', 'RoomController@show')->name('admin.rooms.show')->where('id', '^[1-9][0-9]{0,9}$');
         });
     });
 //}
