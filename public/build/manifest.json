@@ -82,6 +82,11 @@
     "src": "resources/js/rooms/index.js",
     "isEntry": true
   },
+  "resources/js/rooms/show.js": {
+    "file": "assets/show-Dy8Vdgcw.js",
+    "src": "resources/js/rooms/show.js",
+    "isEntry": true
+  },
   "resources/sass/app.scss": {
     "file": "assets/app-DySRb4RP.css",
     "src": "resources/sass/app.scss",

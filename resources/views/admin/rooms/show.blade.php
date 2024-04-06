@@ -111,20 +111,19 @@
                     <li class="nav-item" role="presentation">
                         <a class="nav-link active" id="booking-tab" data-bs-toggle="tab" href="#booking" role="tab" aria-controls="booking" aria-selected="true">
                             Booking History
-                            <span class="badge bg-secondary">5</span>
+                            <span class="badge bg-primary">{{ count($booking) }}</span>
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="cleaning-tab" data-bs-toggle="tab" href="#cleaning" role="tab" aria-controls="cleaning" aria-selected="false">
                             Cleaning History
-                            <span class="badge bg-secondary">3</span>
                         </a>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <!-- First Tab: Booking History Table -->
                     <div class="tab-pane fade show active" id="booking" role="tabpanel" aria-labelledby="booking-tab">
-                        <table class="table">
+                        <table class="table" id="guests_table">
                             <thead>
                                 <tr>
                                     <th>Guest Name</th>
@@ -154,9 +153,8 @@
                         </table>
                     </div>
 
-                    <!-- Second Tab: Cleaning History Table -->
                     <div class="tab-pane fade" id="cleaning" role="tabpanel" aria-labelledby="cleaning-tab">
-                        <table class="table">
+                        <table class="table" id="cleaning_table">
                             <thead>
                                 <tr>
                                     <th>Cleaning Date</th>
@@ -165,12 +163,13 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($cleaning as $clean)
                                 <tr>
-                                    <td>2024-03-06</td>
-                                    <td>Mary Smith</td>
-                                    <td>Room cleaned thoroughly</td>
+                                    <td>{{ date('d-m-Y [H:i]', strtotime($clean->datetime)) }}</td>
+                                    <td>{{ $clean->staff->first_name }} {{ $clean->staff->last_name }}</td>
+                                    <td>{{ $clean->note }}</td>
                                 </tr>
-                                <!-- Add other cleaning records here -->
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -182,5 +181,5 @@
 @endsection
 
 @section('custom-scripts')
-@vite(['resources/js/rooms/index.js'])
+@vite(['resources/js/rooms/show.js'])
 @endsection

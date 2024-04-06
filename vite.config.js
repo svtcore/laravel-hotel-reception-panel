@@ -14,6 +14,7 @@ export default defineConfig({
                 'resources/js/booking/search.js',
                 'resources/js/booking/show.js',
                 'resources/js/rooms/index.js',
+                'resources/js/rooms/show.js',
             ],
             refresh: true,
         }),

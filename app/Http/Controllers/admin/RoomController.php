@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Classes\Rooms;
 use App\Http\Classes\Bookings;
+use App\Http\Classes\CleaningLogs;
 use App\Http\Requests\admin\rooms\SearchRequest;
 use App\Models\Booking;
 use Illuminate\Validation\ValidationException;
@@ -16,12 +17,14 @@ class RoomController extends Controller
     private $booking = NULL;
     private $rooms = NULL;
     private $room_properties = NULL;
+    private $cleaning = NULL;
 
     public function __construct()
     {
         $this->booking = new Bookings();
         $this->rooms = new Rooms();
         $this->room_properties = new RoomProperties();
+        $this->cleaning = new CleaningLogs();
     }
 
     /**
@@ -57,7 +60,7 @@ class RoomController extends Controller
         return view('admin.rooms.show')->with([
             'room' => $this->rooms->getById($id),
             'booking' => $this->booking->getByRoomId($id) ?? array(),
-            'cleaning' => array()]);
+            'cleaning' => $this->cleaning->getByRoomId($id) ?? array()]);
     }
 
     /**
