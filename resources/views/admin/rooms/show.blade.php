@@ -29,7 +29,6 @@
         </div>
 
         <div id="main-container">
-            <!-- Table with information about the hotel room -->
             <div class="content-container text-center">
                 <div class="room-info-table">
                     <h4 class="mb-4"><b>Room Information</b></h4>
@@ -37,8 +36,8 @@
                         <div class="col-md-6">
                             <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Door Number
-                                    <span class="badge bg-primary badge-big">{{ $room->door_number }}</span>
+                                    Room number
+                                    <span class="badge bg-primary badge-big">{{ $room->room_number }}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Type
@@ -46,23 +45,23 @@
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Floor
-                                    <span class="badge bg-primary badge-big">{{ $room->floor }}</span>
+                                    <span class="badge bg-primary badge-big">{{ $room->floor_number }}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Number of Rooms
-                                    <span class="badge bg-primary badge-big">{{ $room->room_amount }}</span>
+                                    Total rooms
+                                    <span class="badge bg-primary badge-big">{{ $room->total_rooms }}</span>
                                 </li>
                             </ul>
                         </div>
                         <div class="col-md-6">
                             <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Number of Adult Beds
-                                    <span class="badge bg-primary badge-big">{{ $room->bed_amount }}</span>
+                                    Adults beds
+                                    <span class="badge bg-primary badge-big">{{ $room->adults_beds_count }}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Number of Child Beds
-                                    <span class="badge bg-primary badge-big">{{ $room->children_bed_amount }}</span>
+                                    Children beds
+                                    <span class="badge bg-primary badge-big">{{ $room->children_beds_count }}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Price per Night
@@ -70,12 +69,12 @@
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Current Status
-                                    @if ($room->status == 'free')
-                                    <span class="badge badge-success badge-big">Free</span>
-                                    @elseif ($room->status == 'busy')
-                                    <span class="badge badge-danger badge-big">Busy</span>
-                                    @elseif ($room->status == 'reserved')
-                                    <span class="badge badge-secondary badge-big">Reserved</span>
+                                    @if ($room->status == 'available')
+                                    <span class="badge badge-success badge-big">Available</span>
+                                    @elseif ($room->status == 'occupied')
+                                    <span class="badge badge-danger badge-big">Occupied</span>
+                                    @elseif ($room->status == 'under_maintenance')
+                                    <span class="badge badge-secondary badge-big">Maintenance</span>
                                     @else
                                     <span class="badge badge-secondary badge-big">Maintence</span>
                                     @endif
@@ -109,7 +108,7 @@
             <div class="content-container text-center mt-4 pl-5 pr-5">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="booking-tab" data-bs-toggle="tab" href="#booking" role="tab" aria-controls="booking" aria-selected="true">
+                        <a class="nav-link active" id="booking-tab" data-bs-toggle="tab" href="#" role="tab" aria-controls="booking" aria-selected="true">
                             Booking History
                             <span class="badge bg-primary">{{ count($booking) }}</span>
                         </a>

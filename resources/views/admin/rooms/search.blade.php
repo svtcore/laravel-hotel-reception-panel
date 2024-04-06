@@ -85,90 +85,57 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-2 pt-2">
-                                        <label for="roomType">Type</label>
-                                        <select class="form-select text-center" id="roomType" name="roomType" required>
-                                            <option value="0" @if (isset($inputData['roomType']) && $inputData['roomType'] == 0) selected @endif>Any
+                                        <label for="type">Type</label>
+                                        <select class="form-select text-center" id="type" name="type" required>
+                                            <option value="0" @if (isset($inputData['type']) && $inputData['type'] == 0) selected @endif>Any
                                             </option>
-                                            <option value="standart" @if (isset($inputData['roomType']) && $inputData['roomType'] == 'standart') selected @endif>
-                                                Standart</option>
-                                            <option value="comfort" @if (isset($inputData['roomType']) && $inputData['roomType'] == 'comfort') selected @endif>
-                                                Comfort</option>
-                                            <option value="premium" @if (isset($inputData['roomType']) && $inputData['roomType'] == 'premium') selected @endif>
-                                                Premium</option>
-                                            <option value="king" @if (isset($inputData['roomType']) && $inputData['roomType'] == 'king') selected @endif>King
+                                            <option value="standard" @if (isset($inputData['type']) && $inputData['type'] == 'standard') selected @endif>
+                                                Standard</option>
+                                            <option value="deluxe" @if (isset($inputData['type']) && $inputData['type'] == 'deluxe') selected @endif>
+                                                Deluxe</option>
+                                            <option value="suite" @if (isset($inputData['type']) && $inputData['type'] == 'suite') selected @endif>
+                                                Suite</option>
+                                            <option value="penthouse" @if (isset($inputData['roomType']) && $inputData['roomType'] == 'penthouse') selected @endif>
+                                                Penthouse
                                             </option>
                                         </select>
                                     </div>
                                     <div class="col-md-2 pt-2">
-                                        <label for="roomStatus">Status</label>
-                                        <select class="form-select text-center" id="roomStatus" name="roomStatus" required>
-                                            <option value="0" @if (isset($inputData['roomStatus']) && $inputData['roomStatus'] == 0) ) selected @endif>Any
+                                        <label for="status">Status</label>
+                                        <select class="form-select text-center" id="status" name="status" required>
+                                            <option value="0" @if (isset($inputData['status']) && $inputData['status'] == 0) selected @endif>Any
                                             </option>
-                                            <option value="free" @if (isset($inputData['roomStatus']) && $inputData['roomStatus'] == 'free') ) selected @endif>
-                                                Free</option>
-                                            <option value="busy" @if (isset($inputData['roomStatus']) && $inputData['roomStatus'] == 'busy') ) selected @endif>
-                                                Busy</option>
-                                            <option value="maintence" @if (isset($inputData['roomStatus']) && $inputData['roomStatus'] == 'maintence') ) selected @endif>
-                                                Maintence</option>
-                                            <option value="reserved" @if (isset($inputData['roomStatus']) && $inputData['roomStatus'] == 'reserved') ) selected @endif>
-                                                Reserved</option>
+                                            <option value="free" @if (isset($inputData['status']) && $inputData['status'] == 'free') selected @endif>
+                                            Available</option>
+                                            <option value="busy" @if (isset($inputData['status']) && $inputData['status'] == 'occupied') selected @endif>
+                                            Occupied</option>
+                                            <option value="under_maintenance" @if (isset($inputData['status']) && $inputData['status'] == 'under_maintenance') selected @endif>
+                                            Maintenance</option>
                                         </select>
                                     </div>
                                     <div class="col-md-2 pt-2">
-                                        <label for="roomAdult">Adults</label>
-                                        <select class="form-select text-center" id="roomAdult" name="roomAdult" required>
-                                            <option value="0" @if (isset($inputData['roomAdult']) && $inputData['roomAdult'] == 0) selected @endif>Any
+                                        <label for="adultsBedsCount">Adults</label>
+                                        <select class="form-select text-center" id="adultsBedsCount" name="adultsBedsCount" required>
+                                            <option value="0" @if (isset($inputData['adultsBedsCount']) && $inputData['adultsBedsCount'] == 0) selected @endif>Any
                                             </option>
-                                            <option value="1" @if (isset($inputData['roomAdult']) && $inputData['roomAdult'] == 1) selected @endif>1
-                                                person</option>
-                                            <option value="2" @if (isset($inputData['roomAdult']) && $inputData['roomAdult'] == 2) selected @endif>2
-                                                persons</option>
-                                            <option value="3" @if (isset($inputData['roomAdult']) && $inputData['roomAdult'] == 3) selected @endif>3
-                                                persons</option>
-                                            <option value="4" @if (isset($inputData['roomAdult']) && $inputData['roomAdult'] == 4) selected @endif>4
-                                                persons</option>
-                                            <option value="5" @if (isset($inputData['roomAdult']) && $inputData['roomAdult'] == 5) selected @endif>5
-                                                persons</option>
-                                            <option value="6" @if (isset($inputData['roomAdult']) && $inputData['roomAdult'] == 6) selected @endif>6
-                                                persons</option>
-                                            <option value="7" @if (isset($inputData['roomAdult']) && $inputData['roomAdult'] == 7) selected @endif>7
-                                                persons</option>
-                                            <option value="8" @if (isset($inputData['roomAdult']) && $inputData['roomAdult'] == 8) selected @endif>8
-                                                persons</option>
-                                            <option value="9" @if (isset($inputData['roomAdult']) && $inputData['roomAdult'] == 9) selected @endif>9
-                                                persons</option>
-                                            <option value="10" @if (isset($inputData['roomAdult']) && $inputData['roomAdult'] == 10) selected @endif>10
-                                                persons</option>
+                                            @for ($i = 1; $i <= 10; $i++)
+                                                <option value="{{ $i }}" @if (isset($inputData['adultsBedsCount']) && $inputData['adultsBedsCount'] == $i) selected @endif>
+                                                    {{ $i }} person{{ $i > 1 ? 's' : '' }}</option>
+                                            @endfor
                                         </select>
                                     </div>
                                     <div class="col-md-2 pt-2">
-                                        <label for="roomChildren">Child bed</label>
-                                        <select class="form-select text-center" id="roomChildren" name="roomChildren"
+                                        <label for="childrenBedsCount">Child bed</label>
+                                        <select class="form-select text-center" id="childrenBedsCount" name="childrenBedsCount"
                                             required>
-                                            <option value="-1" @if (isset($inputData['roomChildren']) && $inputData['roomChildren'] == -1) selected @endif>Any
+                                            <option value="-1" @if (isset($inputData['childrenBedsCount']) && $inputData['childrenBedsCount'] == -1) selected @endif>Any
                                             </option>
-                                            <option value="0" @if (isset($inputData['roomChildren']) && $inputData['roomChildren'] == 0) selected @endif>NO
+                                            <option value="0" @if (isset($inputData['childrenBedsCount']) && $inputData['childrenBedsCount'] == 0) selected @endif>NO
                                                 CHILD BED</option>
-                                            <option value="1" @if (isset($inputData['roomChildren']) && $inputData['roomChildren'] == 1) selected @endif>1
-                                                child bed</option>
-                                            <option value="2" @if (isset($inputData['roomChildren']) && $inputData['roomChildren'] == 2) selected @endif>2
-                                                child bed</option>
-                                            <option value="3" @if (isset($inputData['roomChildren']) && $inputData['roomChildren'] == 3) selected @endif>3
-                                                child bed</option>
-                                            <option value="4" @if (isset($inputData['roomChildren']) && $inputData['roomChildren'] == 4) selected @endif>4
-                                                child bed</option>
-                                            <option value="5" @if (isset($inputData['roomChildren']) && $inputData['roomChildren'] == 5) selected @endif>5
-                                                child bed</option>
-                                            <option value="6" @if (isset($inputData['roomChildren']) && $inputData['roomChildren'] == 6) selected @endif>6
-                                                child bed</option>
-                                            <option value="7" @if (isset($inputData['roomChildren']) && $inputData['roomChildren'] == 7) selected @endif>7
-                                                child bed</option>
-                                            <option value="8" @if (isset($inputData['roomChildren']) && $inputData['roomChildren'] == 8) selected @endif>8
-                                                child bed</option>
-                                            <option value="9" @if (isset($inputData['roomChildren']) && $inputData['roomChildren'] == 9) selected @endif>9
-                                                child bed</option>
-                                            <option value="10" @if (isset($inputData['roomChildren']) && $inputData['roomChildren'] == 10) selected @endif>10
-                                                child bed</option>
+                                            @for ($i = 1; $i <= 10; $i++)
+                                                <option value="{{ $i }}" @if (isset($inputData['childrenBedsCount']) && $inputData['childrenBedsCount'] == $i) selected @endif>
+                                                    {{ $i }} child bed{{ $i > 1 ? 's' : '' }}</option>
+                                            @endfor
                                         </select>
                                     </div>
                                     <div class="col-md-4 pt-3" id="searchBlock">
@@ -187,104 +154,101 @@
                                                 <div class="form-check form-check-inline m-3 font-weight-bold">
                                                     <input class="form-check-input mt-1 mr-2" type="checkbox"
                                                         id="property_{{ $property->id }}" value="{{ $property->id }}"
-                                                        name="properties[]"
-                                                        @if (isset($inputData['properties'])) @foreach ($inputData['properties'] as $prop)
-                                                                @if ($property->id == $prop) checked @endif
-                                                        @endforeach
-                                            @endif>
-                                            <label class="form-check-label"
-                                                for="property_{{ $property->id }}">{{ strtoupper($property->name) }}</label>
+                                                        name="additionalProperties[]"
+                                                        @if (isset($inputData['additionalProperties']) && in_array($property->id, $inputData['additionalProperties'])) checked @endif>
+                                                    <label class="form-check-label"
+                                                        for="property_{{ $property->id }}">{{ strtoupper($property->name) }}</label>
+                                                </div>
+                                            @endforeach
                                         </div>
-                                        @endforeach
                                     </div>
                                 </div>
                             </div>
+                        </form>
                     </div>
-                    </form>
-                </div>
-                <div class="mt-4 text-center">
-                    <h4><b>Search results</b></h4>
-                </div>
-                <div id="main-container">
-                    <table id="free-rooms-table" class="table table-bordered">
-                        <thead>
-                            <tr class="text-center">
-                                <th class="text-center">Room №</th>
-                                <th class="text-center">Type</th>
-                                <th class="text-center">Floor</th>
-                                <th class="text-center">Beds</th>
-                                <th class="text-center">Price/per night</th>
-                                <th class="text-center">Status</th>
-                                <th class="text-center">Will free</th>
-                                <th class="text-center">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($result as $room)
-                                <tr>
-                                    <td class="text-center">{{ $room->door_number }}</td>
-                                    <td class="text-center">{{ strtoupper($room->type) }}</td>
-                                    <td class="text-center">
-                                        {{ $room->floor }}
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="badge badge-primary badge-big">{{ $room->bed_amount }}</span>
-                                        @if ($room->children_bed_amount > 0)
-                                            <span class="badge badge-success badge-big"><i class="fa-solid fa-baby"></i></span> 
-                                        @endif
-                                    </td>
-                                    <td class="text-center"><b>{{ $room->price }} ₴</b></td>
-                                    <td class="text-center">
-                                        @if ($room->status == 'free')
-                                            <span class="badge badge-success badge-big">Free</span>
-                                        @elseif ($room->status == 'busy')
-                                            <span class="badge badge-danger badge-big">Busy</span>
-                                        @elseif ($room->status == 'reserved')
-                                            <span class="badge badge-secondary badge-big">Reserved</span>
-                                        @else
-                                            <span class="badge badge-secondary badge-big">Maintence</span>
-                                        @endif
-                                    </td>
-                                    <td class="text-center">
-                                        @if (isset($room->bookings[0]->check_out_date))
-                                            @php
-                                                $checkOutDate = \Carbon\Carbon::parse(
-                                                    $room->bookings[0]->check_out_date,
-                                                );
-                                                $diffInDays = $checkOutDate->diffInDays(\Carbon\Carbon::now());
-                                                $formattedDate = $checkOutDate->format('d-m-Y');
-                                            @endphp
-
-                                            @if ($diffInDays < 0)
-                                                <span class="badge badge-success badge-big">Now</span>
-                                            @elseif ($diffInDays == 0)
-                                                <span class="badge badge-success badge-big">Today</span>
-                                            @else
-                                                {{ $formattedDate }}
-                                            @endif
-                                        @else
-                                            <span class="badge badge-success badge-big">Now</span>
-                                        @endif
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="btn-group" role="group" aria-label="Room actions">
-                                            <a href="{{ route('admin.rooms.show', $room->id) }}" class="btn btn-primary">Details</a>
-                                            <a href="{{ route('admin.rooms.edit', $room->id) }}" class="btn btn-warning">Edit</a>
-                                            <button type="button" class="btn btn-danger">Delete</button>
-                                        </div>
-                                    </td>
+                    <div class="mt-4 text-center">
+                        <h4><b>Search results</b></h4>
+                    </div>
+                    <div id="main-container">
+                        <table id="free-rooms-table" class="table table-bordered">
+                            <thead>
+                                <tr class="text-center">
+                                    <th class="text-center">Room №</th>
+                                    <th class="text-center">Type</th>
+                                    <th class="text-center">Floor</th>
+                                    <th class="text-center">Beds</th>
+                                    <th class="text-center">Price/per night</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Will free</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($result as $room)
+                                    <tr>
+                                        <td class="text-center">{{ $room->room_number }}</td>
+                                        <td class="text-center">{{ strtoupper($room->type) }}</td>
+                                        <td class="text-center">
+                                            {{ $room->floor_number }}
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge badge-primary badge-big">{{ $room->adults_beds_count }}</span>
+                                            @if ($room->children_beds_count > 0)
+                                                <span class="badge badge-success badge-big"><i class="fa-solid fa-baby"></i></span>
+                                            @endif
+                                        </td>
+                                        <td class="text-center"><b>{{ $room->price }}</b></td>
+                                        <td class="text-center">
+                                            @if ($room->status == 'available')
+                                                <span class="badge badge-success badge-big">Available</span>
+                                            @elseif ($room->status == 'occupied')
+                                                <span class="badge badge-danger badge-big">Occupied</span>
+                                            @elseif ($room->status == 'under_maintenance')
+                                                <span class="badge badge-danger badge-big">Maintenance</span>
+                                            @else
+                                                <span class="badge badge-secondary badge-big">Unknown</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            @if (isset($room->bookings[0]->check_out_date))
+                                                @php
+                                                    $checkOutDate = \Carbon\Carbon::parse(
+                                                        $room->bookings[0]->check_out_date,
+                                                    );
+                                                    $diffInDays = $checkOutDate->diffInDays(\Carbon\Carbon::now());
+                                                    $formattedDate = $checkOutDate->format('d-m-Y');
+                                                @endphp
+
+                                                @if ($diffInDays < 0)
+                                                    <span class="badge badge-success badge-big">Now</span>
+                                                @elseif ($diffInDays == 0)
+                                                    <span class="badge badge-success badge-big">Today</span>
+                                                @else
+                                                    {{ $formattedDate }}
+                                                @endif
+                                            @else
+                                                <span class="badge badge-success badge-big">Now</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="btn-group" role="group" aria-label="Room actions">
+                                                <a href="{{ route('admin.rooms.show', $room->id) }}"
+                                                    class="btn btn-primary">Details</a>
+                                                <a href="{{ route('admin.rooms.edit', $room->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <button type="button" class="btn btn-danger">Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
-    </div>
-    </div>
-    @section('custom-scripts')
-        @vite(['resources/js/rooms/index.js'])
-    @endsection
+@endsection
+@section('custom-scripts')
+    @vite(['resources/js/rooms/index.js'])
 @endsection

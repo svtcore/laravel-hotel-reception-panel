@@ -114,7 +114,6 @@ class RoomController extends Controller
             if ($validatedData === null) {
                 return response()->withErrors(['errors' => 'Validation failed']);
             }
-
             $searchResult = $this->rooms->searchByParams($validatedData);
             if ($searchResult != null) {
                 return view('admin.rooms.search')->with(['result' => $searchResult ?? array(), 'room_properties' => $this->room_properties->getAll() ?? array(), 'inputData' => $validatedData]);

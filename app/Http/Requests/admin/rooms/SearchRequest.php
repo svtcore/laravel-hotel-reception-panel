@@ -26,11 +26,11 @@ class SearchRequest extends FormRequest
             'guestName' => 'nullable|string|max:255', 
             'startDate' => 'nullable|date',
             'endDate' => 'nullable|date|after_or_equal:startDate',
-            'roomType' => 'nullable|string',
-            'roomStatus' => 'nullable|string',
-            'roomAdult' => 'nullable|integer|min:0|max:10',
-            'roomChildren' => 'nullable|integer|min:-1|max:10',
-            'properties.*' => 'nullable|integer'
+            'type' => 'nullable|string',
+            'status' => 'nullable|string',
+            'adultsBedsCount' => 'nullable|integer|min:0|max:10',
+            'childrenBedsCount' => 'nullable|integer|min:-1|max:10',
+            'additionalProperties.*' => 'nullable|integer'
         ];
     }
 }

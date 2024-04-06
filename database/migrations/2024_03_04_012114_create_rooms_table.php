@@ -13,15 +13,14 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('floor');
-            $table->string('door_number');
-            $table->enum('type', ['standart','comfort','premium','king']);
-            $table->unsignedFloat('area');
-            $table->unsignedInteger('room_amount');
-            $table->unsignedInteger('bed_amount');
-            $table->unsignedInteger('children_bed_amount');
+            $table->string('floor_number');
+            $table->string('room_number');
+            $table->enum('type', ['standard', 'deluxe', 'suite', 'penthouse']);
+            $table->unsignedInteger('total_rooms');
+            $table->unsignedInteger('adults_beds_count');
+            $table->unsignedInteger('children_beds_count');
             $table->unsignedFloat('price');
-            $table->enum('status', ['busy', 'free', 'maintence', 'reserved']);
+            $table->enum('status', ['occupied', 'available', 'under_maintenance']);
             $table->timestamps();
         });
     }

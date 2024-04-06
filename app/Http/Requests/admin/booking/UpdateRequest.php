@@ -22,14 +22,14 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'adult_amount' => ['required', 'integer', 'min:1'],
-            'children_amount' => ['nullable', 'regex:/^[0-9]{0,9}$/'],
-            'check_in_date' => ['required', 'date', 'date_format:Y-m-d'],
-            'check_out_date' => ['required', 'date', 'date_format:Y-m-d'],
-            'payment_type' => ['required', 'string', 'in:credit_card,cash'],
-            'status' => ['required', 'string', 'in:reserved,canceled,active,expired,completed'],
-            'note' => ['nullable', 'string', 'max:500'],
-            'services.*' => ['nullable', 'regex:/^[1-9][0-9]{0,9}$/']
+            'adultsCount' => 'required|integer|min:1',
+            'childrenCount' => 'nullable|regex:/^[0-9]{0,9}$/',
+            'checkInDate' => 'required|date|date_format:Y-m-d',
+            'checkOutDate' => 'required|date|date_format:Y-m-d',
+            'paymentType' => 'required|string|in:credit_card,cash,discount',
+            'status' => 'required|string|in:reserved,cancelled,active,expired,completed',
+            'note' => 'nullable|string|max:500',
+            'additionalServices.*' => 'nullable|regex:/^[1-9][0-9]{0,9}$/'
         ];
     }
 }

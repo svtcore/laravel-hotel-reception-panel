@@ -23,14 +23,14 @@ class UpdateRequest extends FormRequest
     {
         return [
             'roomNumber' => 'required|integer|min:1',
-            'roomFloor' => 'required|integer|min:1',
-            'roomType' => 'required|string',
-            'roomCount' => 'required|int|min:1|max:10',
-            'roomStatus' => 'required|string|in:free,busy,maintence,reserved',
-            'roomAdult' => 'required|integer|min:1|max:10',
-            'roomChild' => 'required|integer|min:0|max:10',
-            'roomPrice' => 'required|numeric|min:0',
-            'properties.*' => 'nullable|integer'
+            'floorNumber' => 'required|integer|min:1',
+            'type' => 'required|string',
+            'totalRooms' => 'required|int|min:1|max:10',
+            'status' => 'required|string|in:available,occupied,maintence,under_maintenance',
+            'adultsBedsCount' => 'required|integer|min:1|max:10',
+            'childrenBedsCount' => 'required|integer|min:0|max:10',
+            'price' => 'required|numeric|min:0',
+            'additionalProperties.*' => 'nullable|integer'
         ];
     }
 }

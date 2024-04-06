@@ -6,7 +6,6 @@
 @section('content')
 <div class="container-fluid mt-3">
     <div class="content-container">
-        <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
                 @if (session('success'))
@@ -24,7 +23,6 @@
                 </div>
                 @endif
                 <div class="row">
-                    <!-- Reservation -->
                     <div class="col-md-8">
                         <div class="card">
                             <div class="card-body">
@@ -42,11 +40,11 @@
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Adults
-                                                <span class="badge bg-primary badge-big">{{ $booking_data->adult_amount }}</span>
+                                                <span class="badge bg-primary badge-big">{{ $booking_data->adults_count }}</span>
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Children
-                                                <span class="badge bg-primary badge-big">{{ $booking_data->children_amount }}</span>
+                                                <span class="badge bg-primary badge-big">{{ $booking_data->children_count }}</span>
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Check-in Date
@@ -81,7 +79,7 @@
                                                 case 'reserved':
                                                 $badge_class = 'badge-secondary badge-big';
                                                 break;
-                                                case 'canceled':
+                                                case 'cancelled':
                                                 $badge_class = 'badge-danger badge-big';
                                                 break;
                                                 case 'active':
@@ -124,7 +122,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Booking controls -->
+
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
@@ -136,7 +134,7 @@
                                         @method('PUT')
                                         <select class="form-select" id="statusSelect" name="status">
                                             <option value="reserved" {{ $booking_data->status === 'reserved' ? 'selected' : '' }}>Reserved</option>
-                                            <option value="canceled" {{ $booking_data->status === 'canceled' ? 'selected' : '' }}>Canceled</option>
+                                            <option value="cancelled" {{ $booking_data->status === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                                             <option value="active" {{ $booking_data->status === 'active' ? 'selected' : '' }}>Active</option>
                                             <option value="expired" {{ $booking_data->status === 'expired' ? 'selected' : '' }}>Expired</option>
                                             <option value="completed" {{ $booking_data->status === 'completed' ? 'selected' : '' }}>Completed</option>
@@ -156,7 +154,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Guests -->
+
                     <div class="col-md-8">
                         <div class="card">
                             <div class="card-body">
@@ -191,11 +189,8 @@
                 </div>
             </div>
         </section>
-        <!-- /.content -->
     </div>
-    <!-- /.content-container -->
 </div>
-<!-- /.container-fluid -->
 @section('custom-scripts')
 @vite(['resources/js/booking/show.js'])
 @endsection

@@ -47,12 +47,12 @@
                                 <div class="col-md-2 pt-2">
                                     <label for="roomNumber"></label>
                                     <input type="text" class="form-control text-center" id="roomNumber" name="roomNumber"
-                                        placeholder="Room number" disabled required>
+                                        placeholder="Room number" disabled required maxlength="255">
                                 </div>
                                 <div class="col-md-4 pt-2">
                                     <label for="guestName"></label>
                                     <input type="text" class="form-control text-center" id="guestName" name="guestName"
-                                        placeholder="Guest name" disabled required>
+                                        placeholder="Guest name" disabled required maxlength="255">
                                 </div>
                                 <div class="col-md-6 mt-2 d-none" id="searchTopBlock">
                                     <label for="searchTopBlock"></label>
@@ -76,57 +76,43 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-2 pt-2">
-                                        <label for="roomType">Type</label>
-                                        <select class="form-select text-center" id="roomType" name="roomType" required>
+                                        <label for="type">Type</label>
+                                        <select class="form-select text-center" id="type" name="type" required>
                                             <option value="0">Any</option>
-                                            <option value="standart">Standart</option>
-                                            <option value="comfort">Comfort</option>
-                                            <option value="premium">Premium</option>
-                                            <option value="king">King</option>
+                                            <option value="standard">Standard</option>
+                                            <option value="deluxe">Deluxe</option>
+                                            <option value="suite">Suite</option>
+                                            <option value="penthouse">Penthouse</option>
                                         </select>
                                     </div>
                                     <div class="col-md-2 pt-2">
-                                        <label for="roomStatus">Status</label>
-                                        <select class="form-select text-center" id="roomStatus" name="roomStatus" required>
+                                        <label for="status">Status</label>
+                                        <select class="form-select text-center" id="status" name="status" required>
                                             <option value="0">Any</option>
-                                            <option value="free">Free</option>
-                                            <option value="busy">Busy</option>
-                                            <option value="maintence">Maintence</option>
-                                            <option value="reserved">Reserved</option>
+                                            <option value="available">Available</option>
+                                            <option value="occupied">Occupied</option>
+                                            <option value="under_maintenance">Maintenance</option>
                                         </select>
                                     </div>
                                     <div class="col-md-2 pt-2">
-                                        <label for="roomAdult">Adults</label>
-                                        <select class="form-select text-center" id="roomAdult" name="roomAdult" required>
+                                        <label for="adultsBedsCount">Adults beds</label>
+                                        <select class="form-select text-center" id="adultsBedsCount" name="adultsBedsCount" required>
                                             <option value="0" selected>Any</option>
-                                            <option value="1">1 person</option>
-                                            <option value="2">2 persons</option>
-                                            <option value="3">3 persons</option>
-                                            <option value="4">4 persons</option>
-                                            <option value="5">5 persons</option>
-                                            <option value="6">6 persons</option>
-                                            <option value="7">7 persons</option>
-                                            <option value="8">8 persons</option>
-                                            <option value="9">9 persons</option>
-                                            <option value="10">10 persons</option>
+                                            <option value="1" selected>1 person</option>
+                                            @for ($i = 1; $i <= 10; $i++)
+                                                <option value="{{ $i }}">{{ $i }} persons</option>
+                                            @endfor
                                         </select>
                                     </div>
                                     <div class="col-md-2 pt-2">
-                                        <label for="roomChildren">Child bed</label>
-                                        <select class="form-select text-center" id="roomChildren" name="roomChildren"
+                                        <label for="childrenBedsCount">Children beds</label>
+                                        <select class="form-select text-center" id="childrenBedsCount" name="childrenBedsCount"
                                             required>
                                             <option value="-1" selected>Any</option>
                                             <option value="0">NO CHILD BED</option>
-                                            <option value="1">1 child bed</option>
-                                            <option value="2">2 child bed</option>
-                                            <option value="3">3 child bed</option>
-                                            <option value="4">4 child bed</option>
-                                            <option value="5">5 child bed</option>
-                                            <option value="6">6 child bed</option>
-                                            <option value="7">7 child bed</option>
-                                            <option value="8">8 child bed</option>
-                                            <option value="9">9 child bed</option>
-                                            <option value="10">10 child bed</option>
+                                            @for ($i = 1; $i <= 10; $i++)
+                                                <option value="{{ $i }}">{{ $i }} child bed</option>
+                                            @endfor
                                         </select>
                                     </div>
                                     <div class="col-md-4 pt-3" id="searchBlock">
@@ -145,7 +131,7 @@
                                                 <div class="form-check form-check-inline m-3 font-weight-bold">
                                                     <input class="form-check-input mt-1 mr-2" type="checkbox"
                                                         id="property_{{ $property->id }}" value="{{ $property->id }}"
-                                                        name="properties[]">
+                                                        name="additionalProperties[]">
                                                     <label class="form-check-label"
                                                         for="property_{{ $property->id }}">{{ strtoupper($property->name) }}</label>
                                                 </div>
@@ -157,7 +143,7 @@
                         </form>
                     </div>
                     <div class="mt-4 text-center">
-                        <h4><b>Avaliable rooms</b></h4>
+                        <h4><b>Available rooms</b></h4>
                     </div>
                     <div id="main-container">
                         <table id="free-rooms-table" class="table table-bordered">
@@ -174,16 +160,16 @@
                             <tbody>
                                 @foreach ($rooms as $room)
                                     <tr>
-                                        <td class="text-center">{{ $room->door_number }}</td>
+                                        <td class="text-center"><a href="{{ route('admin.rooms.show', $room->id) }}">{{ $room->room_number }}</td>
                                         <td class="text-center">{{ strtoupper($room->type) }}</td>
                                         <td class="text-center">
-                                            {{ $room->floor }}
+                                            {{ $room->floor_number }}
                                         </td>
                                         <td class="text-center">
-                                            <span class="badge badge-primary badge-big">{{ $room->bed_amount }}</span>
-                                            @if ($room->children_bed_amount > 0)
-                                            <span class="badge badge-success badge-big"><i class="fa-solid fa-baby"></i></span> 
-                                        @endif
+                                            <span class="badge badge-primary badge-big">{{ $room->adults_beds_count }}</span>
+                                            @if ($room->children_beds_count > 0)
+                                                <span class="badge badge-success badge-big"><i class="fa-solid fa-baby"></i></span> 
+                                            @endif
                                         </td>
                                         <td class="text-center"><b>{{ $room->price }} ₴</b></td>
                                         <td class="text-center">
@@ -201,8 +187,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    </div>
     </div>
 @section('custom-scripts')
     @vite(['resources/js/rooms/index.js'])

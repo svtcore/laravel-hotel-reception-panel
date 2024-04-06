@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('room_id');
-            $table->unsignedInteger('adult_amount')->default(1);
-            $table->unsignedInteger('children_amount')->default(0);
+            $table->unsignedInteger('adults_count')->default(1);
+            $table->unsignedInteger('children_count')->default(0);
             $table->unsignedFloat('total_cost')->default(0);
-            $table->enum('payment_type', ['credit_card', 'cash']);
+            $table->enum('payment_type', ['credit_card', 'cash', 'discount']);
             $table->dateTime('check_in_date');
             $table->dateTime('check_out_date');
             $table->string('note')->nullable();
-            $table->enum('status', ['reserved', 'canceled', 'active', 'expired', 'completed']);
+            $table->enum('status', ['reserved', 'cancelled', 'active', 'expired', 'completed']);
             $table->timestamps();
         });
     }

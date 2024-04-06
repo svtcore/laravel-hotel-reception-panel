@@ -22,7 +22,7 @@ class ChangeStatusRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => ['required', 'string', 'in:reserved,canceled,active,expired,completed'],
+            'status' => 'required|string|in:reserved,cancelled,active,expired,completed',
         ];
     }
 }

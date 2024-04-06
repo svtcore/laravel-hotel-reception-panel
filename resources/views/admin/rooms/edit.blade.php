@@ -35,54 +35,52 @@
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-6">
                                             <label for="roomNumber" class="form-label">Room number</label>
-                                            <input type="text" class="form-control text-center" id="roomNumber" name="roomNumber" value="{{ $room_data->door_number }}">
+                                            <input type="text" class="form-control text-center" id="roomNumber" name="roomNumber" value="{{ $room_data->room_number }}" required>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="roomFloor" class="form-label">Floor</label>
-                                            <input type="text" class="form-control text-center" id="roomFloor" name="roomFloor" value="{{ $room_data->floor }}">
+                                            <label for="floorNumber" class="form-label">Floor</label>
+                                            <input type="text" class="form-control text-center" id="floorNumber" name="floorNumber" value="{{ $room_data->floor_number }}" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-6">
-                                            <label for="roomType" class="form-label">Type</label>
-                                            <select class="form-select text-center" id="roomType" name="roomType">
-                                                <option value="standart" {{ $room_data->type == 'standart' ? 'selected' : '' }}>Standard</option>
-                                                <option value="comfort" {{ $room_data->type == 'comfort' ? 'selected' : '' }}>Comfort</option>
-                                                <option value="premium" {{ $room_data->type == 'premium' ? 'selected' : '' }}>Premium</option>
-                                                <option value="king" {{ $room_data->type == 'king' ? 'selected' : '' }}>King</option>
+                                            <label for="type" class="form-label">Type</label>
+                                            <select class="form-select text-center" id="type" name="type" required>
+                                                <option value="standard" {{ $room_data->type == 'standard' ? 'selected' : '' }}>Standard</option>
+                                                <option value="deluxe" {{ $room_data->type == 'deluxe' ? 'selected' : '' }}>Deluxe</option>
+                                                <option value="suite" {{ $room_data->type == 'suite' ? 'selected' : '' }}>Suite</option>
+                                                <option value="penthouse" {{ $room_data->type == 'penthouse' ? 'selected' : '' }}>Penthouse</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="roomCount" class="form-label">Room count</label>
-                                            <input type="number" class="form-control text-center" id="roomCount" name="roomCount" value="{{ $room_data->room_amount }}">
+                                            <label for="totalRooms" class="form-label">Total rooms</label>
+                                            <input type="number" class="form-control text-center" id="totalRooms" name="totalRooms" value="{{ $room_data->total_rooms }}" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-6">
-                                            <label for="roomAdult" class="form-label">Adult beds</label>
-                                            <input type="number" class="form-control text-center" id="roomAdult" name="roomAdult" value="{{ $room_data->bed_amount }}">
+                                            <label for="adultsBedsCount" class="form-label">Adult beds</label>
+                                            <input type="number" class="form-control text-center" id="adultsBedsCount" name="adultsBedsCount" value="{{ $room_data->adults_beds_count }}" required>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="roomChild" class="form-label">Child beds</label>
-                                            <input type="number" class="form-control text-center" id="roomChild" name="roomChild" value="{{ $room_data->children_bed_amount }}">
+                                            <input type="number" class="form-control text-center" id="childrenBedsCount" name="childrenBedsCount" value="{{ $room_data->children_beds_count }}" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-6">
-                                            <label for="roomPrice" class="form-label">Price per night</label>
-                                            <input type="number" class="form-control text-center" min="0" step="1" id="roomPrice" name="roomPrice" value="{{ $room_data->price }}">
+                                            <label for="price" class="form-label">Price per night</label>
+                                            <input type="number" class="form-control text-center" min="0" step="1" id="price" name="price" value="{{ $room_data->price }}" required>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="status" class="form-label">Status</label>
-                                            <select class="form-select text-center" id="status" name="roomStatus">
-                                                <option value="free" {{ $room_data->status == 'free' ? 'selected' : '' }}>
-                                                    Free</option>
-                                                <option value="busy" {{ $room_data->status == 'busy' ? 'selected' : '' }}>
-                                                    Busy</option>
-                                                <option value="maintence" {{ $room_data->status == 'maintence' ? 'selected' : '' }}>
-                                                    Maintence</option>
-                                                <option value="reserved" {{ $room_data->status == 'reserved' ? 'selected' : '' }}>
-                                                    Reserved</option>
+                                            <select class="form-select text-center" id="status" name="status" required>
+                                                <option value="available" {{ $room_data->status == 'available' ? 'selected' : '' }}>
+                                                Available</option>
+                                                <option value="occupied" {{ $room_data->status == 'occupied' ? 'selected' : '' }}>
+                                                Occupied</option>
+                                                <option value="under_maintenance" {{ $room_data->status == 'under_maintenance' ? 'selected' : '' }}>
+                                                    Maintenance</option>
                                             </select>
                                         </div>
                                     </div>
@@ -110,7 +108,7 @@
                                     @endforeach
                                     <div class="col-sm-4">
                                         <div class="form-check mb-3 ml-2 mr-2">
-                                            <input class="form-check-input" type="checkbox" value="{{ $prop->id }}" id="property{{ $prop->id }}" name="properties[]" {{ $selected ? 'checked' : '' }}>
+                                            <input class="form-check-input" type="checkbox" value="{{ $prop->id }}" id="property{{ $prop->id }}" name="additionalProperties[]" {{ $selected ? 'checked' : '' }}>
                                             <label class="form-check-label" for="property{{ $prop->id }}">
                                                 {{ strtoupper($prop->name) }}
                                             </label>
@@ -130,7 +128,4 @@
         </section>
     </div>
 </div>
-@section('custom-scripts')
-
-@endsection
 @endsection

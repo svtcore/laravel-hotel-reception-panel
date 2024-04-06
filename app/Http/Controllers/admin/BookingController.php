@@ -97,6 +97,7 @@ class BookingController extends Controller
         if ($validatedData === null) {
             return response()->json(['errors' => 'Validation failed.'], 422);
         }
+
         $update_result = $this->booking->update($validatedData, $id);
         if ($update_result){
             return redirect()->route('admin.booking.show', $id)->with('success', 'Booking data successful updated');

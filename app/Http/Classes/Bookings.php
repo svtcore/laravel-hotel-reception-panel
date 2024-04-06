@@ -135,23 +135,23 @@ class Bookings
     public function update($validatedData, $id):?bool
     {
         try{
-            $adults = $validatedData['adult_amount'];
-            $children = $validatedData['children_amount'];
-            $check_in_date = $validatedData['check_in_date'];
-            $check_out_date = $validatedData['check_out_date'];
-            $payment_type = $validatedData['payment_type'];
+            $adults = $validatedData['adultsCount'];
+            $children = $validatedData['childrenCount'];
+            $check_in_date = $validatedData['checkInDate'];
+            $check_out_date = $validatedData['checkOutDate'];
+            $payment_type = $validatedData['paymentType'];
             $note = $validatedData['note'];
             $status = $validatedData['status'];
-            if (isset($validatedData['services'])) {
-                $additional_services_ids = $validatedData['services'];
+            if (isset($validatedData['additionalServices'])) {
+                $additional_services_ids = $validatedData['additionalServices'];
             } else $additional_services_ids = [];
 
             $booking = Booking::findOrFail($id);
             $days = $this->diffDate($check_in_date, $check_out_date);
             $total_price = $this->calculatePrice($booking->room_id, $additional_services_ids, $days);
             $result = $booking->update([
-                'adult_amount' => $adults,
-                'children_amount' => $children,
+                'adults_count' => $adults,
+                'children_count' => $children,
                 'total_cost' => $total_price,
                 'payment_type' => $payment_type,
                 'check_in_date' => $check_in_date,
