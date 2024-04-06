@@ -124,7 +124,7 @@
                                         @foreach ($check_in_bookings as $booking)
                                             <tr class="text-center">
                                                 <td class="text-center"><a
-                                                        href="#">{{ $booking->rooms->door_number }}</a></td>
+                                                        href="{{ route('admin.rooms.show', $booking->room_id) }}">{{ $booking->rooms->door_number }}</a></td>
                                                 <td class="text-center">{{ $booking->guests[0]->first_name }}
                                                     {{ $booking->guests[0]->last_name }}
                                                     {{ $booking->guests[0]->middlename }}</td>

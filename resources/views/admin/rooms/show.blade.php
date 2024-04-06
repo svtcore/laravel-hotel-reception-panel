@@ -131,6 +131,7 @@
                                     <th>Check-in date</th>
                                     <th>Check-out date</th>
                                     <th>Total price</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -146,6 +147,15 @@
                                     <td>{{ $date_check_in }}</td>
                                     <td>{{ $date_check_out}}</td>
                                     <td>{{ $book->total_cost}}</td>
+                                    <td>
+                                        @if ($book->status == 'active' || $book->status == 'completed')
+                                        <span class="badge badge-success badge-big">{{ $book->status }}</span>
+                                        @elseif ($book->status == 'canceled')
+                                        <span class="badge badge-danger badge-big">{{ $book->status }}</span>
+                                        @else
+                                        <span class="badge badge-secondary badge-big">{{ $book->status }}</span>
+                                        @endif
+                                    </td>
                                     <td><a href="{{ route('admin.booking.show', $book->id) }}" class="btn btn-secondary">Details</a></td>
                                 </tr>
                                 @endforeach

@@ -171,4 +171,29 @@ class Rooms
             return null;
         }
     }
+
+    public function update($inputData, $id): ?bool
+    {
+        try{
+            $room = Room::findOrFail($id);
+            $result = $room->update([
+                'floor' => $inputData['roomFloor'],
+                'door_number' => $inputData['roomNumber'],
+                'type' => $inputData['roomType'],
+                'room_amount' => $inputData['roomCount'],
+                'bed_amount' => $inputData['roomAdult'],
+                'children_bed_amount' => $inputData['roomChild'],
+                'price' => $inputData['roomPrice'],
+                'room_status' => $inputData['roomStatus'],
+            ]);
+            if (isset($inputData['properties'])){
+                $room->room_properties()->detach();
+                $room->room_properties()->attach($inputData['properties']);
+            }
+            return $result;
+        }
+        catch(Exception $e){
+            return false;
+        }
+    }
 }

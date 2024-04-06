@@ -106,7 +106,7 @@
                             <tbody>
                                 @foreach ($result as $booking)
                                     <tr class="text-center">
-                                        <td class="text-center"><a href="#">{{ $booking->rooms->door_number }}</a>
+                                        <td class="text-center"><a href="{{ route('admin.rooms.show', $booking->rooms->id) }}">{{ $booking->rooms->door_number }}</a>
                                         </td>
                                         <td class="text-center">{{ $booking->guests[0]->first_name }}
                                             {{ $booking->guests[0]->last_name }} {{ $booking->guests[0]->middlename }}

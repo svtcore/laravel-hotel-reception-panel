@@ -269,7 +269,7 @@
                                     <td class="text-center">
                                         <div class="btn-group" role="group" aria-label="Room actions">
                                             <a href="{{ route('admin.rooms.show', $room->id) }}" class="btn btn-primary">Details</a>
-                                            <button type="button" class="btn btn-warning">Edit</button>
+                                            <a href="{{ route('admin.rooms.edit', $room->id) }}" class="btn btn-warning">Edit</a>
                                             <button type="button" class="btn btn-danger">Delete</button>
                                         </div>
                                     </td>

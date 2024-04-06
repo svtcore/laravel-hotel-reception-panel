@@ -9,7 +9,9 @@ use App\Http\Classes\Rooms;
 use App\Http\Classes\Bookings;
 use App\Http\Classes\CleaningLogs;
 use App\Http\Requests\admin\rooms\SearchRequest;
+use App\Http\Requests\admin\rooms\UpdateRequest;
 use App\Models\Booking;
+use Exception;
 use Illuminate\Validation\ValidationException;
 
 class RoomController extends Controller
@@ -68,15 +70,30 @@ class RoomController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('admin.rooms.edit')->with([
+            'room_data' => $this->rooms->getById($id) ?? array(),
+            'room_properties' => $this->room_properties->getAll() ?? array()
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $request, string $id)
     {
-        //
+        try{
+            $validatedData = $request->validated();
+
+            if ($validatedData === null) {
+                return response()->withErrors(['errors' => 'Validation failed']);
+            }
+            if ($this->rooms->update($validatedData, $id)){
+                return redirect()->route('admin.rooms.show', $id)->with('success', 'Room data successful updated');
+            }else return redirect()->back()->withErrors(['error' => 'There is error in while updating record']);
+        }
+        catch(Exception $e){
+            return response()->withErrors(['errors' => 'Error in update room controller']);
+        }
     }
 
     /**
