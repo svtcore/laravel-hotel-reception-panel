@@ -199,6 +199,7 @@
                                         </td>
                                         <td class="text-center"><b>{{ $room->price }}</b></td>
                                         <td class="text-center">
+                                            @if (!isset($room->deleted_at))
                                             @if ($room->status == 'available')
                                                 <span class="badge badge-success badge-big">Available</span>
                                             @elseif ($room->status == 'occupied')
@@ -208,8 +209,12 @@
                                             @else
                                                 <span class="badge badge-secondary badge-big">Unknown</span>
                                             @endif
+                                            @else
+                                                <span class="badge badge-danger badge-big">Deleted</span>
+                                            @endif
                                         </td>
                                         <td class="text-center">
+                                            @if (!isset($room->deleted_at))
                                             @if (isset($room->bookings[0]->check_out_date))
                                                 @php
                                                     $checkOutDate = \Carbon\Carbon::parse(
@@ -229,14 +234,19 @@
                                             @else
                                                 <span class="badge badge-success badge-big">Now</span>
                                             @endif
+                                            @else
+                                                <span class="badge badge-danger badge-big">Never</span>    
+                                            @endif
                                         </td>
                                         <td class="text-center">
                                             <div class="btn-group" role="group" aria-label="Room actions">
                                                 <a href="{{ route('admin.rooms.show', $room->id) }}"
                                                     class="btn btn-primary">Details</a>
+                                                @if (!isset($room->deleted_at))
                                                 <a href="{{ route('admin.rooms.edit', $room->id) }}"
                                                     class="btn btn-warning">Edit</a>
                                                 <button type="button" class="btn btn-danger">Delete</button>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

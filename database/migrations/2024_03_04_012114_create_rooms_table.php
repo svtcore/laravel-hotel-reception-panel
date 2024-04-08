@@ -22,6 +22,7 @@ return new class extends Migration
             $table->unsignedFloat('price');
             $table->enum('status', ['occupied', 'available', 'under_maintenance']);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -60,7 +60,7 @@ class RoomController extends Controller
     {
         
         return view('admin.rooms.show')->with([
-            'room' => $this->rooms->getById($id),
+            'room' => $this->rooms->getById($id, true) ?? abort(404),
             'booking' => $this->booking->getByRoomId($id) ?? array(),
             'cleaning' => $this->cleaning->getByRoomId($id) ?? array()]);
     }
@@ -71,7 +71,7 @@ class RoomController extends Controller
     public function edit(string $id)
     {
         return view('admin.rooms.edit')->with([
-            'room_data' => $this->rooms->getById($id) ?? array(),
+            'room_data' => $this->rooms->getById($id, false) ?? abort(404),
             'room_properties' => $this->room_properties->getAll() ?? array()
         ]);
     }
@@ -101,7 +101,9 @@ class RoomController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if ($this->rooms->deleteById($id)){
+            return redirect()->route('admin.rooms.index')->with('success', 'Record successful deleted');
+        }else return redirect()->back()->withErrors(['error' => __('The requested resource could not be found.')]);
     }
 
     //
@@ -114,7 +116,7 @@ class RoomController extends Controller
             if ($validatedData === null) {
                 return response()->withErrors(['errors' => 'Validation failed']);
             }
-            $searchResult = $this->rooms->searchByParams($validatedData);
+            $searchResult = $this->rooms->searchByParams($validatedData, true);
             if ($searchResult != null) {
                 return view('admin.rooms.search')->with(['result' => $searchResult ?? array(), 'room_properties' => $this->room_properties->getAll() ?? array(), 'inputData' => $validatedData]);
             } else return redirect()->route('admin.rooms.index')->withErrors(['errors' => 'There is no records found']);

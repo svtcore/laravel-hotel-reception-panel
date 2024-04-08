@@ -23,12 +23,12 @@
                     </ul>
                 </div>
                 @endif
+                <form action="{{ route('admin.rooms.update', $room_data->id) }}" method="POST">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title pl-4"><b>Room Details</b></h4><br /><br />
-                                <form action="{{ route('admin.rooms.update', $room_data->id) }}" method="POST">
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="room_id" value="{{ $room_data->id }}">
@@ -89,7 +89,6 @@
                                             <button type="submit" class="btn btn-primary w-100">Save Changes</button>
                                         </div>
                                     </div>
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -125,6 +124,7 @@
                         </div>
                     </div>
                 </div>
+                </form>
         </section>
     </div>
 </div>

@@ -32,8 +32,20 @@
             <div class="content-container text-center">
                 <div class="room-info-table">
                     <h4 class="mb-4"><b>Room Information</b></h4>
+
+                    @if (isset($room->deleted_at))
+                    <div class="row pl-4 mt-2 mb-2 pr-4">
+                        <div class="col-md-12">
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-center align-items-center"> <!-- Изменен класс здесь -->
+                                    <span class="badge bg-danger badge-big">This room has been deleted and no longer available</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    @endif
                     <div class="row pl-4 pr-4">
-                        <div class="col-md-6">
+                        <div @if (!isset($room->deleted_at)) class="col-md-4" @else class="col-md-6" @endif>
                             <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Room number
@@ -53,7 +65,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-md-6">
+                        <div @if (!isset($room->deleted_at)) class="col-md-4" @else class="col-md-6" @endif>
                             <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Adults beds
@@ -81,6 +93,27 @@
                                 </li>
                             </ul>
                         </div>
+                        @if (!isset($room->deleted_at))
+                        <div class="col-md-4">
+                            <div class="card no-shadow">
+                                <div class="card-body">
+                                    <h5 class="mb-2"><b>Room controll</b></h5>
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <a href="{{ route('admin.rooms.edit', $room->id) }}" class="btn btn-primary w-100">Edit room</a>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <form action="{{ route('admin.rooms.delete', $room->id) }}" method="POST" class="w-100">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger w-100" type="submit">Delete room</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                     @if (count($room->room_properties) > 0)
                     <h5 class="@if (count($room->room_properties) < 3) text-left pl-5 @else text-center @endif mt-4"><b>Additional properties</b></h5>
@@ -108,7 +141,7 @@
             <div class="content-container text-center mt-4 pl-5 pr-5">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="booking-tab" data-bs-toggle="tab" href="#" role="tab" aria-controls="booking" aria-selected="true">
+                        <a class="nav-link active" id="booking-tab" data-bs-toggle="tab" href="#booking" role="tab" aria-controls="booking" aria-selected="true">
                             Booking History
                             <span class="badge bg-primary">{{ count($booking) }}</span>
                         </a>
@@ -162,6 +195,7 @@
                         </table>
                     </div>
 
+                    <!-- Second Tab: Cleaning History Table -->
                     <div class="tab-pane fade" id="cleaning" role="tabpanel" aria-labelledby="cleaning-tab">
                         <table class="table" id="cleaning_table">
                             <thead>

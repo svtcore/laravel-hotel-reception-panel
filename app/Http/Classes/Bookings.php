@@ -62,7 +62,7 @@ class Bookings
         }
     }
 
-    public function searchByParams(array $inputData): ?iterable
+    public function searchByParams(array $inputData, $trashed): ?iterable
     {
         try {
             $startDate = $inputData['startDate'] ?? null;
@@ -77,7 +77,11 @@ class Bookings
 
             $searchResult = Booking::with([
                 'guests',
-                'rooms',
+                'rooms' => function($q) use ($trashed) {
+                    if ($trashed) {
+                        $q->withTrashed();
+                    }
+                },
             ])->where(function ($query) use ($startDate, $endDate, $first_name, $last_name, $phoneNumber) {
                 // by date
                 if ($startDate != null && $endDate != null) {
@@ -173,7 +177,7 @@ class Bookings
         try{
             $rooms_obj = new Rooms();
             $additional_services_obj = new AdditionalServices();
-            $room_price = ($rooms_obj->getById($room_id))->price;
+            $room_price = ($rooms_obj->getById($room_id, false))->price;
             $services_price = $additional_services_obj->calculateSelected($ids, $days);
             $total_price = ($room_price * $days) + $services_price;
             if ($total_price > 0) return $total_price;

@@ -27,21 +27,20 @@ class Rooms
         }
     }
 
-    public function getById($id): ?object
+    public function getById($id, $trashed): ?object
     {
         try {
-            $room = Room::with('room_properties')->where('id', $id)->first();
-            if ($room->count() > 0) {
-                return $room;
-            } else {
-                return null;
-            }
+            if ($trashed)
+                $room = Room::with('room_properties')->where('id', $id)->withTrashed()->first();
+            else
+                $room = Room::with('room_properties')->where('id', $id)->first();
+            return $room !== null ? $room : null;
         } catch (Exception $e) {
             return null;
         }
     }
 
-    public function searchByParams($inputData): mixed
+    public function searchByParams($inputData, $trashed): mixed
     {
         try {
             $roomNumber = $inputData['roomNumber'] ?? null;
@@ -57,7 +56,10 @@ class Rooms
             $lastName = null;
 
             if ($roomNumber != null) {
-                $rooms = Room::with('bookings')->with('room_properties')->where('room_number', $roomNumber)->get();
+                if ($trashed)
+                    $rooms = Room::with('bookings')->with('room_properties')->where('room_number', $roomNumber)->withTrashed()->get();
+                else
+                    $rooms = Room::with('bookings')->with('room_properties')->where('room_number', $roomNumber)->get();
             } elseif ($guestName != null) {
                 [$firstName, $lastName] = explode(' ', $inputData['guestName']);
                 $rooms = Room::with('bookings')->whereHas('bookings.guests', function ($query) use ($firstName, $lastName) {
@@ -74,8 +76,7 @@ class Rooms
                             $query->where('type', $roomType);
                         if ($roomAdult != "0")
                             $query->where('adults_beds_count', '>=', $roomAdult);
-                        if ($roomChildren != "-1")
-                        {
+                        if ($roomChildren != "-1") {
                             if ($roomChildren == "0")
                                 $query->where('children_beds_count', $roomChildren);
                             else
@@ -94,14 +95,13 @@ class Rooms
                             ->where('check_out_date', '>=', $startDate)
                             ->where('status', 'active');
                     });
-                    $freeRooms = Room::where('status', 'available')
+                $freeRooms = Room::where('status', 'available')
                     ->where(function ($query) use ($roomType, $roomAdult, $roomChildren) {
                         if ($roomType != "0")
                             $query->where('type', $roomType);
                         if ($roomAdult != "0")
                             $query->where('adults_beds_count', '>=', $roomAdult);
-                        if ($roomChildren != "-1")
-                        {
+                        if ($roomChildren != "-1") {
                             if ($roomChildren == "0")
                                 $query->where('children_beds_count', $roomChildren);
                             else
@@ -124,8 +124,7 @@ class Rooms
                         $query->where('type', $roomType);
                     if ($roomAdult != "0")
                         $query->where('adults_beds_count', '>=', $roomAdult);
-                    if ($roomChildren != "-1")
-                    {
+                    if ($roomChildren != "-1") {
                         if ($roomChildren == "0")
                             $query->where('children_beds_count', $roomChildren);
                         else
@@ -144,15 +143,13 @@ class Rooms
                                     ->where('check_out_date', '<=', $endDate);
                             });
                     })->get();
-            }
-            else if ($roomStatus != "available" || $roomStatus != "occupied"){
+            } else if ($roomStatus != "available" || $roomStatus != "occupied") {
                 $rooms = Room::where(function ($query) use ($roomType, $roomAdult, $roomChildren, $roomStatus) {
                     if ($roomType != "0")
                         $query->where('type', $roomType);
                     if ($roomAdult != "0")
                         $query->where('adults_beds_count', '>=', $roomAdult);
-                    if ($roomChildren != "-1")
-                    {
+                    if ($roomChildren != "-1") {
                         if ($roomChildren == "0")
                             $query->where('children_beds_count', $roomChildren);
                         else
@@ -174,7 +171,7 @@ class Rooms
 
     public function update($inputData, $id): ?bool
     {
-        try{
+        try {
             $room = Room::findOrFail($id);
             $result = $room->update([
                 'floor_number' => $inputData['floorNumber'],
@@ -186,14 +183,23 @@ class Rooms
                 'price' => $inputData['price'],
                 'status' => $inputData['status'],
             ]);
-            if (isset($inputData['additionalProperties'])){
+            if (isset($inputData['additionalProperties'])) {
                 $room->room_properties()->detach();
                 $room->room_properties()->attach($inputData['additionalProperties']);
             }
             return $result;
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             return false;
+        }
+    }
+    public function deleteById($id): bool
+    {
+        try {
+            $room = Room::findOrFail($id);
+            $result = $room->delete();
+            return $result ? true : false;
+        } catch (Exception $e) {
+            dd($e);
         }
     }
 }
