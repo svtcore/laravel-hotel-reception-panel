@@ -3,11 +3,14 @@
 @section('additional_style')
 @vite(['resources/css/bookings-style.css'])
 @endsection
+@section('navbar_header_button')
+    <a href="#" class="add-new-button">New Reservation</a>
+@endsection
 @section('content')
-<div class="container-fluid mt-3">
+<div class="container-fluid mt-5">
     <div class="content-container">
         <section class="content">
-            <div class="container-fluid">
+            <div class="container-fluid mt-4">
                 @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
@@ -24,7 +27,7 @@
                 @endif
                 <div class="row">
                     <div class="col-md-8">
-                        <div class="card">
+                        <div class="card no-shadow">
                             <div class="card-body">
                                 <h4 class="ml-4"><b>Reservation info</b></h4>
                                 <div class="row">
@@ -124,7 +127,7 @@
                     </div>
 
                     <div class="col-md-4">
-                        <div class="card">
+                        <div class="card no-shadow">
                             <div class="card-body">
                                 <h4 class="card-title"><b>Booking Controls</b></h4>
                                 <div class="mb-3">
@@ -156,7 +159,7 @@
                     </div>
 
                     <div class="col-md-8">
-                        <div class="card">
+                        <div class="card no-shadow">
                             <div class="card-body">
                                 <h4 class="card-title pl-4"><b>Guests</b></h4>
                                 <table class="table">

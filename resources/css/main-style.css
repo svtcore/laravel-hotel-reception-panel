@@ -20,10 +20,6 @@ body {
     width: 100%;
 }
 
-#chat-container {
-    margin-top: 20px;
-}
-
 .book-button {
     text-align: center;
     background-color: #28a745;
@@ -36,6 +32,34 @@ body {
     width: 100%;
     display: block;
     transition: background-color 0.3s ease;
+}
+
+.add-new-button {
+    text-align: center;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 0.4em 20px;
+    border-radius: 0;
+    font-size: 16px;
+    display: block;
+    transition: background-color 0.3s ease;
+    border-radius: 30px;
+}
+.nav-page-info{
+    text-align: center;
+    color: #fff;
+    padding: 0.4em 20px;
+    border-radius: 0;
+    font-size: 16px;
+    display: block;
+    font-weight: bolder;
+    transition: background-color 0.3s ease;
+}
+
+.add-new-button:hover {
+    background-color: #34d359;
+    color: #ffffff;
 }
 
 .book-button:hover {
@@ -71,4 +95,14 @@ a {
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 20px;
+}
+.main-header{
+    background-color: #343a40 !important;
+    border-bottom: 1px solid #4b545c;
+}
+.main-sidebar{
+    border-right: 1px solid #4b545c;
+}
+.no-shadow{
+    box-shadow: none !important;
 }

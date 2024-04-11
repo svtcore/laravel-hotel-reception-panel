@@ -9,6 +9,7 @@ use App\Http\Classes\Rooms;
 use App\Http\Classes\Bookings;
 use App\Http\Classes\CleaningLogs;
 use App\Http\Requests\admin\rooms\SearchRequest;
+use App\Http\Requests\admin\rooms\StoreRequest;
 use App\Http\Requests\admin\rooms\UpdateRequest;
 use App\Models\Booking;
 use Exception;
@@ -42,15 +43,29 @@ class RoomController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.rooms.create')->with([
+            'room_properties' => $this->room_properties->getAll() ?? array()
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        try {
+            $validatedData = $request->validated();
+
+            if ($validatedData === null) {
+                return response()->withErrors(['errors' => 'Validation failed']);
+            }
+            $result = $this->rooms->store($validatedData);
+            if ($result != false && $result > 0) {
+                return redirect()->route('admin.rooms.show', $result)->with('success', 'Room data successful added');
+            } else return redirect()->back()->withErrors(['error' => 'There is error in while adding record']);
+        } catch (Exception $e) {
+            return response()->withErrors(['errors' => 'Error in adding room controller']);
+        }
     }
 
     /**
@@ -58,11 +73,12 @@ class RoomController extends Controller
      */
     public function show(string $id)
     {
-        
+
         return view('admin.rooms.show')->with([
             'room' => $this->rooms->getById($id, true) ?? abort(404),
             'booking' => $this->booking->getByRoomId($id) ?? array(),
-            'cleaning' => $this->cleaning->getByRoomId($id) ?? array()]);
+            'cleaning' => $this->cleaning->getByRoomId($id) ?? array()
+        ]);
     }
 
     /**
@@ -81,17 +97,16 @@ class RoomController extends Controller
      */
     public function update(UpdateRequest $request, string $id)
     {
-        try{
+        try {
             $validatedData = $request->validated();
 
             if ($validatedData === null) {
                 return response()->withErrors(['errors' => 'Validation failed']);
             }
-            if ($this->rooms->update($validatedData, $id)){
+            if ($this->rooms->update($validatedData, $id)) {
                 return redirect()->route('admin.rooms.show', $id)->with('success', 'Room data successful updated');
-            }else return redirect()->back()->withErrors(['error' => 'There is error in while updating record']);
-        }
-        catch(Exception $e){
+            } else return redirect()->back()->withErrors(['error' => 'There is error in while updating record']);
+        } catch (Exception $e) {
             return response()->withErrors(['errors' => 'Error in update room controller']);
         }
     }
@@ -101,9 +116,9 @@ class RoomController extends Controller
      */
     public function destroy(string $id)
     {
-        if ($this->rooms->deleteById($id)){
+        if ($this->rooms->deleteById($id)) {
             return redirect()->route('admin.rooms.index')->with('success', 'Record successful deleted');
-        }else return redirect()->back()->withErrors(['error' => __('The requested resource could not be found.')]);
+        } else return redirect()->back()->withErrors(['error' => __('The requested resource could not be found.')]);
     }
 
     //
@@ -123,6 +138,5 @@ class RoomController extends Controller
         } catch (ValidationException $e) {
             return response()->json(['errors' => $e->errors()], 422);
         }
-
     }
 }

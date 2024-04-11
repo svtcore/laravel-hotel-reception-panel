@@ -3,8 +3,11 @@
 @section('additional_style')
     @vite(['resources/css/rooms-style.css'])
 @endsection
+@section('navbar_header_button')
+    <a href="{{ route('admin.rooms.create') }}" class="add-new-button">Add New Room</a>
+@endsection
 @section('content')
-    <div class="container-fluid mt-3">
+    <div class="container-fluid mt-5">
         <div class="content-container">
             <div class="content-header">
                 <div class="container-fluid">

@@ -3,13 +3,16 @@
 @section('additional_style')
 @vite(['resources/css/bookings-style.css'])
 @endsection
+@section('navbar_header_button')
+    <a href="#" class="add-new-button">New Reservation</a>
+@endsection
 @section('content')
 <!-- Main content -->
-<div class="container-fluid mt-3">
+<div class="container-fluid mt-5">
     <div class="content-container">
         <!-- Content Header (Page header) -->
         <div class="content-header">
-            <div class="container-fluid">
+            <div class="container-fluid mt-4">
                 @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}

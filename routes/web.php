@@ -44,6 +44,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
             Route::get('/{id}/edit', 'RoomController@edit')->name('admin.rooms.edit')->where('id', '^[1-9][0-9]{0,9}$');
             Route::put('/{id}', 'RoomController@update')->name('admin.rooms.update')->where('id', '^[1-9][0-9]{0,9}$');
             Route::delete('/{id}', 'RoomController@destroy')->name('admin.rooms.delete')->where('id', '^[1-9][0-9]{0,9}$');
+            Route::get('/create', 'RoomController@create')->name('admin.rooms.create');
+            Route::post('/', 'RoomController@store')->name('admin.rooms.store');
+
         });
     });
 //}

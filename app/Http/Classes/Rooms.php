@@ -169,6 +169,30 @@ class Rooms
         }
     }
 
+    public function store($inputData): bool|int
+    {
+        try {
+            $room = Room::create([
+                'floor_number' => $inputData['floorNumber'],
+                'room_number' => $inputData['roomNumber'],
+                'type' => $inputData['type'],
+                'total_rooms' => $inputData['totalRooms'],
+                'adults_beds_count' => $inputData['adultsBedsCount'],
+                'children_beds_count' => $inputData['childrenBedsCount'],
+                'price' => $inputData['price'],
+                'status' => $inputData['status'],
+            ]);
+    
+            if ($room && isset($inputData['additionalProperties'])) {
+                $room->room_properties()->attach($inputData['additionalProperties']);
+            }
+    
+            return $room->id ?? false;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
     public function update($inputData, $id): ?bool
     {
         try {
@@ -192,6 +216,8 @@ class Rooms
             return false;
         }
     }
+
+
     public function deleteById($id): bool
     {
         try {

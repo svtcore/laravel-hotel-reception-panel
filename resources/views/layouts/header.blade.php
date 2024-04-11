@@ -34,22 +34,33 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 
     <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-dark navbar-primary fixed-top">
+            <div class="container-fluid">
+                <ul class="navbar-nav mx-auto w-50">
+                    <li class="nav-item w-100">
+                        @yield('navbar_header_button')
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- /.navbar -->
+
         <!-- Sidebar -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <aside class="main-sidebar sidebar-dark-primary">
             <!-- Brand Logo -->
-            <a href="#" class="brand-link">
+            <a href="#" class="brand-link d-block text-center">
                 <span class="brand-text font-weight-light">Hotel Booking</span>
             </a>
 
             <!-- Book Button -->
-            <button href="#" class="book-button">Book a room</button>
+            <!--<button href="#" class="book-button">Book a room</button>!-->
 
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
                             <a href="#" class="nav-link nav-custom @yield('dashboard_navbar_state')">
                                 <i class="nav-icon fas fa-bed"></i>
