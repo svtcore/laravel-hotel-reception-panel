@@ -174,12 +174,12 @@
                                             $date_check_in = date('d-m-Y', strtotime($book->check_in_date));
                                             $date_check_out = date('d-m-Y', strtotime($book->check_out_date));
                                             ?>
-                                            <td>{{ $book->guests[0]->first_name }} {{ $book->guests[0]->last_name }}</td>
-                                            <td>{{ count($book->guests) }}</td>
-                                            <td>{{ $date_check_in }}</td>
-                                            <td>{{ $date_check_out}}</td>
-                                            <td>{{ $book->total_cost}}</td>
-                                            <td>
+                                            <td class="text-center">{{ $book->guests[0]->first_name }} {{ $book->guests[0]->last_name }}</td>
+                                            <td class="text-center">{{ count($book->guests) }}</td>
+                                            <td class="text-center">{{ $date_check_in }}</td>
+                                            <td class="text-center">{{ $date_check_out}}</td>
+                                            <td class="text-center">{{ $book->total_cost}}</td>
+                                            <td class="text-center">
                                                 @if ($book->status == 'active' || $book->status == 'completed')
                                                 <span class="badge badge-success badge-big">{{ $book->status }}</span>
                                                 @elseif ($book->status == 'canceled')
@@ -188,7 +188,7 @@
                                                 <span class="badge badge-secondary badge-big">{{ $book->status }}</span>
                                                 @endif
                                             </td>
-                                            <td><a href="{{ route('admin.booking.show', $book->id) }}" class="btn btn-secondary">Details</a></td>
+                                            <td class="text-center"><a href="{{ route('admin.booking.show', $book->id) }}" class="btn btn-secondary">Details</a></td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -200,17 +200,17 @@
                                 <table class="table" id="cleaning_table">
                                     <thead>
                                         <tr>
-                                            <th>Cleaning Date</th>
-                                            <th>Staff Name</th>
-                                            <th>Note</th>
+                                            <th class="text-center">Cleaning Date</th>
+                                            <th class="text-center">Staff Name</th>
+                                            <th class="text-center">Note</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($cleaning as $clean)
                                         <tr>
-                                            <td>{{ date('d-m-Y [H:i]', strtotime($clean->datetime)) }}</td>
-                                            <td>{{ $clean->staff->first_name }} {{ $clean->staff->last_name }}</td>
-                                            <td>{{ $clean->note }}</td>
+                                            <td class="text-center">{{ date('d-m-Y [H:i]', strtotime($clean->datetime)) }}</td>
+                                            <td class="text-center">{{ $clean->staff->first_name }} {{ $clean->staff->last_name }}</td>
+                                            <td class="text-center">{{ $clean->note }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>

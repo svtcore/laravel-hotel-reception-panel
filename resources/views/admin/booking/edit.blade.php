@@ -40,7 +40,7 @@
                                                     <tbody>
                                                         <tr>
                                                             <th scope="row">Room number</th>
-                                                            <td class="text-left">{{ $booking_data->rooms->door_number }}</td>
+                                                            <td class="text-left">{{ $booking_data->rooms->room_number }}</td>
                                                         </tr>
                                                         <tr>
                                                             <th scope="row">Room type</th>
@@ -96,7 +96,7 @@
                                                 <label for="status" class="form-label">Status</label>
                                                 <select class="form-select" id="status" name="status">
                                                     <option value="reserved" {{ $booking_data->status == 'reserved' ? 'selected' : '' }}>Reserved</option>
-                                                    <option value="canceled" {{ $booking_data->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                                                    <option value="cancelled" {{ $booking_data->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                                                     <option value="active" {{ $booking_data->status == 'active' ? 'selected' : '' }}>Active</option>
                                                     <option value="expired" {{ $booking_data->status == 'expired' ? 'selected' : '' }}>Expired</option>
                                                     <option value="completed" {{ $booking_data->status == 'completed' ? 'selected' : '' }}>Completed</option>

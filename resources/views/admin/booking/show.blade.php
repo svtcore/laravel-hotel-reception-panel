@@ -35,7 +35,7 @@
                                         <ul class="list-group list-group-flush pl-3 pr-3">
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Room Number
-                                                <span class="badge bg-primary badge-big">{{ $booking_data->rooms->door_number }}</span>
+                                                <span class="badge bg-primary badge-big">{{ $booking_data->rooms->room_number }}</span>
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Room type
