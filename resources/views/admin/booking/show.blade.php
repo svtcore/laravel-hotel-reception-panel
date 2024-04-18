@@ -4,7 +4,7 @@
 @vite(['resources/css/bookings-style.css'])
 @endsection
 @section('navbar_header_button')
-    <a href="#" class="add-new-button">New Reservation</a>
+<a href="#" class="add-new-button">New Reservation</a>
 @endsection
 @section('content')
 <div class="container-fluid mt-5">
@@ -35,27 +35,27 @@
                                         <ul class="list-group list-group-flush pl-3 pr-3">
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Room Number
-                                                <span class="badge bg-primary badge-big">{{ $booking_data->rooms->room_number }}</span>
+                                                <span class="badge bg-secondary badge-big">@isset($booking_data->rooms->room_number) {{ $booking_data->rooms->room_number }} @endisset</span>
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Room type
-                                                <span class="badge bg-primary badge-big">{{ ucfirst($booking_data->rooms->type) }}</span>
+                                                <span class="badge bg-secondary badge-big">@isset($booking_data->rooms->type) {{ ucfirst($booking_data->rooms->type) }} @endisset</span>
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Adults
-                                                <span class="badge bg-primary badge-big">{{ $booking_data->adults_count }}</span>
+                                                <span class="badge bg-secondary badge-big">{{ $booking_data->adults_count }}</span>
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Children
-                                                <span class="badge bg-primary badge-big">{{ $booking_data->children_count }}</span>
+                                                <span class="badge bg-secondary badge-big">{{ $booking_data->children_count }}</span>
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Check-in Date
-                                                <span class="badge bg-primary badge-big">{{ \Carbon\Carbon::parse($booking_data->check_in_date)->format('d-m-Y') }}</span>
+                                                <span class="badge bg-secondary badge-big">{{ \Carbon\Carbon::parse($booking_data->check_in_date)->format('d-m-Y') }}</span>
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Check-out Date
-                                                <span class="badge bg-primary badge-big">{{ \Carbon\Carbon::parse($booking_data->check_out_date)->format('d-m-Y') }}</span>
+                                                <span class="badge bg-secondary badge-big">{{ \Carbon\Carbon::parse($booking_data->check_out_date)->format('d-m-Y') }}</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -63,15 +63,15 @@
                                         <ul class="list-group list-group-flush pl-2 pr-2">
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Contact Number
-                                                <span class="badge bg-primary badge-big">{{ $booking_data->guests[0]->phone_number }}</span>
+                                                <span class="badge bg-secondary badge-big">@isset($booking_data->guests[0]->phone_number) {{ $booking_data->guests[0]->phone_number }} @endisset</span>
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Payment type
-                                                <span class="badge bg-primary badge-big">{{ ucfirst(str_replace('_', ' ', $booking_data->payment_type)) }}</span>
+                                                <span class="badge bg-secondary badge-big">{{ ucfirst(str_replace('_', ' ', $booking_data->payment_type)) }}</span>
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Total cost
-                                                <span class="badge bg-primary badge-big">{{ $booking_data->total_cost }}</span>
+                                                <span class="badge bg-secondary badge-big">{{ $booking_data->total_cost }}</span>
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Status
@@ -158,37 +158,42 @@
                         </div>
                     </div>
 
+                    @isset($booking_data->guests[0]->first_name)
                     <div class="col-md-8">
                         <div class="card no-shadow">
                             <div class="card-body">
                                 <h4 class="card-title pl-4"><b>Guests</b></h4>
                                 <table class="table">
-                                    <tr>
-                                        <td class="text-center"><b>{{ $booking_data->guests[0]->first_name }}
-                                                {{ $booking_data->guests[0]->last_name }}</b></td>
-                                        @if (count($booking_data->guests) > 1)
-                                        <td class="text-center">
-                                            {{ $booking_data->guests[1]->first_name }}
-                                            {{ $booking_data->guests[1]->last_name }}
-                                        </td>
+                                        <tr>
+                                            <td class="text-center"><b>
+                                                <a href="{{ route('admin.guests.show', $booking_data->guests[0]->id) }}">
+                                                    {{ $booking_data->guests[0]->first_name }}
+                                                    {{ $booking_data->guests[0]->last_name }}</a></b></td>
+                                            @if (count($booking_data->guests) > 1)
+                                            <td class="text-center">
+                                            <a href="{{ route('admin.guests.show', $booking_data->guests[1]->id) }}">
+                                                {{ $booking_data->guests[1]->first_name }}
+                                                {{ $booking_data->guests[1]->last_name }}</a>
+                                            </td>
+                                            @endif
+                                        </tr>
+                                        @if (count($booking_data->guests) > 2)
+                                        @foreach ($booking_data->guests as $index => $guest)
+                                        @if ($index >= 2)
+                                        <tr>
+                                            <td></td>
+                                            <td class="text-center"><a href="{{ route('admin.guests.show', $booking_data->guests[0]->id) }}">{{ $guest->first_name }}
+                                                {{ $guest->last_name }}</a>
+                                            </td>
+                                        </tr>
                                         @endif
-                                    </tr>
-                                    @if (count($booking_data->guests) > 2)
-                                    @foreach ($booking_data->guests as $index => $guest)
-                                    @if ($index >= 2)
-                                    <tr>
-                                        <td></td>
-                                        <td class="text-center">{{ $guest->first_name }}
-                                            {{ $guest->last_name }}
-                                        </td>
-                                    </tr>
-                                    @endif
-                                    @endforeach
-                                    @endif
+                                        @endforeach
+                                        @endif
                                 </table>
                             </div>
                         </div>
                     </div>
+                    @endisset
                 </div>
             </div>
         </section>

@@ -174,12 +174,12 @@
                                                 <span class="badge badge-success badge-big"><i class="fa-solid fa-baby"></i></span> 
                                             @endif
                                         </td>
-                                        <td class="text-center"><b>{{ $room->price }} ₴</b></td>
+                                        <td class="text-center"><b>{{ $room->price }}</b></td>
                                         <td class="text-center">
                                             <div class="btn-group" role="group" aria-label="Room actions">
-                                                <a href="{{ route('admin.rooms.show', $room->id) }}" class="btn btn-primary">Details</a>
-                                                <a href="{{ route('admin.rooms.edit', $room->id) }}" class="btn btn-warning">Edit</a>
-                                                <button type="button" class="btn btn-danger">Delete</button>
+                                                <a href="{{ route('admin.rooms.show', $room->id) }}" class="btn btn-secondary">Details</a>
+                                                <a href="{{ route('admin.rooms.edit', $room->id) }}" class="btn btn-warning"><i class="fas fa-pen"></i></a>
+                                                <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>

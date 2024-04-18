@@ -48,5 +48,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
             Route::post('/', 'RoomController@store')->name('admin.rooms.store');
 
         });
+        Route::prefix('guests')->group(function () {
+            Route::get('/', 'GuestController@index')->name('admin.guests.index');
+            Route::get('/{id}/edit', 'GuestController@edit')->name('admin.guests.edit')->where('id', '^[1-9][0-9]{0,9}$');
+            Route::put('/{id}', 'GuestController@update')->name('admin.guests.update')->where('id', '^[1-9][0-9]{0,9}$');
+            Route::get('/{id}', 'GuestController@show')->name('admin.guests.show')->where('id', '^[1-9][0-9]{0,9}$');
+            Route::delete('/{id}', 'GuestController@destroy')->name('admin.guests.delete')->where('id', '^[1-9][0-9]{0,9}$');
+        });
     });
 //}

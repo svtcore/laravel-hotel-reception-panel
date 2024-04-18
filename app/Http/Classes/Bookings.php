@@ -249,4 +249,21 @@ class Bookings
             return null;
         }
     }
+
+    public function getByGuestId($id): ?iterable
+    {
+        try{
+            $booking = Booking::with('rooms', 'guests')->whereHas('guests', function ($query) use ($id) {
+                $query->where('guest_id', $id);
+            })->get();
+            if ($booking && $booking->count() > 0) {
+                return $booking;
+            } else {
+                return null;
+            }
+        }
+        catch(Exception $e){
+            return null;
+        }
+    }
 }

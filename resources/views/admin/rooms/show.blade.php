@@ -8,6 +8,11 @@
 @section('navbar_header_button')
 <a href="{{ route('admin.rooms.create') }}" class="add-new-button">Add New Room</a>
 @endsection
+@section('navbar_header_button_second')
+<li class="nav-item w-100 ml-5 mr-5">
+    <a href="#" class="add-new-button font-weight-bold">Book this room</a>
+</li>
+@endsection
 @section('content')
 <div class="container-fluid mt-5">
     <div class="content-container">
@@ -49,19 +54,19 @@
                                     <ul class="list-group">
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             Room number
-                                            <span class="badge bg-primary badge-big">{{ $room->room_number }}</span>
+                                            <span class="badge bg-secondary badge-big">{{ $room->room_number }}</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             Type
-                                            <span class="badge bg-primary badge-big">{{ ucfirst($room->type) }}</span>
+                                            <span class="badge bg-secondary badge-big">{{ ucfirst($room->type) }}</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             Floor
-                                            <span class="badge bg-primary badge-big">{{ $room->floor_number }}</span>
+                                            <span class="badge bg-secondary badge-big">{{ $room->floor_number }}</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             Total rooms
-                                            <span class="badge bg-primary badge-big">{{ $room->total_rooms }}</span>
+                                            <span class="badge bg-secondary badge-big">{{ $room->total_rooms }}</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -69,15 +74,15 @@
                                     <ul class="list-group">
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             Adults beds
-                                            <span class="badge bg-primary badge-big">{{ $room->adults_beds_count }}</span>
+                                            <span class="badge bg-secondary badge-big">{{ $room->adults_beds_count }}</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             Children beds
-                                            <span class="badge bg-primary badge-big">{{ $room->children_beds_count }}</span>
+                                            <span class="badge bg-secondary badge-big">{{ $room->children_beds_count }}</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             Price per Night
-                                            <span class="badge bg-primary badge-big">{{ $room->price }}</span>
+                                            <span class="badge bg-secondary badge-big">{{ $room->price }}</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             Current Status
@@ -97,7 +102,7 @@
                                 <div class="col-md-4">
                                     <div class="card no-shadow">
                                         <div class="card-body">
-                                            <h5 class="mb-2"><b>Room controll</b></h5>
+                                            <h5 class="mb-2"><b>Room control</b></h5>
                                             <ul class="list-group">
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                                     <a href="{{ route('admin.rooms.edit', $room->id) }}" class="btn btn-primary w-100">Edit room</a>
@@ -174,7 +179,7 @@
                                             $date_check_in = date('d-m-Y', strtotime($book->check_in_date));
                                             $date_check_out = date('d-m-Y', strtotime($book->check_out_date));
                                             ?>
-                                            <td class="text-center">{{ $book->guests[0]->first_name }} {{ $book->guests[0]->last_name }}</td>
+                                            <td class="text-center"><a href="{{ route('admin.guests.show', $book->guests[0]->id) }}">{{ $book->guests[0]->first_name }} {{ $book->guests[0]->last_name }}</a></td>
                                             <td class="text-center">{{ count($book->guests) }}</td>
                                             <td class="text-center">{{ $date_check_in }}</td>
                                             <td class="text-center">{{ $date_check_out}}</td>
@@ -188,7 +193,7 @@
                                                 <span class="badge badge-secondary badge-big">{{ $book->status }}</span>
                                                 @endif
                                             </td>
-                                            <td class="text-center"><a href="{{ route('admin.booking.show', $book->id) }}" class="btn btn-secondary">Details</a></td>
+                                            <td class="text-center"><a href="{{ route('admin.booking.show', $book->id) }}" class="btn btn-secondary pt-0 pb-0 pr-4 pl-4">Details</a></td>
                                         </tr>
                                         @endforeach
                                     </tbody>

@@ -117,11 +117,13 @@
                             <tr class="text-center">
                                 <td class="text-center"><a href="{{ route('admin.rooms.show', $booking->rooms->id) }}">{{ $booking->rooms->room_number }}</a>
                                 </td>
-                                <td class="text-center">{{ $booking->guests[0]->first_name }}
-                                    {{ $booking->guests[0]->last_name }} {{ $booking->guests[0]->middlename }}
+                                <td class="text-center">
+                                    @isset($booking->guests[0]->first_name)
+                                        {{ $booking->guests[0]->first_name }} {{ $booking->guests[0]->last_name }}
+                                    @endisset
                                 </td>
                                 <td class="text-center">{{ ucfirst($booking->rooms->type) }}</td>
-                                <td class="text-center">{{ $booking->guests[0]->phone_number }}</td>
+                                <td class="text-center">@isset ($booking->guests[0]->phone_number) {{ $booking->guests[0]->phone_number }} @endisset</td>
                                 <td class="text-center">{{ $booking->total_cost }}</td>
                                 <td class="text-center">
                                     {{ \Carbon\Carbon::parse($booking->check_in_date)->format('d-m-Y') }}</td>
@@ -139,8 +141,7 @@
                                 <td class="text-center">
                                     <div class="btn-group mr-2" role="group" aria-label="First group">
                                         <a href="{{ route('admin.booking.show', $booking->id) }}"
-                                            class="btn btn-secondary">
-                                            <i class="fas fa-address-card"></i> Details
+                                            class="btn btn-secondary pt-0 pb-0 pr-4 pl-4">Details
                                         </a>
                                     </div>
                                 </td>

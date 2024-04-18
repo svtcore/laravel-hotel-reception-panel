@@ -4,7 +4,7 @@
 @vite(['resources/css/bookings-style.css'])
 @endsection
 @section('navbar_header_button')
-    <a href="#" class="add-new-button">New Reservation</a>
+<a href="#" class="add-new-button">New Reservation</a>
 @endsection
 @section('content')
 <div class="container-fluid mt-5">
@@ -124,15 +124,17 @@
                                     @foreach ($check_in_bookings as $booking)
                                     <tr class="text-center">
                                         <td class="text-center"><a href="{{ route('admin.rooms.show', $booking->room_id) }}">{{ $booking->rooms->room_number }}</a></td>
-                                        <td class="text-center">{{ $booking->guests[0]->first_name }}
-                                            {{ $booking->guests[0]->last_name }}
-                                            {{ $booking->guests[0]->middlename }}
+                                        <td class="text-center">
+                                            @isset($booking->guests[0]->first_name)
+                                                {{ $booking->guests[0]->first_name }}
+                                                {{ $booking->guests[0]->last_name }}
+                                            @endisset
                                         </td>
                                         <td class="text-center"><b>{{ $booking->adults_count }}</b> @if ($booking->children_count > 0)
                                             <span class="badge badge-success badge-big"><i class="fa-solid fa-baby"></i></span>
                                             @endif
                                         </td>
-                                        <td class="text-center">{{ $booking->guests[0]->phone_number }}</td>
+                                        <td class="text-center">@isset($booking->guests[0]->phone_number) {{ $booking->guests[0]->phone_number }} @endisset</td>
                                         <td class="text-center">{{ $booking->total_cost }}</td>
                                         <td class="text-center">
                                             {{ \Carbon\Carbon::parse($booking->check_in_date)->format('d-m-Y') }}
@@ -143,8 +145,7 @@
                                         <td class="text-center">
                                             <form action="{{ route('admin.booking.delete', $booking->id) }}" method="POST">
                                                 <div class="btn-group mr-2" role="group" aria-label="First group">
-                                                    <a href="{{ route('admin.booking.show', $booking->id) }}" class="btn btn-secondary">
-                                                        <i class="fas fa-address-card"></i> Details
+                                                    <a href="{{ route('admin.booking.show', $booking->id) }}" class="btn btn-secondary">Details
                                                     </a>
                                                     <a href="{{ route('admin.booking.edit', $booking->id) }}" type="button" class="btn btn-warning">
                                                         <i class="fas fa-pen"></i>
@@ -179,15 +180,17 @@
                                     @foreach ($check_out_bookings as $booking)
                                     <tr>
                                         <td class="text-center"><a href="{{ route('admin.rooms.show', $booking->room_id) }}">{{ $booking->rooms->room_number }}</a></td>
-                                        <td class="text-center">{{ $booking->guests[0]->first_name }}
-                                            {{ $booking->guests[0]->last_name }}
-                                            {{ $booking->guests[0]->middlename }}
+                                        <td class="text-center">
+                                            @isset($booking->guests[0]->first_name) 
+                                                {{ $booking->guests[0]->first_name }}
+                                                {{ $booking->guests[0]->last_name }}
+                                            @endisset
                                         </td>
                                         <td class="text-center"><b>{{ $booking->adults_count }}</b> @if ($booking->children_count > 0)
                                             <span class="badge badge-success badge-big"><i class="fa-solid fa-baby"></i></span>
                                             @endif
                                         </td>
-                                        <td class="text-center">{{ $booking->guests[0]->phone_number }}</td>
+                                        <td class="text-center">@isset($booking->guests[0]->phone_number) {{ $booking->guests[0]->phone_number }} @endisset</td>
                                         <td class="text-center">{{ $booking->total_cost }}</td>
                                         <td class="text-center">
                                             {{ \Carbon\Carbon::parse($booking->check_out_date)->format('Y-m-d') }}

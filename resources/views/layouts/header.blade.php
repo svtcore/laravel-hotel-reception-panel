@@ -41,6 +41,7 @@
                     <li class="nav-item w-100">
                         @yield('navbar_header_button')
                     </li>
+                    @yield('navbar_header_button_second')
                 </ul>
             </div>
         </nav>
@@ -80,19 +81,19 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link nav-custom @yield('guests_navbar_state')">
+                            <a href="{{ route('admin.guests.index') }}" class="nav-link nav-custom @yield('guests_navbar_state')">
                                 <i class="nav-icon fas fa-car"></i>
                                 <p>Guests</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link nav-custom @yield('guests_navbar_state')">
+                            <a href="#" class="nav-link nav-custom @yield('staff_navbar_state')">
                                 <i class="nav-icon fas fa-car"></i>
                                 <p>Staff</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link nav-custom @yield('guests_navbar_state')">
+                            <a href="#" class="nav-link nav-custom @yield('users_navbar_state')">
                                 <i class="nav-icon fas fa-car"></i>
                                 <p>Users</p>
                             </a>
@@ -118,7 +119,7 @@
     <!-- ./wrapper -->
 
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <!-- AdminLTE JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
