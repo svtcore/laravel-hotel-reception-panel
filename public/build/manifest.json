@@ -82,13 +82,18 @@
     "src": "resources/js/booking/show.js",
     "isEntry": true
   },
+  "resources/js/guests/create.js": {
+    "file": "assets/create-BPxUFqCf.js",
+    "src": "resources/js/guests/create.js",
+    "isEntry": true
+  },
   "resources/js/guests/edit.js": {
     "file": "assets/edit-CVtaio5s.js",
     "src": "resources/js/guests/edit.js",
     "isEntry": true
   },
   "resources/js/guests/index.js": {
-    "file": "assets/index-D6blUovH.js",
+    "file": "assets/index-CzOOTwWi.js",
     "src": "resources/js/guests/index.js",
     "isEntry": true
   },

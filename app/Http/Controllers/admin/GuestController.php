@@ -6,8 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Classes\Guests;
 use App\Http\Classes\Bookings;
+use App\Http\Requests\admin\guests\SearchRelationRequest;
+use App\Http\Requests\admin\guests\SearchRequest;
+use App\Http\Requests\admin\guests\StoreRequest;
 use App\Http\Requests\admin\guests\UpdateRequest;
 use Exception;
+use Illuminate\Validation\ValidationException;
 
 class GuestController extends Controller
 {
@@ -35,15 +39,28 @@ class GuestController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.guests.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        try{
+            $validatedData = $request->validated();
+
+            if ($validatedData === null) {
+                return response()->withErrors(['errors' => 'Validation failed']);
+            }
+            $result = $this->guests->store($validatedData);
+            if ($result) {
+                return redirect()->route('admin.guests.show', $result)->with('success', 'Guest data successful added');
+            } else return redirect()->back()->withErrors(['error' => 'There is error in while added record']);
+        }
+        catch(Exception $e){
+            
+        }
     }
 
     /**
@@ -94,5 +111,38 @@ class GuestController extends Controller
         if ($this->guests->deleteById($id)) {
             return redirect()->route('admin.guests.index')->with('success', 'Record successful deleted');
         } else return redirect()->back()->withErrors(['error' => __('The requested resource could not be found.')]);
+    }
+
+    public function relation(SearchRelationRequest $request)
+    {
+        $validatedData = $request->validated();
+
+        if ($validatedData === null) {
+            return response()->json(['error' => 'true', 'message' => 'validation_failed']);
+        }
+        $result = $this->bookings->searchByRoomNumber($validatedData['roomNumber']);
+        if ($result != null) return $result;
+        else return response()->json(['error' => 'true', 'message' => 'returned_null']);
+        return $result;
+    }
+
+    /**
+     * Search Guests by input params
+     */
+    public function searchByParams(SearchRequest $request)
+    {
+        try {
+            $validatedData = $request->validated();
+
+            if ($validatedData === null) {
+                return response()->withErrors(['errors' => 'Validation failed']);
+            }
+            $searchResult = $this->guests->searchByParams($validatedData, true);
+            if (is_countable($searchResult) > 0) {
+                return view('admin.guests.search')->with(['guests' => $searchResult, 'inputData' => $validatedData]);
+            } else return redirect()->back()->withErrors(['errors' => 'There is no records found']);
+        } catch (ValidationException $e) {
+            return response()->json(['errors' => $e->errors()], 422);
+        }
     }
 }

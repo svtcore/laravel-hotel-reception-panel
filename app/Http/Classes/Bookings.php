@@ -94,7 +94,9 @@ class Bookings
                 // by guests
                 if ($first_name != null && $last_name != null) {
                     $query->whereHas('guests', function ($subQuery) use ($first_name, $last_name) {
-                        $subQuery->where('first_name', '=', $first_name)->where('last_name', '=', $last_name);
+                        $subQuery
+                            ->where('first_name', 'LIKE', "%$first_name%")
+                            ->where('last_name',  'LIKE', "%$last_name%");
                     });
                 }
 
@@ -261,6 +263,35 @@ class Bookings
             } else {
                 return null;
             }
+        }
+        catch(Exception $e){
+            return null;
+        }
+    }
+
+    public function searchByRoomNumber($room_number): ?iterable
+    {
+        try{
+            $bookings = Booking::whereHas('rooms', function ($query) use ($room_number) {
+                $query->where('room_number', $room_number)
+                    ->where('status', 'available');
+            })
+            ->where('status', 'reserved')
+            ->with(['guests', 'rooms'])
+            ->get();
+            if ($bookings && $bookings->count() > 0)
+            {
+                $filteredBookings = $bookings->map(function ($booking) {
+                    return [
+                        'order_id' => $booking->id,
+                        'first_name' => $booking->guests->first()->first_name,
+                        'last_name' => $booking->guests->first()->last_name,
+                        'check_in_date' => $booking->check_in_date,
+                    ];
+                });
+            
+                return $filteredBookings;
+            } else return null;
         }
         catch(Exception $e){
             return null;

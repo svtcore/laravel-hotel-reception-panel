@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('middle_name')->nullable();
             $table->enum('gender', ['M','F','N']);
             $table->date('dob');
-            $table->string('phone_number');
+            $table->string('phone_number')->nullable();
             $table->timestamps();
         });
     }

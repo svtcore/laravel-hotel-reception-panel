@@ -4,7 +4,7 @@ namespace App\Http\Requests\admin\guests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -33,6 +33,7 @@ class UpdateRequest extends FormRequest
             'documentExpired' => 'nullable|date',
             'documentIssuedBy' => 'nullable|string|max:255',
             'documentIssuedDate' => 'nullable|date',
+            'selectedOrderId' => 'nullable|numeric|min:0'
         ];
     }
 }

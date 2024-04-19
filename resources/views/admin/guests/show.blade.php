@@ -4,7 +4,7 @@
 @vite(['resources/css/guests-style.css'])
 @endsection
 @section('navbar_header_button')
-<a href="#" class="add-new-button">Add Guest</a>
+<a href="{{ route('admin.guests.create') }}" class="add-new-button">Add Guest</a>
 @endsection
 @section('content')
 <div class="container-fluid mt-5">
@@ -57,6 +57,7 @@
                                         </li>
                                     </ul>
                                 </div>
+                                @isset($guest->guest_document)
                                 <div class="col-md-4">
                                     <ul class="list-group">
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -87,6 +88,7 @@
                                         </li>
                                     </ul>
                                 </div>
+                                @endisset
                                 <div class="col-md-4">
                                     <div class="card no-shadow">
                                         <div class="card-body">

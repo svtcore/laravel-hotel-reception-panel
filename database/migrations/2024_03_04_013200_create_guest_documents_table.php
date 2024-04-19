@@ -16,10 +16,10 @@ return new class extends Migration
             $table->unsignedInteger('guest_id');
             $table->string('document_country');
             $table->string('document_serial')->nullable();
-            $table->string('document_number');
+            $table->string('document_number')->nullable();
             $table->date('document_expired')->nullable();
-            $table->string('document_issued_by');
-            $table->date('document_issued_date');
+            $table->string('document_issued_by')->nullable();
+            $table->date('document_issued_date')->nullable();
             $table->timestamps();
         });
     }

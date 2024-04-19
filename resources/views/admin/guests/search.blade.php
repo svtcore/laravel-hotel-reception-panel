@@ -50,14 +50,14 @@
                         <div class="form-row">
                             <div class="col-md-4 pt-2">
                                 <label for="guestName">Guest name</label>
-                                <input type="text" class="form-control" id="guestName" name="guestName" placeholder="Full name" required minlength="2" maxlength="255">
+                                <input type="text" class="form-control" id="guestName" name="guestName" placeholder="Full name" required minlength="2" maxlength="255" @isset($inputData['guestName']) value="{{ $inputData['guestName'] }}" @endisset">
                                 <div class="invalid-feedback">
                                     Please provide a valid guest name.
                                 </div>
                             </div>
                             <div class="col-md-3 pt-2">
                                 <label for="phoneNumber">Phone number</label>
-                                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Phone number" disabled required minlength="10" maxlength="15">
+                                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Phone number" disabled required minlength="10" maxlength="15" @isset($inputData['phoneNumber']) value="{{ $inputData['phoneNumber'] }}" @endisset>
                                 <div class="invalid-feedback">
                                     Please provide a valid phone number.
                                 </div>

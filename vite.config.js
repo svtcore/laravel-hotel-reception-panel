@@ -18,6 +18,7 @@ export default defineConfig({
                 'resources/js/rooms/show.js',
                 'resources/js/guests/index.js',
                 'resources/js/guests/edit.js',
+                'resources/js/guests/create.js',
             ],
             refresh: true,
         }),
