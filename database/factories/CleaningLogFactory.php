@@ -18,7 +18,7 @@ class CleaningLogFactory extends Factory
     {
         return [
             //room_id
-            //staff_id
+            //employee_id
             'datetime' => $this->faker->dateTime(),
             'note' => $this->faker->sentence()
         ];

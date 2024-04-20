@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Staff>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Employee>
  */
-class StaffFactory extends Factory
+class EmployeeFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -21,6 +21,7 @@ class StaffFactory extends Factory
             'last_name' => $this->faker->lastName(),
             'middle_name' => $this->faker->firstName(),
             'dob' => $this->faker->date(),
+            'phone_number' => $this->faker->numerify('380#########'),
             'position' => $this->faker->word(),
             'status' => $this->faker->randomElement(['active', 'fired', 'vacation', 'other'])
         ];

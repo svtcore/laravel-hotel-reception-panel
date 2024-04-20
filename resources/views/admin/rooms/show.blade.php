@@ -206,7 +206,7 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center">Cleaning Date</th>
-                                            <th class="text-center">Staff Name</th>
+                                            <th class="text-center">Employee Name</th>
                                             <th class="text-center">Note</th>
                                         </tr>
                                     </thead>
@@ -214,7 +214,7 @@
                                         @foreach($cleaning as $clean)
                                         <tr>
                                             <td class="text-center">{{ date('d-m-Y [H:i]', strtotime($clean->datetime)) }}</td>
-                                            <td class="text-center">{{ $clean->staff->first_name }} {{ $clean->staff->last_name }}</td>
+                                            <td class="text-center">{{ $clean->employees->first_name }} {{ $clean->employees->last_name }}</td>
                                             <td class="text-center">{{ $clean->note }}</td>
                                         </tr>
                                         @endforeach

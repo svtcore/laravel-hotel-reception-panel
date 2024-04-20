@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('cleaning_logs', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('room_id');
-            $table->unsignedInteger('staff_id');
+            $table->unsignedInteger('employee_id');
             $table->dateTime('datetime');
             $table->string('note')->nullable();
             $table->timestamps();

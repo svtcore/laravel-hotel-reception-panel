@@ -87,9 +87,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link nav-custom @yield('staff_navbar_state')">
+                            <a href="{{ route('admin.employees.index') }}" class="nav-link nav-custom @yield('employees_navbar_state')">
                                 <i class="nav-icon fas fa-car"></i>
-                                <p>Staff</p>
+                                <p>Employees</p>
                             </a>
                         </li>
                         <li class="nav-item">

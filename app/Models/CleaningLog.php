@@ -13,7 +13,7 @@ class CleaningLog extends Model
         return $this->belongsTo(Room::class, 'room_id');
     }
 
-    public function staff(){
-        return $this->belongsTo(Staff::class, 'staff_id');
+    public function employees(){
+        return $this->belongsTo(Employee::class, 'employee_id');
     }
 }

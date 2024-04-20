@@ -59,5 +59,15 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
             Route::post('/', 'GuestController@store')->name('admin.guests.store');
             Route::post('/search', 'GuestController@searchByParams')->name('admin.guests.search');
         });
+
+        Route::prefix('employees')->group(function () {
+            Route::get('/', 'EmployeeController@index')->name('admin.employees.index');
+            Route::get('/{id}/edit', 'EmployeeController@edit')->name('admin.employees.edit')->where('id', '^[1-9][0-9]{0,9}$');
+            Route::put('/{id}', 'EmployeeController@update')->name('admin.employees.update')->where('id', '^[1-9][0-9]{0,9}$');
+            Route::delete('/{id}', 'EmployeeController@destroy')->name('admin.employees.delete')->where('id', '^[1-9][0-9]{0,9}$');
+            Route::get('/create', 'EmployeeController@create')->name('admin.employees.create');
+            Route::post('/', 'EmployeeController@store')->name('admin.employees.store');
+
+        });
     });
 //}

@@ -82,6 +82,11 @@
     "src": "resources/js/booking/show.js",
     "isEntry": true
   },
+  "resources/js/employees/index.js": {
+    "file": "assets/index-BJOLtVQy.js",
+    "src": "resources/js/employees/index.js",
+    "isEntry": true
+  },
   "resources/js/guests/create.js": {
     "file": "assets/create-BPxUFqCf.js",
     "src": "resources/js/guests/create.js",

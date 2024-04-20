@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('cleaning_logs', function (Blueprint $table) {
             $table->foreign('room_id')->references('id')->on('rooms')->onUpdate('cascade');
-            $table->foreign('staff_id')->references('id')->on('staff')->onUpdate('cascade');
+            $table->foreign('employee_id')->references('id')->on('employees')->onUpdate('cascade');
         });
     }
 

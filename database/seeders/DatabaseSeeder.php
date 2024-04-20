@@ -5,11 +5,11 @@ namespace Database\Seeders;
 use App\Models\AdditionalService;
 use App\Models\Booking;
 use App\Models\CleaningLog;
+use App\Models\Employee;
 use App\Models\Guest;
 use App\Models\GuestDocument;
 use App\Models\Room;
 use App\Models\RoomProperty;
-use App\Models\Staff;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             'user' => 10,
             'rooms' => 50,
             'room_properties' => 10,
-            'staff' => 20,
+            'employees' => 20,
             'cleaning_logs' => 100,
             'guests' => 150,
             'bookings' => 100,
@@ -50,10 +50,10 @@ class DatabaseSeeder extends Seeder
             $room = Room::factory()->create();
             $room->room_properties()->attach(rand(1, $config['room_properties']));
         }
-        //Generate stuff
-        Staff::factory($config['staff'])->create();
+        //Generate employees
+        Employee::factory($config['employees'])->create();
         for ($i = 0; $i < $config['cleaning_logs']; $i++) {
-            CleaningLog::factory()->create(['room_id' => rand(1, $config['rooms']), 'staff_id' => rand(1, $config['staff'])]);
+            CleaningLog::factory()->create(['room_id' => rand(1, $config['rooms']), 'employee_id' => rand(1, $config['employees'])]);
         }
         //Generate guests
         for ($i = 0; $i < $config['guests']; $i++) {

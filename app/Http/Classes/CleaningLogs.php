@@ -13,7 +13,7 @@ class CleaningLogs
     public function getByRoomId($room_id): ?iterable
     {
         try{
-            $cleaning_log = CleaningLog::with(['staff'])->where('room_id', $room_id)->get();
+            $cleaning_log = CleaningLog::with(['employees'])->where('room_id', $room_id)->get();
             if ($cleaning_log->count() > 0) {
                 return $cleaning_log;
             } else {
