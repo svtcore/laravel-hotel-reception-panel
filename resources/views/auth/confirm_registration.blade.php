@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Сброс пароля</title>
+    <title>Confirm Registration</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -22,7 +22,7 @@
     <div class="container">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Reset password</h5>
+                <h5 class="card-title">Registration almost complete. Input your password</h5>
                 @if (session('status'))
                     <div class="alert alert-success" role="alert">
                         {{ session('status') }}
@@ -37,12 +37,11 @@
                         </ul>
                     </div>
                 @endif
-                <form method="POST" action="{{ route('password.update') }}">
+                <form method="POST" action="{{ route('confirm.submit') }}">
                     @csrf
                     <input type="hidden" name="token" value="{{ $token }}">
-                    <input type="hidden" name="email" value="{{ $email }}">
                     <div class="form-group">
-                        <label for="password">New password</label>
+                        <label for="password">Password</label>
                         <input type="password" name="password" id="password" class="form-control" required>
                     </div>
                     <div class="form-group">

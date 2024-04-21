@@ -112,6 +112,11 @@
     "src": "resources/js/rooms/show.js",
     "isEntry": true
   },
+  "resources/js/users/index.js": {
+    "file": "assets/index-4-AliplT.js",
+    "src": "resources/js/users/index.js",
+    "isEntry": true
+  },
   "resources/sass/app.scss": {
     "file": "assets/app-DySRb4RP.css",
     "src": "resources/sass/app.scss",

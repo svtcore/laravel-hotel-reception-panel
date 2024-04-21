@@ -20,6 +20,7 @@ export default defineConfig({
                 'resources/js/guests/edit.js',
                 'resources/js/guests/create.js',
                 'resources/js/employees/index.js',
+                'resources/js/users/index.js',
             ],
             refresh: true,
         }),
