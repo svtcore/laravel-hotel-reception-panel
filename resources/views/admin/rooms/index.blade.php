@@ -74,7 +74,7 @@
                                     <div class="col-md-2 mb-2 date-block">
                                         <label for="endDate">End date</label>
                                         <input type="date" class="form-control" id="endDate" name="endDate"
-                                            value="{{ \Carbon\Carbon::now()->toDateString() }}" required>
+                                            value="{{ \Carbon\Carbon::now()->addDay()->toDateString() }}" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -100,8 +100,7 @@
                                     <div class="col-md-2 pt-2">
                                         <label for="adultsBedsCount">Adults beds</label>
                                         <select class="form-select text-center" id="adultsBedsCount" name="adultsBedsCount" required>
-                                            <option value="0" selected>Any</option>
-                                            <option value="1" selected>1 person</option>
+                                            <option value="0">Any</option>
                                             @for ($i = 1; $i <= 10; $i++)
                                                 <option value="{{ $i }}">{{ $i }} persons</option>
                                             @endfor
@@ -177,6 +176,9 @@
                                         <td class="text-center"><b>{{ $room->price }}</b></td>
                                         <td class="text-center">
                                             <div class="btn-group" role="group" aria-label="Room actions">
+                                                @if ($room->status == "available")
+                                                    <a href="{{ route('admin.booking.create', $room->id) }}" class="btn btn-success">Book now</a>
+                                                @endif
                                                 <a href="{{ route('admin.rooms.show', $room->id) }}" class="btn btn-secondary">Details</a>
                                                 <a href="{{ route('admin.rooms.edit', $room->id) }}" class="btn btn-warning"><i class="fas fa-pen"></i></a>
                                                 <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>

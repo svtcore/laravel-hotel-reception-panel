@@ -159,4 +159,24 @@ class Guests
             return null;
         }
     }
+
+    public function getByPhoneNumber($inputData): ?object
+    {
+        try{
+            $guest = Guest::where('phone_number', $inputData['phoneNumber'])->first();
+            if (isset($guest->id)) return $guest;
+            else{
+                $guest = Guest::create([
+                    'first_name' => $inputData['firstName'],
+                    'last_name' => $inputData['lastName'],
+                    'phone_number' => $inputData['phoneNumber']
+                ]);
+                if (isset($guest->id)) return $guest;
+                else return null;
+            }
+        }
+        catch(Exception $e){
+            return null;
+        }
+    }
 }

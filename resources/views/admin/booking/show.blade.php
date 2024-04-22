@@ -35,7 +35,7 @@
                                         <ul class="list-group list-group-flush pl-3 pr-3">
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Room Number
-                                                <span class="badge bg-secondary badge-big">@isset($booking_data->rooms->room_number) {{ $booking_data->rooms->room_number }} @endisset</span>
+                                                <span class="badge bg-secondary badge-big">@isset($booking_data->rooms->room_number) <a href="{{ route('admin.rooms.show', $booking_data->rooms->id) }}">{{ $booking_data->rooms->room_number }}</a> @endisset</span>
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Room type

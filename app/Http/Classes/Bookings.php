@@ -9,7 +9,9 @@ use App\Models\Booking;
 use App\Http\Classes\Rooms;
 use App\Http\Classes\AdditionalServices;
 use DateTime;
+use App\Http\Classes\Guests;
 use phpDocumentor\Reflection\Types\Boolean;
+use App\Models\Room;
 
 class Bookings
 {
@@ -77,7 +79,7 @@ class Bookings
 
             $searchResult = Booking::with([
                 'guests',
-                'rooms' => function($q) use ($trashed) {
+                'rooms' => function ($q) use ($trashed) {
                     if ($trashed) {
                         $q->withTrashed();
                     }
@@ -138,9 +140,9 @@ class Bookings
         }
     }
 
-    public function update($validatedData, $id):?bool
+    public function update($validatedData, $id): ?bool
     {
-        try{
+        try {
             $adults = $validatedData['adultsCount'];
             $children = $validatedData['childrenCount'];
             $check_in_date = $validatedData['checkInDate'];
@@ -168,15 +170,14 @@ class Bookings
             $booking->additional_services()->detach();
             $booking->additional_services()->attach($additional_services_ids);
             return $result;
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             return null;
         }
     }
 
-    public function calculatePrice($room_id, $ids, $days):?float
+    public function calculatePrice($room_id, $ids, $days): ?float
     {
-        try{
+        try {
             $rooms_obj = new Rooms();
             $additional_services_obj = new AdditionalServices();
             $room_price = ($rooms_obj->getById($room_id, false))->price;
@@ -184,15 +185,14 @@ class Bookings
             $total_price = ($room_price * $days) + $services_price;
             if ($total_price > 0) return $total_price;
             else return 0;
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             return null;
         }
     }
 
-    public function diffDate($check_in_date, $check_out_date):?int
+    public function diffDate($check_in_date, $check_out_date): ?int
     {
-        try{
+        try {
             $dateTime1 = new DateTime($check_in_date);
             $dateTime2 = new DateTime($check_out_date);
 
@@ -201,8 +201,7 @@ class Bookings
             if ($daysDiff < 0) $daysDiff = 0;
             elseif ($daysDiff == 0) $daysDiff = 1;
             return $daysDiff;
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             return 0;
         }
     }
@@ -220,41 +219,39 @@ class Bookings
         }
     }
 
-    public function changeStatus($status, $id):bool
+    public function changeStatus($status, $id): bool
     {
-        try{
+        try {
             $booking = Booking::findOrFail($id);
             $booking->update([
                 'status' => $status,
             ]);
             return true;
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             return false;
         }
     }
 
     public function getByRoomId($room_id): ?iterable
     {
-        try{
+        try {
             $booking = Booking::with('guests')
-            ->where('room_id', $room_id)
-            ->whereHas('guests')
-            ->get();
+                ->where('room_id', $room_id)
+                ->whereHas('guests')
+                ->get();
             if ($booking->count() > 0) {
                 return $booking;
             } else {
                 return null;
             }
-        }
-        catch(Exception){
+        } catch (Exception) {
             return null;
         }
     }
 
     public function getByGuestId($id): ?iterable
     {
-        try{
+        try {
             $booking = Booking::with('rooms', 'guests')->whereHas('guests', function ($query) use ($id) {
                 $query->where('guest_id', $id);
             })->get();
@@ -263,24 +260,22 @@ class Bookings
             } else {
                 return null;
             }
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             return null;
         }
     }
 
     public function searchByRoomNumber($room_number): ?iterable
     {
-        try{
+        try {
             $bookings = Booking::whereHas('rooms', function ($query) use ($room_number) {
                 $query->where('room_number', $room_number)
                     ->where('status', 'available');
             })
-            ->where('status', 'reserved')
-            ->with(['guests', 'rooms'])
-            ->get();
-            if ($bookings && $bookings->count() > 0)
-            {
+                ->where('status', 'reserved')
+                ->with(['guests', 'rooms'])
+                ->get();
+            if ($bookings && $bookings->count() > 0) {
                 $filteredBookings = $bookings->map(function ($booking) {
                     return [
                         'order_id' => $booking->id,
@@ -289,12 +284,147 @@ class Bookings
                         'check_in_date' => $booking->check_in_date,
                     ];
                 });
-            
+
                 return $filteredBookings;
             } else return null;
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             return null;
+        }
+    }
+
+    public function getAvailableDate($room_id)
+    {
+        try {
+            $room = new Rooms();
+            $room_data = $room->getById($room_id, false);
+            if (isset($room_data->id)) {
+                $bookings = Booking::where('room_id', $room_id)
+                    ->whereIn('status', ['reserved', 'active', 'expired', 'completed'])
+                    ->select('check_in_date', 'check_out_date')
+                    ->orderBy('check_in_date', 'asc')
+                    ->get();
+
+                $currentDate = Carbon::now();
+
+                $bookings = Booking::where('room_id', $room_id)
+                    ->whereIn('status', ['reserved', 'active', 'expired', 'completed'])
+                    ->select('check_in_date', 'check_out_date')
+                    ->orderBy('check_in_date', 'asc')
+                    ->get();
+
+                $freePeriods = [];
+
+                if ($bookings->count() > 0) {
+                    $previousCheckOutDate = null;
+                    $latestCheckOutDate = null;
+
+                    foreach ($bookings as $booking) {
+                        if ($previousCheckOutDate !== null) {
+                            // Calculate free period between previous check_out_date and current check_in_date
+                            $freePeriodStart = Carbon::parse($previousCheckOutDate);
+                            $freePeriodEnd = Carbon::parse($booking->check_in_date);
+
+                            if ($freePeriodStart->gt($currentDate)) {
+                                $freePeriods[] = [
+                                    'start' => $freePeriodStart->gt($currentDate) ? $freePeriodStart : $currentDate,
+                                    'end' => $freePeriodEnd,
+                                ];
+                            }
+                        }
+
+                        $previousCheckOutDate = $booking->check_out_date;
+
+                        if ($latestCheckOutDate === null || Carbon::parse($booking->check_out_date)->gt($latestCheckOutDate)) {
+                            $latestCheckOutDate = $booking->check_out_date;
+                        }
+                    }
+                }
+                $free_dates = [];
+                $count = 0;
+                foreach ($freePeriods as $freePeriod) {
+                    $dateRange = $freePeriod['start']->format('d.m.Y') . "  —  " . $freePeriod['end']->format('d.m.Y');
+                    $free_dates[$count++] = $dateRange;
+                }
+                $last_date = NULL;
+                if ($latestCheckOutDate !== null) {
+                    $last_date = ($latestCheckOutDate > $currentDate ? $latestCheckOutDate : $currentDate);
+                }
+                return [$free_dates, $last_date];
+            }
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
+    public function checkDatesInRange($inputData, $free_dates, $last_date)
+    {
+        try {
+            $inputCheckInDate = DateTime::createFromFormat('Y-m-d', $inputData['checkInDate']);
+            $inputCheckOutDate = DateTime::createFromFormat('Y-m-d', $inputData['checkOutDate']);
+
+            $dates = [];
+            foreach ($free_dates as $free) {
+                $dates[] = [
+                    'startDate' => DateTime::createFromFormat('d.m.Y', explode('  —  ', $free)[0]),
+                    'endDate' => DateTime::createFromFormat('d.m.Y', explode('  —  ', $free)[1])
+                ];
+            }
+            $lastFreeDate = DateTime::createFromFormat('Y-m-d H:i:s', $last_date);
+
+            // Проверяем входит ли диапазон дат в массив или больше ли он последней свободной даты
+            $inRange = false;
+            foreach ($dates as $dateRange) {
+                if ($inputCheckInDate >= $dateRange['startDate'] && $inputCheckOutDate <= $dateRange['endDate']) {
+                    $inRange = true;
+                    break;
+                }
+            }
+            $greaterThanLastFree = $inputCheckOutDate > $lastFreeDate;
+            if ($inRange || $greaterThanLastFree) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+
+    public function store($inputData)
+    {
+        try {
+            $guest_obj = new Guests();
+            $room = Room::findOrFail($inputData['room_id']);
+            [$free_dates, $last_date] = $this->getAvailableDate($inputData['room_id']);
+            if ($free_dates != null || $last_date != null)
+                $dateRanges = $this->checkDatesInRange($inputData, $free_dates, $last_date);
+            else $dateRanges = true;
+            if ($dateRanges){
+                $guest = $guest_obj->getByPhoneNumber($inputData);
+                $booking = $room->bookings()->create([
+                    'adults_count' => $inputData['adultsCount'],
+                    'children_count' => $inputData['childrenCount'],
+                    'total_cost' => 0,
+                    'payment_type' => $inputData['paymentType'],
+                    'check_in_date' => $inputData['checkInDate'],
+                    'check_out_date' => $inputData['checkOutDate'],
+                    'note' => $inputData['note'],
+                    'status' => $inputData['status'],
+                ]);
+                $guest->bookings()->attach($booking->id);
+                if (isset($inputData['additionalServices']))
+                    $booking->additional_services()->attach($inputData['additionalServices']);
+                $days = $this->diffDate($inputData['checkInDate'], $inputData['checkOutDate']);
+                $price = $this->calculatePrice($inputData['room_id'], $inputData['additionalServices'] ?? array(), $days);
+                $result = $booking->update([
+                    'total_cost' => $price
+                ]);
+                if ($result) return $booking;
+                else return null;
+            }
+        } catch (Exception $e) {
+            dd($e);
         }
     }
 }

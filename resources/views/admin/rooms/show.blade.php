@@ -10,7 +10,7 @@
 @endsection
 @section('navbar_header_button_second')
 <li class="nav-item w-100 ml-5 mr-5">
-    <a href="#" class="add-new-button font-weight-bold">Book this room</a>
+    <a href="{{ route('admin.booking.create', $room->id) }}" class="add-new-button font-weight-bold">Book this room</a>
 </li>
 @endsection
 @section('content')
