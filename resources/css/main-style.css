@@ -46,6 +46,13 @@ body {
     transition: background-color 0.3s ease;
     border-radius: 30px;
 }
+.header-navbar{
+    text-align: center;
+    color: #fff;
+    border: none;
+    padding: 0.4em 20px;
+    font-size: 16px;
+}
 .nav-page-info{
     text-align: center;
     color: #fff;
@@ -105,4 +112,7 @@ a {
 }
 .no-shadow{
     box-shadow: none !important;
+}
+.stat-header{
+    background-color: #3498DB;
 }

@@ -8,6 +8,7 @@ use Illuminate\Support\Carbon;
 use App\Models\Room;
 use PhpParser\Node\Expr;
 use App\Http\Classes\Bookings;
+use App\Models\Booking;
 
 class Rooms
 {
@@ -153,13 +154,13 @@ class Rooms
                     if ($roomStatus != "0")
                         $query->where('status', $roomStatus);
                 })
-                ->where(function ($subQuery) use ($properties) {
-                    if (!empty($properties)) {
-                        $subQuery->whereHas('room_properties', function ($doubleSubQuery) use ($properties) {
-                            $doubleSubQuery->whereIn('id', $properties);
-                        });
-                    }
-                })->get();
+                    ->where(function ($subQuery) use ($properties) {
+                        if (!empty($properties)) {
+                            $subQuery->whereHas('room_properties', function ($doubleSubQuery) use ($properties) {
+                                $doubleSubQuery->whereIn('id', $properties);
+                            });
+                        }
+                    })->get();
                 //for maintence no date required
             }
             if ($rooms->count() > 0) {
@@ -227,6 +228,51 @@ class Rooms
             $room = Room::findOrFail($id);
             $result = $room->delete();
             return $result ? true : false;
+        } catch (Exception $e) {
+            dd($e);
+        }
+    }
+
+    public function getRoomsAvailabilityCount()
+    {
+        try {
+            $rooms = Room::all();
+
+            $available = $rooms->where('status', 'available')->count() ?? 0;
+            $occupied = $rooms->where('status', 'occupied')->count() ?? 0;
+
+            return [$occupied, $available];
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
+    public function getRoomTypesDemand()
+    {
+        try {
+            $roomTypeCounts = Booking::whereIn('status', ['active', 'completed', 'expired'])
+                ->withCount(['rooms as standard_count' => function ($query) {
+                    $query->where('type', 'standard');
+                }])
+                ->withCount(['rooms as deluxe_count' => function ($query) {
+                    $query->where('type', 'deluxe');
+                }])
+                ->withCount(['rooms as suite_count' => function ($query) {
+                    $query->where('type', 'suite');
+                }])
+                ->withCount(['rooms as penthouse_count' => function ($query) {
+                    $query->where('type', 'penthouse');
+                }])
+                ->get();
+
+            $roomTypeDemand = [
+                'standard' => $roomTypeCounts->sum('standard_count'),
+                'deluxe' => $roomTypeCounts->sum('deluxe_count'),
+                'suite' => $roomTypeCounts->sum('suite_count'),
+                'penthouse' => $roomTypeCounts->sum('penthouse_count')
+            ];
+
+            return $roomTypeDemand;
         } catch (Exception $e) {
             dd($e);
         }

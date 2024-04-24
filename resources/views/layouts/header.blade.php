@@ -63,7 +63,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="#" class="nav-link nav-custom @yield('dashboard_navbar_state')">
+                            <a href="{{ route('admin.dashboard') }}" class="nav-link nav-custom @yield('dashboard_navbar_state')">
                                 <i class="nav-icon fas fa-bed"></i>
                                 <p>Dashboard</p>
                             </a>

@@ -4,7 +4,7 @@
 @vite(['resources/css/bookings-style.css'])
 @endsection
 @section('navbar_header_button')
-<h4>Add new reservation</h4>
+<span class="header-navbar">Booking</span>
 @endsection
 @section('content')
 <div class="container-fluid mt-5">

@@ -427,4 +427,84 @@ class Bookings
             dd($e);
         }
     }
+
+    public function bookingsSumByDay()
+    {
+        $currentDate = now();
+        $currentMonth = $currentDate->month;
+        $currentYear = $currentDate->year;
+
+        $daysInMonth = $currentDate->day;
+
+        $bookingsSumByDay = [];
+
+        for ($day = 1; $day <= $daysInMonth; $day++) {
+            $bookingsSumByDay[$day] = 0;
+        }
+
+        $bookingsData = Booking::where(function ($query) use ($currentMonth, $currentYear, $currentDate) {
+            $query->whereYear('check_in_date', $currentYear)
+                ->whereMonth('check_in_date', $currentMonth)
+                ->whereDay('check_in_date', '>=', 1)
+                ->whereDay('check_in_date', '<=', $currentDate->day)
+                ->whereIn('status', ['active', 'completed', 'expired']);
+        })
+            ->orWhere(function ($query) use ($currentMonth, $currentYear, $currentDate) {
+                $query->whereYear('check_out_date', $currentYear)
+                    ->whereMonth('check_out_date', $currentMonth)
+                    ->whereDay('check_out_date', '>=', 1)
+                    ->whereDay('check_out_date', '<=', $currentDate->day)
+                    ->whereIn('status', ['active', 'completed', 'expired']);
+            })
+            ->selectRaw('SUM(total_cost) as total, DAY(check_in_date) as day')
+            ->groupByRaw('DAY(check_in_date)')
+            ->orderByRaw('DAY(check_in_date)')
+            ->get();
+
+        foreach ($bookingsData as $booking) {
+            $bookingsSumByDay[$booking->day] = $booking->total;
+        }
+
+        return $bookingsSumByDay;
+    }
+
+    public function checkInsCountByDay()
+    {
+        $currentDate = now();
+        $currentMonth = $currentDate->month;
+        $currentYear = $currentDate->year;
+
+        $daysInMonth = $currentDate->daysInMonth;
+
+        $checkInsCountByDay = [];
+
+        for ($day = 1; $day <= $daysInMonth; $day++) {
+            $checkInsCountByDay[$day] = 0;
+        }
+
+        $checkInsData = Booking::where(function ($query) use ($currentMonth, $currentYear, $currentDate) {
+            $query->whereYear('check_in_date', $currentYear)
+                ->whereMonth('check_in_date', $currentMonth)
+                ->whereDay('check_in_date', '>=', 1)
+                ->whereDay('check_in_date', '<=', $currentDate->day)
+                ->whereIn('status', ['active', 'completed', 'expired']);
+        })
+            ->orWhere(function ($query) use ($currentMonth, $currentYear, $currentDate) {
+                $query->whereYear('check_out_date', $currentYear)
+                    ->whereMonth('check_out_date', $currentMonth)
+                    ->whereDay('check_out_date', '>=', 1)
+                    ->whereDay('check_out_date', '<=', $currentDate->day)
+                    ->whereIn('status', ['active', 'completed', 'expired']);
+            })
+            ->selectRaw('COUNT(*) as count, DAY(check_in_date) as day')
+            ->groupByRaw('DAY(check_in_date)')
+            ->orderByRaw('DAY(check_in_date)')
+            ->get();
+
+        foreach ($checkInsData as $checkIn) {
+            $checkInsCountByDay[$checkIn->day] = $checkIn->count;
+        }
+
+        return $checkInsCountByDay;
+    }
 }

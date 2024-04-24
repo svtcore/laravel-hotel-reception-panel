@@ -80,6 +80,8 @@ Route::namespace('admin')->group(function () {
         Route::post('/', 'UserController@store')->name('admin.users.store');
         Route::post('/password/reset', 'UserController@sendResetLinkToEmail')->name('admin.users.reset_password');
     });
+    Route::get('/dashboard', 'DashboardController@index')->name('admin.dashboard');
+    Route::get('bookingsSumByDay', 'DashboardController@getBookingsSumByDay')->name('admin.dashboard.bookings_sum_by_day');
 });
 Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 Route::get('account/confim/{token}', 'Auth\ConfirmationAccountController@index')->name('confirm.registration');

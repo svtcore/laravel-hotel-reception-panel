@@ -42,7 +42,7 @@
     "isEntry": true
   },
   "resources/css/main-style.css": {
-    "file": "assets/main-style-9UkNjgDJ.css",
+    "file": "assets/main-style-nsRfk3KC.css",
     "src": "resources/css/main-style.css",
     "isEntry": true
   },
@@ -52,7 +52,8 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-Z97gIrT1.js",
+    "file": "assets/app-lkUo2uVu.js",
+    "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
@@ -69,51 +70,85 @@
   },
   "resources/js/booking/index.js": {
     "file": "assets/index-D2ow0N4E.js",
+    "name": "index",
     "src": "resources/js/booking/index.js",
     "isEntry": true
   },
   "resources/js/booking/search.js": {
     "file": "assets/search-D6aChrDh.js",
+    "name": "search",
     "src": "resources/js/booking/search.js",
     "isEntry": true
   },
   "resources/js/booking/show.js": {
     "file": "assets/show-CZVqwxeF.js",
+    "name": "show",
     "src": "resources/js/booking/show.js",
+    "isEntry": true
+  },
+  "resources/js/dashboard/bookings.js": {
+    "file": "assets/bookings-CxfmlbHX.js",
+    "name": "bookings",
+    "src": "resources/js/dashboard/bookings.js",
+    "isEntry": true
+  },
+  "resources/js/dashboard/income.js": {
+    "file": "assets/income-BL5M4Sez.js",
+    "name": "income",
+    "src": "resources/js/dashboard/income.js",
+    "isEntry": true
+  },
+  "resources/js/dashboard/rooms.js": {
+    "file": "assets/rooms-BCAWXNqX.js",
+    "name": "rooms",
+    "src": "resources/js/dashboard/rooms.js",
+    "isEntry": true
+  },
+  "resources/js/dashboard/rooms_availability.js": {
+    "file": "assets/rooms_availability-DH-UgAbh.js",
+    "name": "rooms_availability",
+    "src": "resources/js/dashboard/rooms_availability.js",
     "isEntry": true
   },
   "resources/js/employees/index.js": {
     "file": "assets/index-BJOLtVQy.js",
+    "name": "index",
     "src": "resources/js/employees/index.js",
     "isEntry": true
   },
   "resources/js/guests/create.js": {
     "file": "assets/create-BPxUFqCf.js",
+    "name": "create",
     "src": "resources/js/guests/create.js",
     "isEntry": true
   },
   "resources/js/guests/edit.js": {
     "file": "assets/edit-CVtaio5s.js",
+    "name": "edit",
     "src": "resources/js/guests/edit.js",
     "isEntry": true
   },
   "resources/js/guests/index.js": {
     "file": "assets/index-CzOOTwWi.js",
+    "name": "index",
     "src": "resources/js/guests/index.js",
     "isEntry": true
   },
   "resources/js/rooms/index.js": {
     "file": "assets/index-Cfy0m3JU.js",
+    "name": "index",
     "src": "resources/js/rooms/index.js",
     "isEntry": true
   },
   "resources/js/rooms/show.js": {
     "file": "assets/show-J7d4CvIN.js",
+    "name": "show",
     "src": "resources/js/rooms/show.js",
     "isEntry": true
   },
   "resources/js/users/index.js": {
     "file": "assets/index-4-AliplT.js",
+    "name": "index",
     "src": "resources/js/users/index.js",
     "isEntry": true
   },

@@ -4,7 +4,7 @@
 @vite(['resources/css/bookings-style.css'])
 @endsection
 @section('navbar_header_button')
-<a href="#" class="add-new-button">New Reservation</a>
+<span class="header-navbar">Booking</span>
 @endsection
 @section('content')
 <div class="container-fluid mt-5">
@@ -154,6 +154,11 @@
                                         <button class="btn btn-danger w-100" type="submit">Delete Reservation</button>
                                     </form>
                                 </div>
+                                @isset($booking_data->guests[0]->first_name)
+                                <div class="mb-3">
+                                    <a href="{{ route('admin.guests.create') }}" class="btn btn-secondary w-100">Relate guests</a>
+                                </div>
+                                @endisset
                             </div>
                         </div>
                     </div>

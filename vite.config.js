@@ -21,6 +21,10 @@ export default defineConfig({
                 'resources/js/guests/create.js',
                 'resources/js/employees/index.js',
                 'resources/js/users/index.js',
+                'resources/js/dashboard/income.js',
+                'resources/js/dashboard/rooms.js',
+                'resources/js/dashboard/rooms_availability.js',
+                'resources/js/dashboard/bookings.js'
             ],
             refresh: true,
         }),
