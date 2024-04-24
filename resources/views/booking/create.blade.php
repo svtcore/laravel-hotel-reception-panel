@@ -25,7 +25,7 @@
                     </ul>
                 </div>
                 @endif
-                <form action="{{ route('admin.booking.store') }}" method="POST">
+                <form action="{{ route('booking.store') }}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-md-6">

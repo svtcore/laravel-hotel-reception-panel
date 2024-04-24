@@ -3,7 +3,7 @@
 @section('additional_style')
 @endsection
 @section('navbar_header_button')
-<a href="{{ route('admin.users.create') }}" class="add-new-button">Add User</a>
+<a href="{{ route('users.create') }}" class="add-new-button">Add User</a>
 @endsection
 
 @section('content')
@@ -45,15 +45,15 @@
                                 <td class="text-center">{{ $user->name }}</td>
                                 <td class="text-center">{{ $user->email }}</td>
                                 <td class="text-center">{{ ucfirst($user->roles[0]->name) }}</td>
-                                <form action="{{ route('admin.users.reset_password') }}" method="POST">
+                                <form action="{{ route('users.reset_password') }}" method="POST">
                                     @csrf
                                     <input type="hidden" value="{{ $user->email }}" id="email" name="email"/>
                                     <td class="text-center"><button type="submit" class="btn btn-primary">Reset password</button></td>
                                 </form>
                                 <td class="text-center">
-                                    <form action="{{ route('admin.users.delete', $user->id) }}" method="POST">
+                                    <form action="{{ route('users.delete', $user->id) }}" method="POST">
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
-                                            <a href="{{ route('admin.users.edit', $user->id) }}" type="button" class="btn btn-warning">
+                                            <a href="{{ route('users.edit', $user->id) }}" type="button" class="btn btn-warning">
                                                 <i class="fas fa-pen"></i>
                                             </a>
                                             @csrf

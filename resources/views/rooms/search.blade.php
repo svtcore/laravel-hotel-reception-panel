@@ -4,7 +4,7 @@
     @vite(['resources/css/rooms-style.css'])
 @endsection
 @section('navbar_header_button')
-    <a href="{{ route('admin.rooms.create') }}" class="add-new-button">Add New Room</a>
+    <a href="{{ route('rooms.create') }}" class="add-new-button">Add New Room</a>
 @endsection
 @section('content')
     <div class="container-fluid mt-5">
@@ -28,7 +28,7 @@
                     <div class="content-container text-center">
                         <h4>Search form</h4>
 
-                        <form id="searchForm" method="POST" action="{{ route('admin.rooms.search') }}">
+                        <form id="searchForm" method="POST" action="{{ route('rooms.search') }}">
                             @csrf
                             <div class="row mt-4">
                                 <div class="col-md-2">
@@ -243,10 +243,10 @@
                                         </td>
                                         <td class="text-center">
                                             <div class="btn-group" role="group" aria-label="Room actions">
-                                                <a href="{{ route('admin.rooms.show', $room->id) }}"
+                                                <a href="{{ route('rooms.show', $room->id) }}"
                                                     class="btn btn-primary">Details</a>
                                                 @if (!isset($room->deleted_at))
-                                                <a href="{{ route('admin.rooms.edit', $room->id) }}"
+                                                <a href="{{ route('rooms.edit', $room->id) }}"
                                                     class="btn btn-warning">Edit</a>
                                                 <button type="button" class="btn btn-danger">Delete</button>
                                                 @endif

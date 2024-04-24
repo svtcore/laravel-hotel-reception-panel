@@ -4,7 +4,7 @@
 @vite(['resources/css/guests-style.css'])
 @endsection
 @section('navbar_header_button')
-<a href="{{ route('admin.guests.create') }}" class="add-new-button">Add Guest</a>
+<a href="{{ route('guests.create') }}" class="add-new-button">Add Guest</a>
 @endsection
 @section('content')
 <div class="container-fluid mt-5">
@@ -28,7 +28,7 @@
                 <div class="content-container text-center">
                     <h4><b>Search form</b></h4>
 
-                    <form id="searchForm" method="POST" action="{{ route('admin.guests.search') }}">
+                    <form id="searchForm" method="POST" action="{{ route('guests.search') }}">
                         @csrf
                         <div class="row mt-5">
                             <div class="col-md-4">
@@ -50,14 +50,14 @@
                         <div class="form-row">
                             <div class="col-md-4 pt-2">
                                 <label for="guestName">Guest name</label>
-                                <input type="text" class="form-control" id="guestName" name="guestName" placeholder="Full name" required minlength="2" maxlength="255" @isset($inputData['guestName']) value="{{ $inputData['guestName'] }}" @endisset">
+                                <input type="text" class="form-control" id="guestName" name="guestName" placeholder="Full name" required minlength="2" maxlength="255">
                                 <div class="invalid-feedback">
                                     Please provide a valid guest name.
                                 </div>
                             </div>
                             <div class="col-md-3 pt-2">
                                 <label for="phoneNumber">Phone number</label>
-                                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Phone number" disabled required minlength="10" maxlength="15" @isset($inputData['phoneNumber']) value="{{ $inputData['phoneNumber'] }}" @endisset>
+                                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Phone number" disabled required minlength="10" maxlength="15">
                                 <div class="invalid-feedback">
                                     Please provide a valid phone number.
                                 </div>
@@ -96,11 +96,11 @@
                                 <td class="text-center">{{ \Carbon\Carbon::parse($guest->dob)->format('d-m-Y') }}</td>
                                 <td class="text-center">{{ $guest->phone_number }}</td>
                                 <td class="text-center">
-                                    <form action="{{ route('admin.guests.delete', $guest->id) }}" method="POST">
+                                    <form action="{{ route('guests.delete', $guest->id) }}" method="POST">
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
-                                            <a href="{{ route('admin.guests.show', $guest->id) }}" class="btn btn-secondary">Details
+                                            <a href="{{ route('guests.show', $guest->id) }}" class="btn btn-secondary">Details
                                             </a>
-                                            <a href="{{ route('admin.guests.edit', $guest->id) }}" type="button" class="btn btn-warning">
+                                            <a href="{{ route('guests.edit', $guest->id) }}" type="button" class="btn btn-warning">
                                                 <i class="fas fa-pen"></i>
                                             </a>
                                             @csrf

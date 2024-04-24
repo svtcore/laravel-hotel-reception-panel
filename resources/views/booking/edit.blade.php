@@ -30,7 +30,7 @@
                             <div class="card no-shadow">
                                 <div class="card-body">
                                     <h4 class="card-title pl-4"><b>Reservation Details</b></h4><br /><br />
-                                    <form action="{{ route('admin.booking.update', $booking_data->id) }}" method="POST">
+                                    <form action="{{ route('booking.update', $booking_data->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                         <input type="hidden" name="booking_id" value="{{ $booking_data->id }}">

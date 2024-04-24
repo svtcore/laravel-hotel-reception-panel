@@ -4,7 +4,7 @@
 @vite(['resources/css/guests-style.css'])
 @endsection
 @section('navbar_header_button')
-<a href="{{ route('admin.guests.create') }}" class="add-new-button">Add Guest</a>
+<a href="{{ route('guests.create') }}" class="add-new-button">Add Guest</a>
 @endsection
 @section('content')
 <div class="container-fluid mt-5">
@@ -95,10 +95,10 @@
                                             <h5 class="mb-2"><b>Control panel</b></h5>
                                             <ul class="list-group">
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <a href="{{ route('admin.guests.edit', $guest->id) }}" class="btn btn-primary w-100">Edit data</a>
+                                                    <a href="{{ route('guests.edit', $guest->id) }}" class="btn btn-primary w-100">Edit data</a>
                                                 </li>
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <form action="{{ route('admin.guests.delete', $guest->id) }}" method="POST" class="w-100">
+                                                    <form action="{{ route('guests.delete', $guest->id) }}" method="POST" class="w-100">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="btn btn-danger w-100" type="submit">Delete</button>
@@ -142,7 +142,7 @@
                                     <span class="badge badge-secondary badge-big">{{ $book->status }}</span>
                                     @endif
                                 </td>
-                                <td class="text-center"><a href="{{ route('admin.booking.show', $book->id) }}" class="btn btn-secondary pt-0 pb-0 pr-4 pl-4">Details</a></td>
+                                <td class="text-center"><a href="{{ route('g.show', $book->id) }}" class="btn btn-secondary pt-0 pb-0 pr-4 pl-4">Details</a></td>
                             </tr>
                             @endforeach
                         </tbody>

@@ -30,7 +30,7 @@
                     </ul>
                 </div>
                 @endif
-                <form id="editForm" class="" action="{{ route('admin.users.store') }}" method="POST">
+                <form id="editForm" class="" action="{{ route('users.store') }}" method="POST">
                     <div class="row justify-content-center ml-5 mr-5">
                         <div class="col-md-8">
                             <div class="card no-shadow">

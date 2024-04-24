@@ -26,41 +26,43 @@
                     </ul>
                 </div>
                 @endif
-                <form id="editForm" class="ml-4 mr-4 mt-5" action="{{ route('admin.employees.store') }}" method="POST">
+                <form id="editForm" class="ml-4 mr-4 mt-5" action="{{ route('employees.update', $employee->id) }}" method="POST">
                     <div class="row justify-content-center ml-5 mr-5">
                         <div class="col-md-6">
                             <div class="card no-shadow">
                                 <div class="card-body">
                                     <h4 class="card-title pl-4"><b>Employee data</b></h4><br /><br />
                                     @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="employee_id" value="{{ $employee->id }}">
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-6">
                                             <label for="firstName" class="form-label">First Name</label>
-                                            <input type="text" class="form-control text-center" id="firstName" name="firstName" value="" required maxlength="255">
+                                            <input type="text" class="form-control text-center" id="firstName" name="firstName" value="{{ $employee->first_name }}" required maxlength="255">
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="lastName" class="form-label">Last Name</label>
-                                            <input type="text" class="form-control text-center" id="lastName" name="lastName" value="" required maxlength="255">
+                                            <input type="text" class="form-control text-center" id="lastName" name="lastName" value="{{ $employee->last_name }}" required maxlength="255">
                                         </div>
                                     </div>
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-6">
                                             <label for="dob" class="form-label">DOB</label>
-                                            <input type="date" class="form-control" id="dob" name="dob" value="" required>
+                                            <input type="date" class="form-control" id="dob" name="dob" value="{{ $employee->dob }}" required>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="status" class="form-label">Status</label>
                                             <select class="form-select text-center" id="status" name="status">
-                                                <option value="active">Active</option>
-                                                <option value="fired">Fired</option>
-                                                <option value="vacation">On Vacation</option>
-                                                <option value="other">Other</option>
+                                                <option value="active" {{ $employee->status == 'active' ? 'selected' : '' }}>Active</option>
+                                                <option value="fired" {{ $employee->status == 'fired' ? 'selected' : '' }}>Fired</option>
+                                                <option value="vacation" {{ $employee->status == 'vacation' ? 'selected' : '' }}>On Vacation</option>
+                                                <option value="other" {{ $employee->status == 'other' ? 'selected' : '' }}>Other</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="row justify-content-center">
                                         <div class="col-sm-12">
-                                            <button type="submit" class="btn btn-primary w-100">Confirm data</button>
+                                            <button type="submit" class="btn btn-primary w-100">Save Changes</button>
                                         </div>
                                     </div>
                                 </div>
@@ -73,13 +75,13 @@
                                     <div class="row ml-2 mr-2 mb-4">
                                         <div class="col-sm-12">
                                             <label for="phoneNumber" class="form-label">Phone number</label>
-                                            <input type="text" class="form-control text-center" id="phoneNumber" name="phoneNumber" value="" required maxlength="20">
+                                            <input type="text" class="form-control text-center" id="phoneNumber" name="phoneNumber" value="{{ $employee->phone_number }}" required maxlength="20">
                                         </div>
                                     </div>
                                     <div class="row mb-5 ml-2 mr-2">
                                         <div class="col-sm-12">
                                             <label for="position" class="form-label">Position</label>
-                                            <input type="text" class="form-control text-center" id="position" name="position" value="" maxlength="255">
+                                            <input type="text" class="form-control text-center" id="position" name="position" value="{{ $employee->position }}" maxlength="255">
                                         </div>
                                     </div>
                                 </div>

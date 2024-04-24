@@ -26,7 +26,7 @@
                     </ul>
                 </div>
                 @endif
-                <form id="editForm" class="" action="{{ route('admin.users.update', $user->id) }}" method="POST">
+                <form id="editForm" class="" action="{{ route('users.update', $user->id) }}" method="POST">
                     <div class="row justify-content-center ml-5 mr-5">
                         <div class="col-md-8">
                             <div class="card no-shadow">
@@ -68,7 +68,7 @@
                                         </div>
                                     </div>
                 </form>
-                <form action="{{ route('admin.users.reset_password') }}" method="POST">
+                <form action="{{ route('users.reset_password') }}" method="POST">
                     <div class="row mb-4 ml-2 mr-2">
                         @csrf
                         <div class="col-sm-12">
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </form>
-                <form method="POST" action="{{ route('admin.users.delete', $user->id) }}">
+                <form method="POST" action="{{ route('users.delete', $user->id) }}">
                     <div class="row mb-3 ml-2 mr-2">
                         <div class="col-sm-12">
                             @csrf

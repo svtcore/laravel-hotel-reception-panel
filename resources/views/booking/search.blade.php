@@ -30,7 +30,7 @@
                 <div class="content-container text-center">
                     <h4>Search form</h4>
 
-                    <form id="searchForm" method="POST" action="{{ route('admin.booking.search') }}">
+                    <form id="searchForm" method="POST" action="{{ route('booking.search') }}">
                         @csrf
                         <div class="row mt-5">
                             <div class="col-md-4">
@@ -115,7 +115,7 @@
                         <tbody>
                             @foreach ($result as $booking)
                             <tr class="text-center">
-                                <td class="text-center"><a href="{{ route('admin.rooms.show', $booking->rooms->id) }}">{{ $booking->rooms->room_number }}</a>
+                                <td class="text-center"><a href="{{ route('rooms.show', $booking->rooms->id) }}">{{ $booking->rooms->room_number }}</a>
                                 </td>
                                 <td class="text-center">
                                     @isset($booking->guests[0]->first_name)
@@ -140,7 +140,7 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="btn-group mr-2" role="group" aria-label="First group">
-                                        <a href="{{ route('admin.booking.show', $booking->id) }}"
+                                        <a href="{{ route('booking.show', $booking->id) }}"
                                             class="btn btn-secondary pt-0 pb-0 pr-4 pl-4">Details
                                         </a>
                                     </div>

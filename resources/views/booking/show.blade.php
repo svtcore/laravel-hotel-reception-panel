@@ -35,7 +35,7 @@
                                         <ul class="list-group list-group-flush pl-3 pr-3">
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Room Number
-                                                <span class="badge bg-secondary badge-big">@isset($booking_data->rooms->room_number) <a href="{{ route('admin.rooms.show', $booking_data->rooms->id) }}">{{ $booking_data->rooms->room_number }}</a> @endisset</span>
+                                                <span class="badge bg-secondary badge-big">@isset($booking_data->rooms->room_number) <a href="{{ route('rooms.show', $booking_data->rooms->id) }}">{{ $booking_data->rooms->room_number }}</a> @endisset</span>
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Room type
@@ -132,7 +132,7 @@
                                 <h4 class="card-title"><b>Booking Controls</b></h4>
                                 <div class="mb-3">
                                     <label for="statusSelect" class="form-label float-right">Change Status</label>
-                                    <form id="statusForm" name="statusForm" action="{{ route('admin.booking.status', $booking_data->id) }}" method="POST">
+                                    <form id="statusForm" name="statusForm" action="{{ route('booking.status', $booking_data->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                         <select class="form-select" id="statusSelect" name="status">
@@ -145,10 +145,10 @@
                                     </form>
                                 </div>
                                 <div class="mb-3">
-                                    <a href="{{ route('admin.booking.edit', $booking_data->id) }}" class="btn btn-primary w-100">Edit Reservation</a>
+                                    <a href="{{ route('booking.edit', $booking_data->id) }}" class="btn btn-primary w-100">Edit Reservation</a>
                                 </div>
                                 <div class="mb-3">
-                                    <form action="{{ route('admin.booking.delete', $booking_data->id) }}" method="POST">
+                                    <form action="{{ route('booking.delete', $booking_data->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger w-100" type="submit">Delete Reservation</button>
@@ -156,7 +156,7 @@
                                 </div>
                                 @isset($booking_data->guests[0]->first_name)
                                 <div class="mb-3">
-                                    <a href="{{ route('admin.guests.create') }}" class="btn btn-secondary w-100">Relate guests</a>
+                                    <a href="{{ route('guests.create') }}" class="btn btn-secondary w-100">Relate guests</a>
                                 </div>
                                 @endisset
                             </div>
@@ -171,12 +171,12 @@
                                 <table class="table">
                                         <tr>
                                             <td class="text-center"><b>
-                                                <a href="{{ route('admin.guests.show', $booking_data->guests[0]->id) }}">
+                                                <a href="{{ route('guests.show', $booking_data->guests[0]->id) }}">
                                                     {{ $booking_data->guests[0]->first_name }}
                                                     {{ $booking_data->guests[0]->last_name }}</a></b></td>
                                             @if (count($booking_data->guests) > 1)
                                             <td class="text-center">
-                                            <a href="{{ route('admin.guests.show', $booking_data->guests[1]->id) }}">
+                                            <a href="{{ route('guests.show', $booking_data->guests[1]->id) }}">
                                                 {{ $booking_data->guests[1]->first_name }}
                                                 {{ $booking_data->guests[1]->last_name }}</a>
                                             </td>
@@ -187,7 +187,7 @@
                                         @if ($index >= 2)
                                         <tr>
                                             <td></td>
-                                            <td class="text-center"><a href="{{ route('admin.guests.show', $booking_data->guests[0]->id) }}">{{ $guest->first_name }}
+                                            <td class="text-center"><a href="{{ route('guests.show', $booking_data->guests[0]->id) }}">{{ $guest->first_name }}
                                                 {{ $guest->last_name }}</a>
                                             </td>
                                         </tr>

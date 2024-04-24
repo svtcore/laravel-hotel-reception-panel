@@ -4,7 +4,7 @@
 @vite(['resources/css/rooms-style.css'])
 @endsection
 @section('navbar_header_button')
-<a href="{{ route('admin.employees.create') }}" class="add-new-button">Add Employee</a>
+<a href="{{ route('employees.create') }}" class="add-new-button">Add Employee</a>
 @endsection
 @section('content')
 <div class="container-fluid mt-3">
@@ -49,9 +49,9 @@
                                 <td class="text-center">{{ ucfirst($employee->position) }}</td>
                                 <td class="text-center">{{ ucfirst($employee->status) }}</td>
                                 <td class="text-center">
-                                    <form action="{{ route('admin.employees.delete', $employee->id) }}" method="POST">
+                                    <form action="{{ route('employees.delete', $employee->id) }}" method="POST">
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
-                                            <a href="{{ route('admin.employees.edit', $employee->id) }}" type="button" class="btn btn-warning">
+                                            <a href="{{ route('employees.edit', $employee->id) }}" type="button" class="btn btn-warning">
                                                 <i class="fas fa-pen"></i>
                                             </a>
                                             @csrf

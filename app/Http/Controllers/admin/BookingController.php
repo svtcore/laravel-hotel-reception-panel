@@ -36,7 +36,7 @@ class BookingController extends Controller
      */
     public function index()
     {
-        return view('admin.booking.index')->with([
+        return view('booking.index')->with([
             'check_in_bookings' => $this->booking->getLastCheckInOrders() ?? array(),
             'check_out_bookings' => $this->booking->getLastCheckOutOrders() ?? array(),
         ]);
@@ -50,7 +50,7 @@ class BookingController extends Controller
         $room = $this->rooms->getById($id, false);
         [$free_dates, $last_date] = $this->booking->getAvailableDate($id);
         if ($room) {
-            return view('admin.booking.create')->with([
+            return view('booking.create')->with([
                 'avaliable_services' => $this->additional_services->getAvaliable() ?? array(),
                 'room' => $room,
                 'free_dates' => $free_dates,
@@ -71,7 +71,7 @@ class BookingController extends Controller
         }
         $booking = $this->booking->store($validatedData);
         if ($booking) {
-            return redirect()->route('admin.booking.show', $booking->id)->with('success', 'Booking data successful added');
+            return redirect()->route('booking.show', $booking->id)->with('success', 'Booking data successful added');
         } else return redirect()->back()->withErrors(['error' => 'There is error in controller store']);
     }
 
@@ -86,7 +86,7 @@ class BookingController extends Controller
             if ($booking_data === null) {
                 return abort(404);
             } else {
-                return view('admin.booking.show')->with([
+                return view('booking.show')->with([
                     'booking_data' => $booking_data
                 ]);
             }
@@ -102,7 +102,7 @@ class BookingController extends Controller
      */
     public function edit(string $id)
     {
-        return view('admin.booking.edit')->with([
+        return view('booking.edit')->with([
             'booking_data' => $this->booking->getById($id) ?? abort(404),
             'avaliable_services' => $this->additional_services->getAvaliable() ?? array()
         ]);
@@ -121,7 +121,7 @@ class BookingController extends Controller
 
         $update_result = $this->booking->update($validatedData, $id);
         if ($update_result) {
-            return redirect()->route('admin.booking.show', $id)->with('success', 'Booking data successful updated');
+            return redirect()->route('booking.show', $id)->with('success', 'Booking data successful updated');
         } else return redirect()->back()->withErrors(['error' => 'There is error in controller update']);
     }
 
@@ -131,7 +131,7 @@ class BookingController extends Controller
     public function destroy(string $id)
     {
         if ($this->booking->deleteById($id)) {
-            return redirect()->route('admin.booking.index')->with('success', 'Record successful deleted');
+            return redirect()->route('booking.index')->with('success', 'Record successful deleted');
         } else return redirect()->back()->withErrors(['error' => __('The requested resource could not be found.')]);
     }
     /**
@@ -147,7 +147,7 @@ class BookingController extends Controller
             }
             $searchResult = $this->booking->searchByParams($validatedData, true);
             if (is_countable($searchResult) > 0) {
-                return view('admin.booking.search')->with(['result' => $searchResult, 'inputData' => $validatedData]);
+                return view('booking.search')->with(['result' => $searchResult, 'inputData' => $validatedData]);
             } else return redirect()->back()->withErrors(['errors' => 'There is no records found']);
         } catch (ValidationException $e) {
             return response()->json(['errors' => $e->errors()], 422);

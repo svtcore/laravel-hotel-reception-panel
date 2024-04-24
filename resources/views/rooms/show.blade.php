@@ -6,11 +6,11 @@
 @vite(['resources/css/rooms-style.css'])
 @endsection
 @section('navbar_header_button')
-<a href="{{ route('admin.rooms.create') }}" class="add-new-button">Add New Room</a>
+<a href="{{ route('rooms.create') }}" class="add-new-button">Add New Room</a>
 @endsection
 @section('navbar_header_button_second')
 <li class="nav-item w-100 ml-5 mr-5">
-    <a href="{{ route('admin.booking.create', $room->id) }}" class="add-new-button font-weight-bold">Book this room</a>
+    <a href="{{ route('booking.create', $room->id) }}" class="add-new-button font-weight-bold">Book this room</a>
 </li>
 @endsection
 @section('content')
@@ -105,10 +105,10 @@
                                             <h5 class="mb-2"><b>Room control</b></h5>
                                             <ul class="list-group">
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <a href="{{ route('admin.rooms.edit', $room->id) }}" class="btn btn-primary w-100">Edit room</a>
+                                                    <a href="{{ route('rooms.edit', $room->id) }}" class="btn btn-primary w-100">Edit room</a>
                                                 </li>
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <form action="{{ route('admin.rooms.delete', $room->id) }}" method="POST" class="w-100">
+                                                    <form action="{{ route('rooms.delete', $room->id) }}" method="POST" class="w-100">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="btn btn-danger w-100" type="submit">Delete room</button>
@@ -179,7 +179,7 @@
                                             $date_check_in = date('d-m-Y', strtotime($book->check_in_date));
                                             $date_check_out = date('d-m-Y', strtotime($book->check_out_date));
                                             ?>
-                                            <td class="text-center"><a href="{{ route('admin.guests.show', $book->guests[0]->id) }}">{{ $book->guests[0]->first_name }} {{ $book->guests[0]->last_name }}</a></td>
+                                            <td class="text-center"><a href="{{ route('guests.show', $book->guests[0]->id) }}">{{ $book->guests[0]->first_name }} {{ $book->guests[0]->last_name }}</a></td>
                                             <td class="text-center">{{ count($book->guests) }}</td>
                                             <td class="text-center">{{ $date_check_in }}</td>
                                             <td class="text-center">{{ $date_check_out}}</td>
@@ -193,7 +193,7 @@
                                                 <span class="badge badge-secondary badge-big">{{ $book->status }}</span>
                                                 @endif
                                             </td>
-                                            <td class="text-center"><a href="{{ route('admin.booking.show', $book->id) }}" class="btn btn-secondary pt-0 pb-0 pr-4 pl-4">Details</a></td>
+                                            <td class="text-center"><a href="{{ route('booking.show', $book->id) }}" class="btn btn-secondary pt-0 pb-0 pr-4 pl-4">Details</a></td>
                                         </tr>
                                         @endforeach
                                     </tbody>

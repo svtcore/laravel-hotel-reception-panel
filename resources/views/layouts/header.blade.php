@@ -63,37 +63,37 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="{{ route('admin.dashboard') }}" class="nav-link nav-custom @yield('dashboard_navbar_state')">
+                            <a href="{{ route('dashboard') }}" class="nav-link nav-custom @yield('dashboard_navbar_state')">
                                 <i class="nav-icon fas fa-bed"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.booking.index') }}" class="nav-link nav-custom @yield('booking_navbar_state')">
+                            <a href="{{ route('booking.index') }}" class="nav-link nav-custom @yield('booking_navbar_state')">
                                 <i class="nav-icon fas fa-bed"></i>
                                 <p>Booking</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.rooms.index') }}" class="nav-link nav-custom @yield('rooms_navbar_state')">
+                            <a href="{{ route('rooms.index') }}" class="nav-link nav-custom @yield('rooms_navbar_state')">
                                 <i class="nav-icon fas fa-utensils"></i>
                                 <p>Rooms</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.guests.index') }}" class="nav-link nav-custom @yield('guests_navbar_state')">
+                            <a href="{{ route('guests.index') }}" class="nav-link nav-custom @yield('guests_navbar_state')">
                                 <i class="nav-icon fas fa-car"></i>
                                 <p>Guests</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.employees.index') }}" class="nav-link nav-custom @yield('employees_navbar_state')">
+                            <a href="{{ route('employees.index') }}" class="nav-link nav-custom @yield('employees_navbar_state')">
                                 <i class="nav-icon fas fa-car"></i>
                                 <p>Employees</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.users.index') }}" class="nav-link nav-custom @yield('users_navbar_state')">
+                            <a href="{{ route('users.index') }}" class="nav-link nav-custom @yield('users_navbar_state')">
                                 <i class="nav-icon fas fa-car"></i>
                                 <p>Users</p>
                             </a>

@@ -4,7 +4,7 @@
     @vite(['resources/css/rooms-style.css'])
 @endsection
 @section('navbar_header_button')
-    <a href="{{ route('admin.rooms.create') }}" class="add-new-button">Add New Room</a>
+    <a href="{{ route('rooms.create') }}" class="add-new-button">Add New Room</a>
 @endsection
 @section('content')
     <div class="container-fluid mt-5">
@@ -28,7 +28,7 @@
                     <div class="content-container text-center">
                         <h4>Search form</h4>
 
-                        <form id="searchForm" method="POST" action="{{ route('admin.rooms.search') }}">
+                        <form id="searchForm" method="POST" action="{{ route('rooms.search') }}">
                             @csrf
                             <div class="row mt-4">
                                 <div class="col-md-2">
@@ -162,7 +162,7 @@
                             <tbody>
                                 @foreach ($rooms as $room)
                                     <tr>
-                                        <td class="text-center"><a href="{{ route('admin.rooms.show', $room->id) }}">{{ $room->room_number }}</td>
+                                        <td class="text-center"><a href="{{ route('show', $room->id) }}">{{ $room->room_number }}</td>
                                         <td class="text-center">{{ strtoupper($room->type) }}</td>
                                         <td class="text-center">
                                             {{ $room->floor_number }}
@@ -177,10 +177,10 @@
                                         <td class="text-center">
                                             <div class="btn-group" role="group" aria-label="Room actions">
                                                 @if ($room->status == "available")
-                                                    <a href="{{ route('admin.booking.create', $room->id) }}" class="btn btn-success">Book now</a>
+                                                    <a href="{{ route('booking.create', $room->id) }}" class="btn btn-success">Book now</a>
                                                 @endif
-                                                <a href="{{ route('admin.rooms.show', $room->id) }}" class="btn btn-secondary">Details</a>
-                                                <a href="{{ route('admin.rooms.edit', $room->id) }}" class="btn btn-warning"><i class="fas fa-pen"></i></a>
+                                                <a href="{{ route('rooms.show', $room->id) }}" class="btn btn-secondary">Details</a>
+                                                <a href="{{ route('rooms.edit', $room->id) }}" class="btn btn-warning"><i class="fas fa-pen"></i></a>
                                                 <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                                             </div>
                                         </td>

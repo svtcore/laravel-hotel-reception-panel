@@ -21,7 +21,7 @@ class DashboardController extends Controller
     }
 
     public function index(){
-        return view('admin.dashboard')->with([
+        return view('dashboard')->with([
             'sum_by_day' => json_encode(array_values($this->booking->bookingsSumByDay())) ?? array(),
             'room_data' => json_encode(array_values($this->rooms->getRoomTypesDemand())) ?? array(),
             'rooms_availability_data' => json_encode(array_values($this->rooms->getRoomsAvailabilityCount())) ?? array(),

@@ -28,7 +28,7 @@
                 <div class="content-container text-center">
                     <h4><b>Search form</b></h4>
 
-                    <form id="searchForm" method="POST" action="{{ route('admin.booking.search') }}">
+                    <form id="searchForm" method="POST" action="{{ route('booking.search') }}">
                         @csrf
                         <div class="row mt-5">
                             <div class="col-md-4">
@@ -123,7 +123,7 @@
                                 <tbody>
                                     @foreach ($check_in_bookings as $booking)
                                     <tr class="text-center">
-                                        <td class="text-center"><a href="{{ route('admin.rooms.show', $booking->room_id) }}">{{ $booking->rooms->room_number }}</a></td>
+                                        <td class="text-center"><a href="{{ route('rooms.show', $booking->room_id) }}">{{ $booking->rooms->room_number }}</a></td>
                                         <td class="text-center">
                                             @isset($booking->guests[0]->first_name)
                                                 {{ $booking->guests[0]->first_name }}
@@ -143,11 +143,11 @@
                                             {{ \Carbon\Carbon::parse($booking->check_out_date)->format('d-m-Y') }}
                                         </td>
                                         <td class="text-center">
-                                            <form action="{{ route('admin.booking.delete', $booking->id) }}" method="POST">
+                                            <form action="{{ route('booking.delete', $booking->id) }}" method="POST">
                                                 <div class="btn-group mr-2" role="group" aria-label="First group">
-                                                    <a href="{{ route('admin.booking.show', $booking->id) }}" class="btn btn-secondary">Details
+                                                    <a href="{{ route('booking.show', $booking->id) }}" class="btn btn-secondary">Details
                                                     </a>
-                                                    <a href="{{ route('admin.booking.edit', $booking->id) }}" type="button" class="btn btn-warning">
+                                                    <a href="{{ route('booking.edit', $booking->id) }}" type="button" class="btn btn-warning">
                                                         <i class="fas fa-pen"></i>
                                                     </a>
                                                     @csrf
@@ -179,7 +179,7 @@
                                 <tbody>
                                     @foreach ($check_out_bookings as $booking)
                                     <tr>
-                                        <td class="text-center"><a href="{{ route('admin.rooms.show', $booking->room_id) }}">{{ $booking->rooms->room_number }}</a></td>
+                                        <td class="text-center"><a href="{{ route('rooms.show', $booking->room_id) }}">{{ $booking->rooms->room_number }}</a></td>
                                         <td class="text-center">
                                             @isset($booking->guests[0]->first_name) 
                                                 {{ $booking->guests[0]->first_name }}
@@ -196,14 +196,14 @@
                                             {{ \Carbon\Carbon::parse($booking->check_out_date)->format('Y-m-d') }}
                                         </td>
                                         <td class="text-center">
-                                            <form action="{{ route('admin.booking.status', $booking->id) }}" method="POST">
+                                            <form action="{{ route('booking.status', $booking->id) }}" method="POST">
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="btn-group mr-2" role="group" aria-label="First group">
                                                     <input type="hidden" value="completed" name="status" />
                                                     <button type="submit" class="btn btn-success">Complete
                                                         check-out</i></button>
-                                                    <a href="{{ route('admin.booking.edit', $booking->id) }}" type="submit" class="btn btn-warning"><i class="fas fa-pen"></i></a>
+                                                    <a href="{{ route('booking.edit', $booking->id) }}" type="submit" class="btn btn-warning"><i class="fas fa-pen"></i></a>
                                                 </div>
                                             </form>
                                         </td>
