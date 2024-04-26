@@ -4,7 +4,7 @@
 @vite(['resources/css/guests-style.css'])
 @endsection
 @section('navbar_header_button')
-<a href="{{ route('guests.create') }}" class="add-new-button">Add Guest</a>
+<a href="{{ route('guests.create') }}" style="width:400px;" class="add-new-button">Add Guest</a>
 @endsection
 @section('content')
 <div class="container-fluid mt-5">

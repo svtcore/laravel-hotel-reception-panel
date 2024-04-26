@@ -4,7 +4,12 @@
 @vite(['resources/css/rooms-style.css'])
 @endsection
 @section('navbar_header_button')
-<a href="{{ route('employees.create') }}" class="add-new-button">Add Employee</a>
+@role('admin')
+<a href="{{ route('employees.create') }}" style="width:400px;" class="add-new-button">Add Employee</a>
+@endrole
+@role('receptionist')
+<span class="header-navbar">Employees</span>
+@endrole
 @endsection
 @section('content')
 <div class="container-fluid mt-3">
@@ -26,7 +31,7 @@
                 </div>
                 @endif
                 <div class="mt-4 text-center">
-                    <h4><b>Employees</b></h4>
+
                 </div>
                 <div>
                     <table id="employees-table" class="table table-bordered table-striped">
@@ -37,7 +42,9 @@
                                 <th class="text-center">Phone number</th>
                                 <th class="text-center">Position</th>
                                 <th class="text-center">Status</th>
+                                @role('admin')
                                 <th class="text-center">Action</th>
+                                @endrole
                             </tr>
                         </thead>
                         <tbody>
@@ -48,6 +55,7 @@
                                 <td class="text-center">{{ $employee->phone_number }}</td>
                                 <td class="text-center">{{ ucfirst($employee->position) }}</td>
                                 <td class="text-center">{{ ucfirst($employee->status) }}</td>
+                                @role('admin')
                                 <td class="text-center">
                                     <form action="{{ route('employees.delete', $employee->id) }}" method="POST">
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
@@ -61,7 +69,8 @@
                                             </button>
                                         </div>
                                     </form>
-                                </td>
+                                </td>]
+                                @endrole
                             </tr>
                             @endforeach
                         </tbody>

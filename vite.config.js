@@ -18,6 +18,7 @@ export default defineConfig({
                 'resources/js/rooms/show.js',
                 'resources/js/guests/index.js',
                 'resources/js/guests/edit.js',
+                'resources/js/guests/search.js',
                 'resources/js/guests/create.js',
                 'resources/js/employees/index.js',
                 'resources/js/users/index.js',

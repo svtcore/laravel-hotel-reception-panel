@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\receptionist;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Classes\Guests;
 use App\Http\Classes\Bookings;
-use App\Http\Requests\admin\booking\DeleteRelationRequest;
-use App\Http\Requests\admin\guests\SearchRelationGuest;
-use App\Http\Requests\admin\guests\SearchRelationRequest;
-use App\Http\Requests\admin\guests\SearchRequest;
-use App\Http\Requests\admin\guests\StoreRequest;
-use App\Http\Requests\admin\guests\SubmitRelationRequest;
-use App\Http\Requests\admin\guests\UpdateRequest;
+use App\Http\Requests\receptionist\booking\DeleteRelationRequest;
+use App\Http\Requests\receptionist\guests\SearchRelationGuest;
+use App\Http\Requests\receptionist\guests\SearchRelationRequest;
+use App\Http\Requests\receptionist\guests\SearchRequest;
+use App\Http\Requests\receptionist\guests\StoreRequest;
+use App\Http\Requests\receptionist\guests\SubmitRelationRequest;
+use App\Http\Requests\receptionist\guests\UpdateRequest;
 use Exception;
 use Illuminate\Validation\ValidationException;
 
@@ -62,7 +62,7 @@ class GuestController extends Controller
             } else return redirect()->back()->withErrors(['error' => 'There is error in while added record']);
         }
         catch(Exception $e){
-            
+            dd($e);
         }
     }
 
@@ -140,7 +140,7 @@ class GuestController extends Controller
             if ($validatedData === null) {
                 return response()->withErrors(['errors' => 'Validation failed']);
             }
-            $searchResult = $this->guests->searchByParams($validatedData, true);
+            $searchResult = $this->guests->searchByParams($validatedData, false);
             if (is_countable($searchResult) > 0) {
                 return view('guests.search')->with(['guests' => $searchResult, 'inputData' => $validatedData]);
             } else return redirect()->back()->withErrors(['errors' => 'There is no records found']);
@@ -163,6 +163,7 @@ class GuestController extends Controller
         catch(Exception $e){
             return null;
         }
+        
     }
 
     public function searchRelation(SearchRelationGuest $request){

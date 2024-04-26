@@ -4,7 +4,7 @@
 @vite(['resources/css/bookings-style.css'])
 @endsection
 @section('navbar_header_button')
-<span class="header-navbar">Booking</span>
+<span class="header-navbar">Add booking</span>
 @endsection
 @section('content')
 <div class="container-fluid mt-5">
@@ -31,7 +31,8 @@
                         <div class="col-md-6">
                             <div class="card no-shadow">
                                 <div class="card-body">
-                                    <h4 class="card-title pl-4"><b>Reservation Details</b></h4><br /><br />
+                                    <h4 class="card-title pl-4"><b>Reservation Details</b></h4>
+                                    <br /><br />
                                     @csrf
                                     <input type="hidden" id="room_id" name="room_id" value="{{ $room->id }}" />
                                     <div class="row mb-3 ml-2 mr-2">

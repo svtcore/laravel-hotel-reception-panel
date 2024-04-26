@@ -32,17 +32,17 @@
     "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
   },
   "resources/css/bookings-style.css": {
-    "file": "assets/bookings-style-d7vovrA4.css",
-    "src": "resources/css/guests-style.css",
+    "file": "assets/bookings-style-BNs7AKo2.css",
+    "src": "resources/css/bookings-style.css",
     "isEntry": true
   },
   "resources/css/guests-style.css": {
-    "file": "assets/bookings-style-d7vovrA4.css",
+    "file": "assets/guests-style-d7vovrA4.css",
     "src": "resources/css/guests-style.css",
     "isEntry": true
   },
   "resources/css/main-style.css": {
-    "file": "assets/main-style-nsRfk3KC.css",
+    "file": "assets/main-style-B-ZOr2t_.css",
     "src": "resources/css/main-style.css",
     "isEntry": true
   },
@@ -132,6 +132,12 @@
     "file": "assets/index-CzOOTwWi.js",
     "name": "index",
     "src": "resources/js/guests/index.js",
+    "isEntry": true
+  },
+  "resources/js/guests/search.js": {
+    "file": "assets/search-Cesar9HF.js",
+    "name": "search",
+    "src": "resources/js/guests/search.js",
     "isEntry": true
   },
   "resources/js/rooms/index.js": {

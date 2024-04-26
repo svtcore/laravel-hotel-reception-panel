@@ -4,7 +4,7 @@
 @vite(['resources/css/rooms-style.css'])
 @endsection
 @section('navbar_header_button')
-    <span class="nav-page-info">Create new room data</span>
+    <span class="header-navbar">Create new room data</span>
 @endsection
 @section('content')
 <div class="container-fluid mt-5">

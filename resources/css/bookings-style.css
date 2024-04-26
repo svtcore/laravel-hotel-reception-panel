@@ -70,3 +70,22 @@ body {
     font-size: 14px;
     border-radius: 5px;
 }
+.search-results {
+    list-style-type: none;
+    padding: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 0;
+    list-style-type: none;
+}
+
+.search-results li {
+    padding: 5px;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    cursor: pointer;
+}
+
+.search-results li:hover {
+    background-color: #e9ecef;
+}

@@ -127,7 +127,9 @@ class Bookings
         try {
             $booking = Booking::with([
                 'rooms',
-                'guests',
+                'guests' => function($q){
+                    $q->orderBy('pivot_guest_id', 'asc');
+                },
                 'additional_services'
             ])->where('id', $id)->first();
             if ($booking && $booking->count() > 0) {
@@ -252,9 +254,10 @@ class Bookings
     public function getByGuestId($id): ?iterable
     {
         try {
-            $booking = Booking::with('rooms', 'guests')->whereHas('guests', function ($query) use ($id) {
-                $query->where('guest_id', $id);
-            })->get();
+            $booking = Booking::with('rooms', 'guests')
+                ->whereHas('guests', function ($query) use ($id) {
+                    $query->where('id', $id);
+                })->get();
             if ($booking && $booking->count() > 0) {
                 return $booking;
             } else {
@@ -400,7 +403,7 @@ class Bookings
             if ($free_dates != null || $last_date != null)
                 $dateRanges = $this->checkDatesInRange($inputData, $free_dates, $last_date);
             else $dateRanges = true;
-            if ($dateRanges){
+            if ($dateRanges) {
                 $guest = $guest_obj->getByPhoneNumber($inputData);
                 $booking = $room->bookings()->create([
                     'adults_count' => $inputData['adultsCount'],
@@ -506,5 +509,24 @@ class Bookings
         }
 
         return $checkInsCountByDay;
+    }
+
+    public function deleteRelation($inputData): bool
+    {
+        try {
+            $guest_id = $inputData['guest_id'];
+            $booking_id = $inputData['booking_id'];
+    
+            $booking = Booking::findOrFail($booking_id);
+    
+            if ($booking) {
+                $booking->guests()->detach($guest_id);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return false;
+        }
     }
 }

@@ -5,7 +5,7 @@
 @endsection
 @section('content')
 @section('navbar_header_button')
-<span class="nav-page-info">Add new guest</span>
+<span class="header-navbar">Guests</span>
 @endsection
 <div class="container-fluid mt-5">
     <div class="content-container">
@@ -114,7 +114,7 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="card-body">
-                                                <input type="hidden" id="target_url" name="target_url" data-route="{{ route('.relation') }}" />
+                                                <input type="hidden" id="target_url" name="target_url" data-route="{{ route('guests.relation') }}" />
                                                 <div class="form-group">
                                                     <input type="text" class="form-control text-center font-weight-bold" id="roomNumber" placeholder="Room number" name="roomNumber">
                                                 </div>

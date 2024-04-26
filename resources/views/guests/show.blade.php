@@ -4,7 +4,7 @@
 @vite(['resources/css/guests-style.css'])
 @endsection
 @section('navbar_header_button')
-<a href="{{ route('guests.create') }}" class="add-new-button">Add Guest</a>
+<a href="{{ route('guests.create') }}" style="width:400px;" class="add-new-button">Add Guest</a>
 @endsection
 @section('content')
 <div class="container-fluid mt-5">
@@ -142,7 +142,7 @@
                                     <span class="badge badge-secondary badge-big">{{ $book->status }}</span>
                                     @endif
                                 </td>
-                                <td class="text-center"><a href="{{ route('g.show', $book->id) }}" class="btn btn-secondary pt-0 pb-0 pr-4 pl-4">Details</a></td>
+                                <td class="text-center"><a href="{{ route('booking.show', $book->id) }}" class="btn btn-secondary pt-0 pb-0 pr-4 pl-4">Details</a></td>
                             </tr>
                             @endforeach
                         </tbody>

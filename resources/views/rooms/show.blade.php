@@ -6,12 +6,14 @@
 @vite(['resources/css/rooms-style.css'])
 @endsection
 @section('navbar_header_button')
-<a href="{{ route('rooms.create') }}" class="add-new-button">Add New Room</a>
+@role('admin')
+    <a href="{{ route('rooms.create') }}" style="width:400px;" class="add-new-button">Add New Room</a>
+@endrole
+@role('receptionist')
+<span class="header-navbar">Rooms</span>
+@endrole
 @endsection
 @section('navbar_header_button_second')
-<li class="nav-item w-100 ml-5 mr-5">
-    <a href="{{ route('booking.create', $room->id) }}" class="add-new-button font-weight-bold">Book this room</a>
-</li>
 @endsection
 @section('content')
 <div class="container-fluid mt-5">
@@ -105,6 +107,10 @@
                                             <h5 class="mb-2"><b>Room control</b></h5>
                                             <ul class="list-group">
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <a href="{{ route('booking.create', $room->id) }}" class="btn btn-success w-100">Book this room</a>
+                                                </li>
+                                                @role('admin')
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
                                                     <a href="{{ route('rooms.edit', $room->id) }}" class="btn btn-primary w-100">Edit room</a>
                                                 </li>
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -114,6 +120,7 @@
                                                         <button class="btn btn-danger w-100" type="submit">Delete room</button>
                                                     </form>
                                                 </li>
+                                                @endrole
                                             </ul>
                                         </div>
                                     </div>

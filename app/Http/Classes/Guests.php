@@ -114,8 +114,10 @@ class Guests
                     'document_issued_date' => $inputData['documentIssuedDate'],
                 ]);
             }
-            $booking = Booking::findOrFail($inputData['selectedOrderId']);
-            $guest->bookings()->attach($booking);
+            if (isset($inputData['selectedOrderId']) && $inputData['selectedOrderId'] != 0) {
+                $booking = Booking::findOrFail($inputData['selectedOrderId']);
+                $guest->bookings()->attach($booking);
+            }
             if ($result) {
                 return $result->id;
             } else return null;
@@ -131,16 +133,24 @@ class Guests
 
             if (isset($inputData['guestName'])) {
                 $guestName = $inputData['guestName'];
-                $searchResult->where(function ($query) use ($guestName) {
-                    $query->where('first_name', 'like', "%$guestName%")
-                        ->orWhere('last_name', 'like', "%$guestName%");
-                });
+                $names = explode(' ', $guestName);
+                if (count($names) == 2) {
+                    $firstName = $names[0];
+                    $lastName = $names[1];
+                    $searchResult->where('first_name', 'like', "%" . $firstName . "%")
+                        ->where('last_name', 'like', "%" . $lastName . "%");
+                } else {
+                    $searchResult->where(function ($query) use ($guestName) {
+                        $query->where('first_name', 'like', "%" . $guestName . "%")
+                            ->orWhere('last_name', 'like', "%" . $guestName . "%");
+                    });
+                }
             } elseif (isset($inputData['firstName'])) {
                 $firstName = $inputData['firstName'];
-                $searchResult->where('first_name', 'like', "%$firstName%");
+                $searchResult->where('first_name', 'like', "%" . $firstName . "%");
             } elseif (isset($inputData['lastName'])) {
                 $lastName = $inputData['lastName'];
-                $searchResult->where('last_name', 'like', "%$lastName%");
+                $searchResult->where('last_name', 'like', "%" . $lastName . "%");
             }
 
             if (isset($inputData['phoneNumber'])) {
@@ -150,7 +160,7 @@ class Guests
 
             $searchResult = $searchResult->orderBy('id', 'DESC')->get();
 
-            if ($searchResult->count() > 0) {
+            if ($searchResult->isNotEmpty()) {
                 return $searchResult;
             } else {
                 return null;
@@ -160,12 +170,13 @@ class Guests
         }
     }
 
+
     public function getByPhoneNumber($inputData): ?object
     {
-        try{
+        try {
             $guest = Guest::where('phone_number', $inputData['phoneNumber'])->first();
             if (isset($guest->id)) return $guest;
-            else{
+            else {
                 $guest = Guest::create([
                     'first_name' => $inputData['firstName'],
                     'last_name' => $inputData['lastName'],
@@ -174,9 +185,56 @@ class Guests
                 if (isset($guest->id)) return $guest;
                 else return null;
             }
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+    
+
+    public function searchRelationGuest($inputData)
+    {
+        try{
+            $guest_data = explode(' ', $inputData['guestName']);
+            if (count($guest_data) > 1){
+                $firstName = $guest_data[0];
+                $lastName = $guest_data[1];
+
+                $result = Guest::select(['id','first_name', 'last_name', 'dob'])->where("first_name", "like", "%".$firstName."%")
+                    ->where("last_name", "like", "%".$lastName."%")->get();
+                if ($result && $result->count() > 0){
+                    return $result;
+                }else return null;
+
+            }elseif (count($guest_data) == 1){
+                $name = $guest_data[0];
+                $result = Guest::select(['id','first_name', 'last_name', 'dob'])
+                    ->where("first_name", "like", "%".$name."%")
+                    ->OrWhere("last_name", "like", "%".$name."%")->get();
+                if ($result && $result->count() > 0){
+                        return $result;
+                    }else return null;
+            }
         }
         catch(Exception $e){
-            return null;
+            dd($e);
+        }
+    }
+
+    public function submitRelation($inputData): bool
+    {
+        try {
+            $guest_id = $inputData['related_guest_id'];
+            $booking_id = $inputData['booking_id'];
+            $booking = Booking::findOrFail($booking_id);
+
+            if ($booking) {
+                $booking->guests()->attach($guest_id);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return false;
         }
     }
 }

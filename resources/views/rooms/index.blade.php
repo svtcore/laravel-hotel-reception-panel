@@ -4,7 +4,12 @@
     @vite(['resources/css/rooms-style.css'])
 @endsection
 @section('navbar_header_button')
-    <a href="{{ route('rooms.create') }}" class="add-new-button">Add New Room</a>
+@role('admin')
+    <a href="{{ route('rooms.create') }}" class="add-new-button" style="width:400px;">Add New Room</a>
+@endrole
+@role('receptionist')
+<span class="header-navbar">Rooms</span>
+@endrole
 @endsection
 @section('content')
     <div class="container-fluid mt-5">
@@ -162,7 +167,7 @@
                             <tbody>
                                 @foreach ($rooms as $room)
                                     <tr>
-                                        <td class="text-center"><a href="{{ route('show', $room->id) }}">{{ $room->room_number }}</td>
+                                        <td class="text-center"><a href="{{ route('rooms.show', $room->id) }}">{{ $room->room_number }}</td>
                                         <td class="text-center">{{ strtoupper($room->type) }}</td>
                                         <td class="text-center">
                                             {{ $room->floor_number }}
@@ -180,8 +185,14 @@
                                                     <a href="{{ route('booking.create', $room->id) }}" class="btn btn-success">Book now</a>
                                                 @endif
                                                 <a href="{{ route('rooms.show', $room->id) }}" class="btn btn-secondary">Details</a>
+                                                @role('admin')
                                                 <a href="{{ route('rooms.edit', $room->id) }}" class="btn btn-warning"><i class="fas fa-pen"></i></a>
-                                                <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                                <form action="{{ route('rooms.delete', $room->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                                </form>
+                                                @endrole
                                             </div>
                                         </td>
                                     </tr>

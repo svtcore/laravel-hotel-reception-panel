@@ -37,7 +37,7 @@
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-dark navbar-primary fixed-top">
             <div class="container-fluid">
-                <ul class="navbar-nav mx-auto w-50">
+                <ul class="navbar-nav mx-auto mt-1">
                     <li class="nav-item w-100">
                         @yield('navbar_header_button')
                     </li>
@@ -62,22 +62,25 @@
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        @role('admin')
                         <li class="nav-item">
                             <a href="{{ route('dashboard') }}" class="nav-link nav-custom @yield('dashboard_navbar_state')">
                                 <i class="nav-icon fas fa-bed"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('booking.index') }}" class="nav-link nav-custom @yield('booking_navbar_state')">
-                                <i class="nav-icon fas fa-bed"></i>
-                                <p>Booking</p>
-                            </a>
-                        </li>
+                        @endrole
+                        @hasanyrole('admin|receptionist')
                         <li class="nav-item">
                             <a href="{{ route('rooms.index') }}" class="nav-link nav-custom @yield('rooms_navbar_state')">
                                 <i class="nav-icon fas fa-utensils"></i>
                                 <p>Rooms</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('booking.index') }}" class="nav-link nav-custom @yield('booking_navbar_state')">
+                                <i class="nav-icon fas fa-bed"></i>
+                                <p>Booking</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -92,12 +95,15 @@
                                 <p>Employees</p>
                             </a>
                         </li>
+                        @endhasanyrole
+                        @role('admin')
                         <li class="nav-item">
                             <a href="{{ route('users.index') }}" class="nav-link nav-custom @yield('users_navbar_state')">
                                 <i class="nav-icon fas fa-car"></i>
                                 <p>Users</p>
                             </a>
                         </li>
+                        @endrole
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

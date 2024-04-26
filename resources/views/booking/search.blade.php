@@ -7,10 +7,8 @@
 <span class="header-navbar">Booking</span>
 @endsection
 @section('content')
-<!-- Main content -->
 <div class="container-fluid mt-5">
     <div class="content-container">
-        <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="container-fluid mt-4">
                 @if (session('success'))

@@ -30,6 +30,7 @@
                         <div class="card no-shadow">
                             <div class="card-body">
                                 <h4 class="ml-4"><b>Reservation info</b></h4>
+                                <hr/>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <ul class="list-group list-group-flush pl-3 pr-3">
@@ -187,7 +188,7 @@
                                         @if ($index >= 2)
                                         <tr>
                                             <td></td>
-                                            <td class="text-center"><a href="{{ route('guests.show', $booking_data->guests[0]->id) }}">{{ $guest->first_name }}
+                                            <td class="text-center"><a href="{{ route('guests.show', $booking_data->guests[$index]->id) }}">{{ $guest->first_name }}
                                                 {{ $guest->last_name }}</a>
                                             </td>
                                         </tr>
