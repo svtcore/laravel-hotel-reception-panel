@@ -26,9 +26,13 @@
                 </div>
                 @endif
                 <div class="content-container text-center">
-                    <h4><b>Search form</b></h4>
-
-                    <form id="searchForm" method="POST" action="{{ route('booking.search') }}">
+                    <h4 class="font-weight-bold">Search form</h4>
+                    @role('admin')
+                    <form id="searchForm" method="POST" action="{{ route('admin.booking.search') }}">
+                    @endrole
+                    @role('receptionist')
+                    <form id="searchForm" method="POST" action="{{ route('receptionist.booking.search') }}">
+                    @endrole
                         @csrf
                         <div class="row mt-5">
                             <div class="col-md-4">
@@ -38,11 +42,18 @@
                                     <span class="toggle-label">By date</span>
                                 </label>
                             </div>
-                            <div class="col-md-3">
-                                <label class="toggle" checked>
+                            <div class="col-md-2">
+                                <label class="toggle">
                                     <input class="toggle-checkbox" id="switch-by-name" type="checkbox">
                                     <div class="toggle-switch"></div>
-                                    <span class="toggle-label">By guest name</span>
+                                    <span class="toggle-label">By guest</span>
+                                </label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="toggle" checked>
+                                    <input class="toggle-checkbox" id="switch-by-room" type="checkbox">
+                                    <div class="toggle-switch"></div>
+                                    <span class="toggle-label">By room</span>
                                 </label>
                             </div>
                             <div class="col-md-2">
@@ -63,11 +74,18 @@
                                 <label for="endDate">End date</label>
                                 <input type="date" class="form-control" id="endDate" name="endDate" disabled value="{{ \Carbon\Carbon::now()->toDateString() }}" required>
                             </div>
-                            <div class="col-md-3 pt-2">
+                            <div class="col-md-2 pt-2">
                                 <label for="guestName">Guest name</label>
-                                <input type="text" class="form-control" id="guestName" name="guestName" placeholder="Full name" required minlength="2" maxlength="255">
+                                <input type="text" class="form-control" id="guestName" name="guestName" disabled placeholder="Full name"  minlength="2" maxlength="255" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid guest name.
+                                </div>
+                            </div>
+                            <div class="col-md-2 pt-2">
+                                <label for="roomNumber">Room number</label>
+                                <input type="text" class="form-control" id="roomNumber" name="roomNumber" placeholder="Room number" required minlength="1" maxlength="3">
+                                <div class="invalid-feedback">
+                                    Please provide a valid room number.
                                 </div>
                             </div>
                             <div class="col-md-2 pt-2">
@@ -77,7 +95,7 @@
                                     Please provide a valid phone number.
                                 </div>
                             </div>
-                            <div class="col-md-3 pt-2 mt-2">
+                            <div class="col-md-2 pt-2 mt-2">
                                 <label for="phoneNumber"></label>
                                 <button type="submit" class="btn btn-primary w-100">Search</button>
                             </div>
@@ -123,7 +141,12 @@
                                 <tbody>
                                     @foreach ($check_in_bookings as $booking)
                                     <tr class="text-center">
-                                        <td class="text-center"><a href="{{ route('rooms.show', $booking->room_id) }}">{{ $booking->rooms->room_number }}</a></td>
+                                        @role('admin')
+                                        <td class="text-center"><a href="{{ route('admin.rooms.show', $booking->room_id) }}">@isset($booking->rooms->room_number) {{ $booking->rooms->room_number }} @endisset</a></td>
+                                        @endrole
+                                        @role('receptionist')
+                                        <td class="text-center"><a href="{{ route('receptionist.rooms.show', $booking->room_id) }}">@isset($booking->rooms->room_number) {{ $booking->rooms->room_number }} @endisset</a></td>
+                                        @endrole
                                         <td class="text-center">
                                             @isset($booking->guests[0]->first_name)
                                                 {{ $booking->guests[0]->first_name }}
@@ -143,13 +166,27 @@
                                             {{ \Carbon\Carbon::parse($booking->check_out_date)->format('d-m-Y') }}
                                         </td>
                                         <td class="text-center">
-                                            <form action="{{ route('booking.delete', $booking->id) }}" method="POST">
+                                            @role('admin')
+                                            <form action="{{ route('admin.booking.delete', $booking->id) }}" method="POST">
+                                            @endrole
+                                            @role('receptionist')
+                                            <form action="{{ route('receptionist.booking.delete', $booking->id) }}" method="POST">
+                                            @endrole
                                                 <div class="btn-group mr-2" role="group" aria-label="First group">
-                                                    <a href="{{ route('booking.show', $booking->id) }}" class="btn btn-secondary">Details
+                                                    @role('admin')
+                                                    <a href="{{ route('admin.booking.show', $booking->id) }}" class="btn btn-secondary">Details
                                                     </a>
-                                                    <a href="{{ route('booking.edit', $booking->id) }}" type="button" class="btn btn-warning">
+                                                    <a href="{{ route('admin.booking.edit', $booking->id) }}" type="button" class="btn btn-warning">
                                                         <i class="fas fa-pen"></i>
                                                     </a>
+                                                    @endrole
+                                                    @role('receptionist')
+                                                    <a href="{{ route('receptionist.booking.show', $booking->id) }}" class="btn btn-secondary">Details
+                                                    </a>
+                                                    <a href="{{ route('receptionist.booking.edit', $booking->id) }}" type="button" class="btn btn-warning">
+                                                        <i class="fas fa-pen"></i>
+                                                    </a>
+                                                    @endrole
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger">
@@ -179,7 +216,12 @@
                                 <tbody>
                                     @foreach ($check_out_bookings as $booking)
                                     <tr>
-                                        <td class="text-center"><a href="{{ route('rooms.show', $booking->room_id) }}">{{ $booking->rooms->room_number }}</a></td>
+                                        @role('admin')
+                                        <td class="text-center">@isset($booking->rooms->room_number) <a href="{{ route('admin.rooms.show', $booking->room_id) }}">{{ $booking->rooms->room_number }}</a>@endisset</td>
+                                        @endrole
+                                        @role('receptionist')
+                                        <td class="text-center">@isset($booking->rooms->room_number) <a href="{{ route('receptionist.rooms.show', $booking->room_id) }}">{{ $booking->rooms->room_number }}</a>@endisset</td>
+                                        @endrole
                                         <td class="text-center">
                                             @isset($booking->guests[0]->first_name) 
                                                 {{ $booking->guests[0]->first_name }}
@@ -196,14 +238,24 @@
                                             {{ \Carbon\Carbon::parse($booking->check_out_date)->format('Y-m-d') }}
                                         </td>
                                         <td class="text-center">
-                                            <form action="{{ route('booking.status', $booking->id) }}" method="POST">
+                                            @role('admin')
+                                            <form action="{{ route('admin.booking.status', $booking->id) }}" method="POST">
+                                            @endrole
+                                            @role('receptionist')
+                                            <form action="{{ route('receptionist.booking.status', $booking->id) }}" method="POST">
+                                            @endrole
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="btn-group mr-2" role="group" aria-label="First group">
                                                     <input type="hidden" value="completed" name="status" />
                                                     <button type="submit" class="btn btn-success">Complete
                                                         check-out</i></button>
-                                                    <a href="{{ route('booking.edit', $booking->id) }}" type="submit" class="btn btn-warning"><i class="fas fa-pen"></i></a>
+                                                    @role('admin')
+                                                    <a href="{{ route('admin.booking.edit', $booking->id) }}" type="submit" class="btn btn-warning"><i class="fas fa-pen"></i></a>
+                                                    @endrole
+                                                    @role('receptionist')
+                                                    <a href="{{ route('receptionist.booking.edit', $booking->id) }}" type="submit" class="btn btn-warning"><i class="fas fa-pen"></i></a>
+                                                    @endrole
                                                 </div>
                                             </form>
                                         </td>

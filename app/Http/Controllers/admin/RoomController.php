@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Classes\Rooms;
 use App\Http\Classes\Bookings;
-use App\Http\Classes\CleaningLogs;
 use App\Http\Requests\admin\rooms\SearchRequest;
 use App\Http\Requests\admin\rooms\StoreRequest;
 use App\Http\Requests\admin\rooms\UpdateRequest;
@@ -20,14 +19,12 @@ class RoomController extends Controller
     private $booking = NULL;
     private $rooms = NULL;
     private $room_properties = NULL;
-    private $cleaning = NULL;
 
     public function __construct()
     {
         $this->booking = new Bookings();
         $this->rooms = new Rooms();
         $this->room_properties = new RoomProperties();
-        $this->cleaning = new CleaningLogs();
     }
 
     /**
@@ -61,10 +58,10 @@ class RoomController extends Controller
             }
             $result = $this->rooms->store($validatedData);
             if ($result != false && $result > 0) {
-                return redirect()->route('rooms.show', $result)->with('success', 'Room data successful added');
+                return redirect()->route('admin.rooms.show', $result)->with('success', 'Room data successful added');
             } else return redirect()->back()->withErrors(['error' => 'There is error in while adding record']);
         } catch (Exception $e) {
-            return response()->withErrors(['errors' => 'Error in adding room controller']);
+            return redirect()->back()->withErrors(['error' => 'Error while adding room record']);
         }
     }
 
@@ -77,7 +74,6 @@ class RoomController extends Controller
         return view('rooms.show')->with([
             'room' => $this->rooms->getById($id, true) ?? abort(404),
             'booking' => $this->booking->getByRoomId($id) ?? array(),
-            'cleaning' => $this->cleaning->getByRoomId($id) ?? array()
         ]);
     }
 
@@ -104,10 +100,10 @@ class RoomController extends Controller
                 return response()->withErrors(['errors' => 'Validation failed']);
             }
             if ($this->rooms->update($validatedData, $id)) {
-                return redirect()->route('rooms.show', $id)->with('success', 'Room data successful updated');
+                return redirect()->route('admin.rooms.show', $id)->with('success', 'Room data successful updated');
             } else return redirect()->back()->withErrors(['error' => 'There is error in while updating record']);
         } catch (Exception $e) {
-            return response()->withErrors(['errors' => 'Error in update room controller']);
+            return redirect()->back()->withErrors(['error' => 'There is error in while updating record']);
         }
     }
 
@@ -117,7 +113,7 @@ class RoomController extends Controller
     public function destroy(string $id)
     {
         if ($this->rooms->deleteById($id)) {
-            return redirect()->route('rooms.index')->with('success', 'Record successful deleted');
+            return redirect()->route('admin.rooms.index')->with('success', 'Record successful deleted');
         } else return redirect()->back()->withErrors(['error' => __('The requested resource could not be found.')]);
     }
 
@@ -134,7 +130,7 @@ class RoomController extends Controller
             $searchResult = $this->rooms->searchByParams($validatedData, true);
             if ($searchResult != null) {
                 return view('rooms.search')->with(['result' => $searchResult ?? array(), 'room_properties' => $this->room_properties->getAll() ?? array(), 'inputData' => $validatedData]);
-            } else return redirect()->route('rooms.index')->withErrors(['errors' => 'There is no records found']);
+            } else return redirect()->route('admin.rooms.index')->withErrors(['errors' => 'There is no records found']);
         } catch (ValidationException $e) {
             return response()->json(['errors' => $e->errors()], 422);
         }

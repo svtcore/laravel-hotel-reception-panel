@@ -36,7 +36,12 @@
                                         <ul class="list-group list-group-flush pl-3 pr-3">
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Room Number
-                                                <span class="badge bg-secondary badge-big">@isset($booking_data->rooms->room_number) <a href="{{ route('rooms.show', $booking_data->rooms->id) }}">{{ $booking_data->rooms->room_number }}</a> @endisset</span>
+                                                @role('admin')
+                                                <span class="badge bg-secondary badge-big">@isset($booking_data->rooms->room_number) <a href="{{ route('admin.rooms.show', $booking_data->rooms->id) }}">{{ $booking_data->rooms->room_number }}</a> @endisset</span>
+                                                @endrole
+                                                @role('receptionist')
+                                                <span class="badge bg-secondary badge-big">@isset($booking_data->rooms->room_number) <a href="{{ route('receptionist.rooms.show', $booking_data->rooms->id) }}">{{ $booking_data->rooms->room_number }}</a> @endisset</span>
+                                                @endrole
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 Room type
@@ -133,8 +138,13 @@
                                 <h4 class="card-title"><b>Booking Controls</b></h4>
                                 <div class="mb-3">
                                     <label for="statusSelect" class="form-label float-right">Change Status</label>
-                                    <form id="statusForm" name="statusForm" action="{{ route('booking.status', $booking_data->id) }}" method="POST">
-                                        @csrf
+                                    @role('admin')
+                                    <form id="statusForm" name="statusForm" action="{{ route('admin.booking.status', $booking_data->id) }}" method="POST">
+                                    @endrole
+                                    @role('receptionist')
+                                    <form id="statusForm" name="statusForm" action="{{ route('receptionist.booking.status', $booking_data->id) }}" method="POST">
+                                    @endrole   
+                                    @csrf
                                         @method('PUT')
                                         <select class="form-select" id="statusSelect" name="status">
                                             <option value="reserved" {{ $booking_data->status === 'reserved' ? 'selected' : '' }}>Reserved</option>
@@ -146,18 +156,33 @@
                                     </form>
                                 </div>
                                 <div class="mb-3">
-                                    <a href="{{ route('booking.edit', $booking_data->id) }}" class="btn btn-primary w-100">Edit Reservation</a>
+                                    @role('admin')
+                                    <a href="{{ route('admin.booking.edit', $booking_data->id) }}" class="btn btn-primary w-100">Edit Reservation</a>
+                                    @endrole
+                                    @role('receptionist')
+                                    <a href="{{ route('receptionist.booking.edit', $booking_data->id) }}" class="btn btn-primary w-100">Edit Reservation</a>
+                                    @endrole
                                 </div>
                                 <div class="mb-3">
-                                    <form action="{{ route('booking.delete', $booking_data->id) }}" method="POST">
-                                        @csrf
+                                    @role('admin')
+                                    <form action="{{ route('admin.booking.delete', $booking_data->id) }}" method="POST">
+                                    @endrole    
+                                    @role('receptionist')
+                                    <form action="{{ route('receptionist.booking.delete', $booking_data->id) }}" method="POST">
+                                    @endrole
+                                    @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger w-100" type="submit">Delete Reservation</button>
                                     </form>
                                 </div>
                                 @isset($booking_data->guests[0]->first_name)
                                 <div class="mb-3">
-                                    <a href="{{ route('guests.create') }}" class="btn btn-secondary w-100">Relate guests</a>
+                                    @role('admin')
+                                    <a href="{{ route('admin.guests.create') }}" class="btn btn-secondary w-100">Relate guests</a>
+                                    @endrole
+                                    @role('receptionist')
+                                    <a href="{{ route('receptionist.guests.create') }}" class="btn btn-secondary w-100">Relate guests</a>
+                                    @endrole
                                 </div>
                                 @endisset
                             </div>
@@ -172,12 +197,22 @@
                                 <table class="table">
                                         <tr>
                                             <td class="text-center"><b>
-                                                <a href="{{ route('guests.show', $booking_data->guests[0]->id) }}">
+                                                @role('admin')
+                                                <a href="{{ route('admin.guests.show', $booking_data->guests[0]->id) }}">
+                                                @endrole
+                                                @role('receptionist')
+                                                <a href="{{ route('receptionist.guests.show', $booking_data->guests[0]->id) }}">
+                                                @endrole
                                                     {{ $booking_data->guests[0]->first_name }}
                                                     {{ $booking_data->guests[0]->last_name }}</a></b></td>
                                             @if (count($booking_data->guests) > 1)
                                             <td class="text-center">
-                                            <a href="{{ route('guests.show', $booking_data->guests[1]->id) }}">
+                                            @role('admin')
+                                            <a href="{{ route('admin.guests.show', $booking_data->guests[1]->id) }}">
+                                            @endrole
+                                            @role('receptionist')
+                                            <a href="{{ route('receptionist.guests.show', $booking_data->guests[1]->id) }}">
+                                            @endrole
                                                 {{ $booking_data->guests[1]->first_name }}
                                                 {{ $booking_data->guests[1]->last_name }}</a>
                                             </td>
@@ -188,8 +223,13 @@
                                         @if ($index >= 2)
                                         <tr>
                                             <td></td>
-                                            <td class="text-center"><a href="{{ route('guests.show', $booking_data->guests[$index]->id) }}">{{ $guest->first_name }}
-                                                {{ $guest->last_name }}</a>
+                                            @role('admin')
+                                            <td class="text-center"><a href="{{ route('admin.guests.show', $booking_data->guests[$index]->id) }}">{{ $guest->first_name }}
+                                            @endrole  
+                                            @role('receptionist')
+                                            <td class="text-center"><a href="{{ route('receptionist.guests.show', $booking_data->guests[$index]->id) }}">{{ $guest->first_name }}
+                                            @endrole    
+                                            {{ $guest->last_name }}</a>
                                             </td>
                                         </tr>
                                         @endif

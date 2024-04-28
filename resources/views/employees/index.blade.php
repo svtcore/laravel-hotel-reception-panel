@@ -5,7 +5,7 @@
 @endsection
 @section('navbar_header_button')
 @role('admin')
-<a href="{{ route('employees.create') }}" style="width:400px;" class="add-new-button">Add Employee</a>
+<a href="{{ route('admin.employees.create') }}" style="width:400px;" class="add-new-button">Add Employee</a>
 @endrole
 @role('receptionist')
 <span class="header-navbar">Employees</span>
@@ -30,9 +30,6 @@
                     </ul>
                 </div>
                 @endif
-                <div class="mt-4 text-center">
-
-                </div>
                 <div>
                     <table id="employees-table" class="table table-bordered table-striped">
                         <thead>
@@ -57,9 +54,9 @@
                                 <td class="text-center">{{ ucfirst($employee->status) }}</td>
                                 @role('admin')
                                 <td class="text-center">
-                                    <form action="{{ route('employees.delete', $employee->id) }}" method="POST">
+                                    <form action="{{ route('admin.employees.delete', $employee->id) }}" method="POST">
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
-                                            <a href="{{ route('employees.edit', $employee->id) }}" type="button" class="btn btn-warning">
+                                            <a href="{{ route('admin.employees.edit', $employee->id) }}" type="button" class="btn btn-warning">
                                                 <i class="fas fa-pen"></i>
                                             </a>
                                             @csrf
@@ -69,7 +66,7 @@
                                             </button>
                                         </div>
                                     </form>
-                                </td>]
+                                </td>
                                 @endrole
                             </tr>
                             @endforeach

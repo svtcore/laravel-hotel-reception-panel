@@ -26,7 +26,12 @@
                     </ul>
                 </div>
                 @endif
-                <form id="editForm" action="{{ route('guests.update', $guest->id) }}" method="POST">
+                @role('admin')
+                <form id="editForm" action="{{ route('admin.guests.update', $guest->id) }}" method="POST">
+                @endrole
+                @role('receptionist')
+                <form id="editForm" action="{{ route('receptionist.guests.update', $guest->id) }}" method="POST">
+                @endrole
                     <div class="row">
                         <div class="col-md-5">
                             <div class="card no-shadow">

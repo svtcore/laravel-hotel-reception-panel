@@ -4,7 +4,12 @@
 @vite(['resources/css/guests-style.css'])
 @endsection
 @section('navbar_header_button')
-<a href="{{ route('guests.create') }}" style="width:400px;" class="add-new-button">Add Guest</a>
+@role('admin')
+<a href="{{ route('admin.guests.create') }}" style="width:400px;" class="add-new-button">Add Guest</a>
+@endrole
+@role('receptionist')
+<a href="{{ route('receptionist.guests.create') }}" style="width:400px;" class="add-new-button">Add Guest</a>
+@endrole
 @endsection
 @section('content')
 <div class="container-fluid mt-5">
@@ -26,9 +31,13 @@
                 </div>
                 @endif
                 <div class="content-container text-center">
-                    <h4><b>Search form</b></h4>
-
-                    <form id="searchForm" method="POST" action="{{ route('guests.search') }}">
+                    <h4 class="font-weight-bold">Search form</h4>
+                    @role('admin')
+                    <form id="searchForm" method="POST" action="{{ route('admin.guests.search') }}">
+                    @endrole
+                    @role('receptionist')
+                    <form id="searchForm" method="POST" action="{{ route('receptionist.guests.search') }}">
+                    @endrole
                         @csrf
                         <div class="row mt-5">
                             <div class="col-md-4">
@@ -96,13 +105,27 @@
                                 <td class="text-center">{{ \Carbon\Carbon::parse($guest->dob)->format('d-m-Y') }}</td>
                                 <td class="text-center">{{ $guest->phone_number }}</td>
                                 <td class="text-center">
-                                    <form action="{{ route('guests.delete', $guest->id) }}" method="POST">
+                                    @role('admin')
+                                    <form action="{{ route('admin.guests.delete', $guest->id) }}" method="POST">
+                                    @endrole
+                                    @role('receptionist')
+                                    <form action="{{ route('receptionist.guests.delete', $guest->id) }}" method="POST">
+                                    @endrole
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
-                                            <a href="{{ route('guests.show', $guest->id) }}" class="btn btn-secondary">Details
+                                            @role('admin')
+                                            <a href="{{ route('admin.guests.show', $guest->id) }}" class="btn btn-primary">Details
                                             </a>
-                                            <a href="{{ route('guests.edit', $guest->id) }}" type="button" class="btn btn-warning">
+                                            <a href="{{ route('admin.guests.edit', $guest->id) }}" type="button" class="btn btn-warning">
                                                 <i class="fas fa-pen"></i>
                                             </a>
+                                            @endrole
+                                            @role('receptionist')
+                                            <a href="{{ route('receptionist.guests.show', $guest->id) }}" class="btn btn-secondary">Details
+                                            </a>
+                                            <a href="{{ route('receptionist.guests.edit', $guest->id) }}" type="button" class="btn btn-warning">
+                                                <i class="fas fa-pen"></i>
+                                            </a>
+                                            @endrole
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">

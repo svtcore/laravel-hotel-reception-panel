@@ -5,7 +5,6 @@ namespace App\Http\Classes;
 
 use Exception;
 use Illuminate\Support\Carbon;
-use App\Models\CleaningLog;
 use App\Models\Guest;
 use PhpParser\Node\Expr;
 use App\Models\Booking;
@@ -104,7 +103,7 @@ class Guests
                 'dob' => $inputData['dob'],
             ]);
             $guest = Guest::findOrFail($result->id);
-            if (isset($inputData['document_country'])) {
+            if (isset($inputData['countryCode'])) {
                 $guest->guest_document()->create([
                     'document_country' => $inputData['countryCode'],
                     'document_serial' => $inputData['documentSerial'],

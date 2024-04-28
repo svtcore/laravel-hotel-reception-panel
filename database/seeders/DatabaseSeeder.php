@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\AdditionalService;
 use App\Models\Booking;
-use App\Models\CleaningLog;
 use App\Models\Employee;
 use App\Models\Guest;
 use App\Models\GuestDocument;
@@ -29,7 +28,6 @@ class DatabaseSeeder extends Seeder
             'rooms' => 50,
             'room_properties' => 10,
             'employees' => 20,
-            'cleaning_logs' => 100,
             'guests' => 150,
             'bookings' => 100,
             'additional_services' => 5,
@@ -52,9 +50,6 @@ class DatabaseSeeder extends Seeder
         }
         //Generate employees
         Employee::factory($config['employees'])->create();
-        for ($i = 0; $i < $config['cleaning_logs']; $i++) {
-            CleaningLog::factory()->create(['room_id' => rand(1, $config['rooms']), 'employee_id' => rand(1, $config['employees'])]);
-        }
         //Generate guests
         for ($i = 0; $i < $config['guests']; $i++) {
             $guest = Guest::factory()->create();

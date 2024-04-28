@@ -71,7 +71,7 @@ class BookingController extends Controller
         }
         $booking = $this->booking->store($validatedData);
         if ($booking) {
-            return redirect()->route('booking.show', $booking->id)->with('success', 'Booking data successful added');
+            return redirect()->route('admin.booking.show', $booking->id)->with('success', 'Booking data successful added');
         } else return redirect()->back()->withErrors(['error' => 'There is error in controller store']);
     }
 
@@ -102,9 +102,12 @@ class BookingController extends Controller
      */
     public function edit(string $id)
     {
+        [$free_dates, $last_date] = $this->booking->getAvailableDate($id);
         return view('booking.edit')->with([
             'booking_data' => $this->booking->getById($id) ?? abort(404),
-            'avaliable_services' => $this->additional_services->getAvaliable() ?? array()
+            'avaliable_services' => $this->additional_services->getAvaliable() ?? array(),
+            'free_dates' => $free_dates,
+            'last_free_date' =>  $last_date
         ]);
     }
 
@@ -121,7 +124,7 @@ class BookingController extends Controller
 
         $update_result = $this->booking->update($validatedData, $id);
         if ($update_result) {
-            return redirect()->route('booking.show', $id)->with('success', 'Booking data successful updated');
+            return redirect()->route('admin.booking.show', $id)->with('success', 'Booking data successful updated');
         } else return redirect()->back()->withErrors(['error' => 'There is error in controller update']);
     }
 
@@ -131,7 +134,7 @@ class BookingController extends Controller
     public function destroy(string $id)
     {
         if ($this->booking->deleteById($id)) {
-            return redirect()->route('booking.index')->with('success', 'Record successful deleted');
+            return redirect()->route('admin.booking.index')->with('success', 'Record successful deleted');
         } else return redirect()->back()->withErrors(['error' => __('The requested resource could not be found.')]);
     }
     /**

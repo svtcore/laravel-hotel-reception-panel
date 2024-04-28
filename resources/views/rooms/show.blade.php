@@ -7,7 +7,7 @@
 @endsection
 @section('navbar_header_button')
 @role('admin')
-    <a href="{{ route('rooms.create') }}" style="width:400px;" class="add-new-button">Add New Room</a>
+<a href="{{ route('admin.rooms.create') }}" style="width:400px;" class="add-new-button">Add New Room</a>
 @endrole
 @role('receptionist')
 <span class="header-navbar">Rooms</span>
@@ -107,14 +107,19 @@
                                             <h5 class="mb-2"><b>Room control</b></h5>
                                             <ul class="list-group">
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <a href="{{ route('booking.create', $room->id) }}" class="btn btn-success w-100">Book this room</a>
+                                                    @role('admin')
+                                                    <a href="{{ route('admin.booking.create', $room->id) }}" class="btn btn-success w-100">Book this room</a>
+                                                    @endrole
+                                                    @role('receptionist')
+                                                    <a href="{{ route('receptionist.booking.create', $room->id) }}" class="btn btn-success w-100">Book this room</a>
+                                                    @endrole
                                                 </li>
                                                 @role('admin')
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <a href="{{ route('rooms.edit', $room->id) }}" class="btn btn-primary w-100">Edit room</a>
+                                                    <a href="{{ route('admin.rooms.edit', $room->id) }}" class="btn btn-primary w-100">Edit room</a>
                                                 </li>
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <form action="{{ route('rooms.delete', $room->id) }}" method="POST" class="w-100">
+                                                    <form action="{{ route('admin.rooms.delete', $room->id) }}" method="POST" class="w-100">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="btn btn-danger w-100" type="submit">Delete room</button>
@@ -158,11 +163,6 @@
                                     <span class="badge bg-primary">{{ count($booking) }}</span>
                                 </a>
                             </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="cleaning-tab" data-bs-toggle="tab" href="#cleaning" role="tab" aria-controls="cleaning" aria-selected="false">
-                                    Cleaning History
-                                </a>
-                            </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <!-- First Tab: Booking History Table -->
@@ -171,7 +171,7 @@
                                     <thead>
                                         <tr>
                                             <th>Guest Name</th>
-                                            <th>Related persons</th>
+                                            <th>Related</th>
                                             <th>Check-in date</th>
                                             <th>Check-out date</th>
                                             <th>Total price</th>
@@ -186,7 +186,12 @@
                                             $date_check_in = date('d-m-Y', strtotime($book->check_in_date));
                                             $date_check_out = date('d-m-Y', strtotime($book->check_out_date));
                                             ?>
-                                            <td class="text-center"><a href="{{ route('guests.show', $book->guests[0]->id) }}">{{ $book->guests[0]->first_name }} {{ $book->guests[0]->last_name }}</a></td>
+                                            @role('admin')
+                                            <td class="text-center"><a href="{{ route('admin.guests.show', $book->guests[0]->id) }}">{{ $book->guests[0]->first_name }} {{ $book->guests[0]->last_name }}</a></td>
+                                            @endrole
+                                            @role('receptionist')
+                                            <td class="text-center"><a href="{{ route('receptionist.guests.show', $book->guests[0]->id) }}">{{ $book->guests[0]->first_name }} {{ $book->guests[0]->last_name }}</a></td>
+                                            @endrole
                                             <td class="text-center">{{ count($book->guests) }}</td>
                                             <td class="text-center">{{ $date_check_in }}</td>
                                             <td class="text-center">{{ $date_check_out}}</td>
@@ -200,29 +205,29 @@
                                                 <span class="badge badge-secondary badge-big">{{ $book->status }}</span>
                                                 @endif
                                             </td>
-                                            <td class="text-center"><a href="{{ route('booking.show', $book->id) }}" class="btn btn-secondary pt-0 pb-0 pr-4 pl-4">Details</a></td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                            @role('admin')
+                                            <td class="text-center">
+                                                <form action="{{ route('admin.booking.delete', $book->id) }}" method="POST">
+                                                    <a href="{{ route('admin.booking.show', $book->id) }}" class="btn btn-secondary pt-0 pb-0 pr-4 pl-4">Details</a>
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger pt-0 pb-0" type="submit"><i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            @endrole
+                                            @role('receptionist')
+                                            <td class="text-center">
+                                                <form action="{{ route('receptionist.booking.delete', $book->id) }}" method="POST">
+                                                    <a href="{{ route('receptionist.booking.show', $book->id) }}" class="btn btn-secondary pt-0 pb-0 pr-4 pl-4">Details</a>
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger pt-0 pb-0" type="submit"><i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            @endrole
 
-                            <!-- Second Tab: Cleaning History Table -->
-                            <div class="tab-pane fade" id="cleaning" role="tabpanel" aria-labelledby="cleaning-tab">
-                                <table class="table" id="cleaning_table">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">Cleaning Date</th>
-                                            <th class="text-center">Employee Name</th>
-                                            <th class="text-center">Note</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($cleaning as $clean)
-                                        <tr>
-                                            <td class="text-center">{{ date('d-m-Y [H:i]', strtotime($clean->datetime)) }}</td>
-                                            <td class="text-center">{{ $clean->employees->first_name }} {{ $clean->employees->last_name }}</td>
-                                            <td class="text-center">{{ $clean->note }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>

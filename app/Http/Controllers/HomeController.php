@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Exception;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        try {
+            $user = User::find(Auth::user()->id);
+
+            if ($user->hasRole('admin')) {
+                return redirect()->route('admin.dashboard');
+            } elseif ($user->hasRole('receptionist')) {
+                return redirect()->route('receptionist.booking.index');
+            } else {
+                return redirect()->route('login');
+            }
+        } catch (Exception $e) {
+            return redirect()->route('login');
+        }
     }
 }

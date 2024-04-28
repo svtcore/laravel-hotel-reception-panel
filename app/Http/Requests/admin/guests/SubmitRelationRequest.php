@@ -22,8 +22,8 @@ class SubmitRelationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'guest_id' => 'required|numeric|mix:1',
-            'booking_id' => 'required|numeric|mix:1',
+            'related_guest_id' => 'required|numeric|min:1',
+            'booking_id' => 'required|numeric|min:1'
         ];
     }
 }

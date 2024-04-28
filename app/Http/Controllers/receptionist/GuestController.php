@@ -58,7 +58,7 @@ class GuestController extends Controller
             }
             $result = $this->guests->store($validatedData);
             if ($result) {
-                return redirect()->route('guests.show', $result)->with('success', 'Guest data successful added');
+                return redirect()->route('receptionist.guests.show', $result)->with('success', 'Guest data successful added');
             } else return redirect()->back()->withErrors(['error' => 'There is error in while added record']);
         }
         catch(Exception $e){
@@ -99,7 +99,7 @@ class GuestController extends Controller
                 return response()->withErrors(['errors' => 'Validation failed']);
             }
             if ($this->guests->update($validatedData, $id)) {
-                return redirect()->route('guests.show', $id)->with('success', 'Guest data successful updated');
+                return redirect()->route('receptionist.guests.show', $id)->with('success', 'Guest data successful updated');
             } else return redirect()->back()->withErrors(['error' => 'There is error in while updating record']);
         } catch (Exception $e) {
             return response()->withErrors(['errors' => 'Error in update guest controller']);
@@ -112,7 +112,7 @@ class GuestController extends Controller
     public function destroy(string $id)
     {
         if ($this->guests->deleteById($id)) {
-            return redirect()->route('guests.index')->with('success', 'Record successful deleted');
+            return redirect()->route('receptionist.guests.index')->with('success', 'Record successful deleted');
         } else return redirect()->back()->withErrors(['error' => __('The requested resource could not be found.')]);
     }
 

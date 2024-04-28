@@ -8,11 +8,6 @@ use App\Http\Requests\admin\users\StoreRequest;
 use App\Http\Requests\admin\users\UpdateRequest;
 use App\Http\Requests\auth\MailRequest;
 use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\ResetPasswordMail;
-use App\Models\User;
 
 class UserController extends Controller
 {
@@ -56,7 +51,7 @@ class UserController extends Controller
                 return response()->withErrors(['errors' => 'Validation failed']);
             }
             if ($this->users->store($validatedData)) {
-                return redirect()->route('users.index')->with('success', 'Confirmation has been sent');
+                return redirect()->route('admin.users.index')->with('success', 'Confirmation has been sent');
             } else return redirect()->back()->withErrors(['error' => 'There is error in while adding record']);
         } catch (Exception $e) {
             return response()->withErrors(['errors' => 'Error in update user controller']);
@@ -94,10 +89,10 @@ class UserController extends Controller
                 return response()->withErrors(['errors' => 'Validation failed']);
             }
             if ($this->users->update($validatedData, $id)) {
-                return redirect()->route('users.index', $id)->with('success', 'User data successful updated');
+                return redirect()->route('admin.users.index', $id)->with('success', 'User data successful updated');
             } else return redirect()->back()->withErrors(['error' => 'There is error in while updating record']);
         } catch (Exception $e) {
-            return response()->withErrors(['errors' => 'Error in update guest controller']);
+            return redirect()->back()->withErrors(['error' => 'There is error in while updating record']);
         }
     }
 
@@ -107,7 +102,7 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         if ($this->users->deleteById($id)) {
-            return redirect()->route('users.index')->with('success', 'Record successful deleted');
+            return redirect()->route('admin.users.index')->with('success', 'Record successful deleted');
         } else return redirect()->back()->withErrors(['error' => __('The requested resource could not be found.')]);
     }
 

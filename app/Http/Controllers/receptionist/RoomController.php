@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Classes\Rooms;
 use App\Http\Classes\Bookings;
-use App\Http\Classes\CleaningLogs;
 use App\Http\Requests\receptionist\rooms\SearchRequest;
 use App\Http\Requests\receptionist\rooms\StoreRequest;
 use App\Http\Requests\receptionist\rooms\UpdateRequest;
@@ -20,14 +19,12 @@ class RoomController extends Controller
     private $booking = NULL;
     private $rooms = NULL;
     private $room_properties = NULL;
-    private $cleaning = NULL;
 
     public function __construct()
     {
         $this->booking = new Bookings();
         $this->rooms = new Rooms();
         $this->room_properties = new RoomProperties();
-        $this->cleaning = new CleaningLogs();
     }
 
     /**
@@ -47,7 +44,6 @@ class RoomController extends Controller
         return view('rooms.show')->with([
             'room' => $this->rooms->getById($id, true) ?? abort(404),
             'booking' => $this->booking->getByRoomId($id) ?? array(),
-            'cleaning' => $this->cleaning->getByRoomId($id) ?? array()
         ]);
     }
 
@@ -62,7 +58,7 @@ class RoomController extends Controller
             $searchResult = $this->rooms->searchByParams($validatedData, true);
             if ($searchResult != null) {
                 return view('rooms.search')->with(['result' => $searchResult ?? array(), 'room_properties' => $this->room_properties->getAll() ?? array(), 'inputData' => $validatedData]);
-            } else return redirect()->route('rooms.index')->withErrors(['errors' => 'There is no records found']);
+            } else return redirect()->route('receptionist.rooms.index')->withErrors(['errors' => 'There is no records found']);
         } catch (ValidationException $e) {
             return response()->json(['errors' => $e->errors()], 422);
         }

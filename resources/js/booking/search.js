@@ -1,6 +1,6 @@
 
 $(document).ready(function () {
-    $("#switch-by-name").prop("checked", true);
+    $("#switch-by-room").prop("checked", true);
     $("#switch-by-date").change(function () {
         var isChecked = $(this).is(":checked");
         $("#startDate").prop("disabled", !isChecked);
@@ -9,6 +9,10 @@ $(document).ready(function () {
     $("#switch-by-name").change(function () {
         var isChecked = $(this).is(":checked");
         $("#guestName").prop("disabled", !isChecked);
+    });
+    $("#switch-by-room").change(function () {
+        var isChecked = $(this).is(":checked");
+        $("#roomNumber").prop("disabled", !isChecked);
     });
     $("#switch-by-phone").change(function () {
         var isChecked = $(this).is(":checked");

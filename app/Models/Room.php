@@ -30,8 +30,4 @@ class Room extends Model
     {
         return $this->belongsToMany(RoomProperty::class,'rooms_room_properties');
     }
-
-    public function cleaning_logs(){
-        return $this->hasMany(CleaningLog::class, 'room_id');
-    }
 }

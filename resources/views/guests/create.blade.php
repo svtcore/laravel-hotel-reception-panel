@@ -26,7 +26,12 @@
                     </ul>
                 </div>
                 @endif
-                <form id="addForm" action="{{ route('guests.store') }}" method="POST">
+                @role('admin')
+                <form id="addForm" action="{{ route('admin.guests.store') }}" method="POST">
+                @endrole
+                @role('receptionist')
+                <form id="addForm" action="{{ route('receptionist.guests.store') }}" method="POST">
+                @endrole
                     <div class="row">
                         <div class="col-md-5">
                             <div class="card no-shadow">
@@ -114,7 +119,12 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="card-body">
-                                                <input type="hidden" id="target_url" name="target_url" data-route="{{ route('guests.relation') }}" />
+                                                @role('admin')
+                                                <input type="hidden" id="target_url" name="target_url" data-route="{{ route('admin.guests.relation') }}" />
+                                                @endrole
+                                                @role('receptionist')
+                                                <input type="hidden" id="target_url" name="target_url" data-route="{{ route('receptionist.guests.relation') }}" />
+                                                @endrole
                                                 <div class="form-group">
                                                     <input type="text" class="form-control text-center font-weight-bold" id="roomNumber" placeholder="Room number" name="roomNumber">
                                                 </div>

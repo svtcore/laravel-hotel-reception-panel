@@ -50,7 +50,7 @@ class GuestController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        try{
+        try {
             $validatedData = $request->validated();
 
             if ($validatedData === null) {
@@ -58,11 +58,9 @@ class GuestController extends Controller
             }
             $result = $this->guests->store($validatedData);
             if ($result) {
-                return redirect()->route('guests.show', $result)->with('success', 'Guest data successful added');
+                return redirect()->route('admin.guests.show', $result)->with('success', 'Guest data successful added');
             } else return redirect()->back()->withErrors(['error' => 'There is error in while added record']);
-        }
-        catch(Exception $e){
-            
+        } catch (Exception $e) {
         }
     }
 
@@ -99,7 +97,7 @@ class GuestController extends Controller
                 return response()->withErrors(['errors' => 'Validation failed']);
             }
             if ($this->guests->update($validatedData, $id)) {
-                return redirect()->route('guests.show', $id)->with('success', 'Guest data successful updated');
+                return redirect()->route('admin.guests.show', $id)->with('success', 'Guest data successful updated');
             } else return redirect()->back()->withErrors(['error' => 'There is error in while updating record']);
         } catch (Exception $e) {
             return response()->withErrors(['errors' => 'Error in update guest controller']);
@@ -112,7 +110,7 @@ class GuestController extends Controller
     public function destroy(string $id)
     {
         if ($this->guests->deleteById($id)) {
-            return redirect()->route('guests.index')->with('success', 'Record successful deleted');
+            return redirect()->route('admin.guests.index')->with('success', 'Record successful deleted');
         } else return redirect()->back()->withErrors(['error' => __('The requested resource could not be found.')]);
     }
 
@@ -149,57 +147,52 @@ class GuestController extends Controller
         }
     }
 
-    public function deleteRelation(DeleteRelationRequest $request){
-        try{
+    public function deleteRelation(DeleteRelationRequest $request)
+    {
+        try {
             $validatedData = $request->validated();
 
             if ($validatedData === null) {
                 return response()->json(['error' => 'true', 'message' => 'validation_failed']);
             }
-            if ($this->bookings->deleteRelation($validatedData)){
+            if ($this->bookings->deleteRelation($validatedData)) {
                 return redirect()->back()->with(['success' => 'Relation successful deleted']);
-            }else return redirect()->back()->withErrors(['errors' => 'There is no error while deleting relation']);
-        }
-        catch(Exception $e){
+            } else return redirect()->back()->withErrors(['errors' => 'There is no error while deleting relation']);
+        } catch (Exception $e) {
             return null;
         }
     }
 
-    public function searchRelation(SearchRelationGuest $request){
-        try{
+    public function searchRelation(SearchRelationGuest $request)
+    {
+        try {
             $validatedData = $request->validated();
 
             if ($validatedData === null) {
                 return response()->json(['error' => 'true', 'message' => 'validation_failed']);
             }
             $guest = $this->guests->searchRelationGuest($validatedData);
-            if ($guest != null){
+            if ($guest != null) {
                 return $guest;
-            }else return null;
-        }
-        catch(Exception $e){
+            } else return null;
+        } catch (Exception $e) {
             return null;
         }
     }
 
-    public function submitRelation(SubmitRelationRequest $request){
-        try{
-            try{
-                $validatedData = $request->validated();
-    
-                if ($validatedData === null) {
-                    return redirect()->back()->withErrors(['errors' => 'There is no error while deleting relation']);
-                }
-                $guest = $this->guests->submitRelation($validatedData);
-                if ($guest != null){
-                    return redirect()->back()->with(['success', 'Relation successful added']);
-                }else return redirect()->back()->withErrors(['errors' => 'There is no error while deleting relation']);
-            }
-            catch(Exception $e){
+    public function submitRelation(SubmitRelationRequest $request)
+    {
+        try {
+            $validatedData = $request->validated();
+            if ($validatedData === null) {
                 return redirect()->back()->withErrors(['errors' => 'There is no error while deleting relation']);
             }
-        }
-        catch(Exception $e){
+            $guest = $this->guests->submitRelation($validatedData);
+            if ($guest != null) {
+                return redirect()->back()->with(['success', 'Relation successful added']);
+            } else return redirect()->back()->withErrors(['errors' => 'There is no error while deleting relation']);
+        } catch (Exception $e) {
+            dd($e);
             return redirect()->back()->withErrors(['errors' => 'There is no error while deleting relation']);
         }
     }

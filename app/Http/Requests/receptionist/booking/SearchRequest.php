@@ -24,6 +24,7 @@ class SearchRequest extends FormRequest
         return [
             'startDate' => 'nullable|date',
             'endDate' => 'nullable|date|after_or_equal:startDate',
+            'roomNumber' => 'nullable|string|max:3',
             'guestName' => 'nullable|string|max:255', 
             'phoneNumber' => 'nullable|string|max:20',
         ];

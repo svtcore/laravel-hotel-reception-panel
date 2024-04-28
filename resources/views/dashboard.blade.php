@@ -3,7 +3,7 @@
 @section('additional_style')
 @endsection
 @section('navbar_header_button')
-<h5 class="header-navbar">Statistics</h5>
+<h5 class="header-navbar mt-1 mb-1 p-0">Statistics</h5>
 @endsection
 
 @section('content')

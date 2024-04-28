@@ -25,7 +25,12 @@
                     </ul>
                 </div>
                 @endif
-                <form action="{{ route('booking.store') }}" method="POST">
+                @role('admin')
+                <form action="{{ route('admin.booking.store') }}" method="POST">
+                @endrole
+                @role('receptionist')
+                <form action="{{ route('receptionist.booking.store') }}" method="POST">
+                @endrole
                     @csrf
                     <div class="row">
                         <div class="col-md-6">

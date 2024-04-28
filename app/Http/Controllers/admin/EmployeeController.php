@@ -48,7 +48,7 @@ class EmployeeController extends Controller
                 return response()->withErrors(['errors' => 'Validation failed']);
             }
             if ($this->employees->store($validatedData)) {
-                return redirect()->route('employees.index')->with('success', 'Employee data successful added');
+                return redirect()->route('admin.employees.index')->with('success', 'Employee data successful added');
             } else return redirect()->back()->withErrors(['error' => 'There is error in while adding record']);
         } catch (Exception $e) {
             return response()->withErrors(['errors' => 'Error in adding employee controller']);
@@ -85,7 +85,7 @@ class EmployeeController extends Controller
                 return response()->withErrors(['errors' => 'Validation failed']);
             }
             if ($this->employees->update($validatedData, $id)) {
-                return redirect()->route('employees.index')->with('success', 'Employee data successful updated');
+                return redirect()->route('admin.employees.index')->with('success', 'Employee data successful updated');
             } else return redirect()->back()->withErrors(['error' => 'There is error in while updating record']);
         } catch (Exception $e) {
             return response()->withErrors(['errors' => 'Error in update employee controller']);
@@ -99,10 +99,10 @@ class EmployeeController extends Controller
     {
         try {
             if ($this->employees->delete($id))
-                return redirect()->route('employees.index')->with('success', 'Employee deleted successfully');
-            else return redirect()->route('employees.index')->with('error', 'Error while deleting record');
+                return redirect()->route('admin.employees.index')->with('success', 'Employee deleted successfully');
+            else return redirect()->route('admin.employees.index')->with('error', 'Error while deleting record');
         } catch (Exception $e) {
-            return redirect()->route('employees.index')->with('error', 'Error while deleting record');
+            return redirect()->route('admin.employees.index')->with('error', 'Error while deleting record');
         }
     }
 }

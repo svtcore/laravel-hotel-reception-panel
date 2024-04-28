@@ -5,7 +5,7 @@
 @endsection
 @section('navbar_header_button')
 @role('admin')
-    <a href="{{ route('rooms.create') }}" class="add-new-button">Add New Room</a>
+<a href="{{ route('admin.rooms.create') }}" style="width:400px;" class="add-new-button">Add New Room</a>
 @endrole
 @role('receptionist')
 <span class="header-navbar">Rooms</span>
@@ -31,9 +31,13 @@
                 </div>
                 @endif
                 <div class="content-container text-center">
-                    <h4>Search form</h4>
-
-                    <form id="searchForm" method="POST" action="{{ route('rooms.search') }}">
+                    <h4 class="font-weight-bold">Search form</h4>
+                    @role('admin')
+                    <form id="searchForm" method="POST" action="{{ route('admin.rooms.search') }}">
+                    @endrole
+                    @role('receptionist')
+                    <form id="searchForm" method="POST" action="{{ route('receptionist.rooms.search') }}">
+                    @endrole
                         @csrf
                         <div class="row mt-4">
                             <div class="col-md-2">
@@ -225,11 +229,24 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="btn-group" role="group" aria-label="Room actions">
-                                        <a href="{{ route('rooms.show', $room->id) }}" class="btn btn-primary">Details</a>
+                                        @if ($room->status == "available")
+                                        @role('admin')
+                                        <a href="{{ route('admin.booking.create', $room->id) }}" class="btn btn-success">Book now</a>
+                                        @endrole
+                                        @role('receptionist')
+                                        <a href="{{ route('receptionist.booking.create', $room->id) }}" class="btn btn-success">Book now</a>
+                                        @endrole
+                                        @endif
+                                        @role('admin')
+                                        <a href="{{ route('admin.rooms.show', $room->id) }}" class="btn btn-primary">Details</a>
+                                        @endrole
+                                        @role('receptionist')
+                                        <a href="{{ route('receptionist.rooms.show', $room->id) }}" class="btn btn-primary">Details</a>
+                                        @endrole
                                         @role('admin')
                                         @if (!isset($room->deleted_at))
-                                        <a href="{{ route('rooms.edit', $room->id) }}" class="btn btn-warning">Edit</a>
-                                        <button type="button" class="btn btn-danger">Delete</button>
+                                        <a href="{{ route('admin.rooms.edit', $room->id) }}" class="btn btn-warning"><i class="fas fa-pen"></i></a></a>
+                                        <button type="button" class="btn btn-danger"><i class="fas fa-trash"></i></a></button>
                                         @endif
                                         @endrole
                                     </div>

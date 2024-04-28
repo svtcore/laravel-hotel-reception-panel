@@ -20,7 +20,4 @@ class Employee extends Model
     ];
     protected $dates = ['deleted_at'];
 
-    public function cleaning_logs(){
-        return $this->hasMany(CleaningLog::class, 'employee_id');
-    }
 }

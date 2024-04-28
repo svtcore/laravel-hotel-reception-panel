@@ -70,6 +70,7 @@ class Bookings
             $startDate = $inputData['startDate'] ?? null;
             $endDate = $inputData['endDate'] ?? null;
             $phoneNumber = $inputData['phoneNumber'] ?? null;
+            $roomNumber = $inputData['roomNumber'] ?? null;
             $first_name = null;
             $last_name = null;
 
@@ -84,7 +85,7 @@ class Bookings
                         $q->withTrashed();
                     }
                 },
-            ])->where(function ($query) use ($startDate, $endDate, $first_name, $last_name, $phoneNumber) {
+            ])->where(function ($query) use ($startDate, $endDate, $first_name, $last_name, $roomNumber, $phoneNumber) {
                 // by date
                 if ($startDate != null && $endDate != null) {
                     $startDate = $startDate . " 00:00:00";
@@ -106,6 +107,13 @@ class Bookings
                 if ($phoneNumber != null) {
                     $query->whereHas('guests', function ($subQuery) use ($phoneNumber) {
                         $subQuery->where('phone_number', '=', $phoneNumber);
+                    });
+                }
+
+                // by room number
+                if ($roomNumber != null) {
+                    $query->whereHas('rooms', function ($subQuery) use ($roomNumber) {
+                        $subQuery->where('room_number', '=', $roomNumber);
                     });
                 }
             })
@@ -171,6 +179,8 @@ class Bookings
             ]);
             $booking->additional_services()->detach();
             $booking->additional_services()->attach($additional_services_ids);
+            $rooms_obj = new Rooms();
+            $rooms_obj->changeRoomStatusByBookingStatus($booking->room_id, $status);
             return $result;
         } catch (Exception $e) {
             return null;
@@ -215,6 +225,8 @@ class Bookings
             $booking->additional_services()->detach();
             $booking->guests()->detach();
             $result = $booking->delete();
+            $rooms_obj = new Rooms();
+            $rooms_obj->changeRoomStatusByBookingStatus($booking->room_id, "deleted");
             return $result ? true : false;
         } catch (Exception $e) {
             return false;
@@ -228,7 +240,10 @@ class Bookings
             $booking->update([
                 'status' => $status,
             ]);
-            return true;
+            $rooms_obj = new Rooms();
+            if ($rooms_obj->changeRoomStatusByBookingStatus($booking->room_id, $status)){
+                return true;
+            }else return false;
         } catch (Exception $e) {
             return false;
         }
@@ -273,9 +288,9 @@ class Bookings
         try {
             $bookings = Booking::whereHas('rooms', function ($query) use ($room_number) {
                 $query->where('room_number', $room_number)
-                    ->where('status', 'available');
+                    ->whereIn('status', ['available', 'occupied']);
             })
-                ->where('status', 'reserved')
+                ->whereIn('status', ['reserved', 'active'])
                 ->with(['guests', 'rooms'])
                 ->get();
             if ($bookings && $bookings->count() > 0) {
@@ -306,58 +321,54 @@ class Bookings
                     ->select('check_in_date', 'check_out_date')
                     ->orderBy('check_in_date', 'asc')
                     ->get();
-
+    
                 $currentDate = Carbon::now();
-
-                $bookings = Booking::where('room_id', $room_id)
-                    ->whereIn('status', ['reserved', 'active', 'expired', 'completed'])
-                    ->select('check_in_date', 'check_out_date')
-                    ->orderBy('check_in_date', 'asc')
-                    ->get();
-
+    
                 $freePeriods = [];
-
+    
                 if ($bookings->count() > 0) {
                     $previousCheckOutDate = null;
                     $latestCheckOutDate = null;
-
+    
                     foreach ($bookings as $booking) {
-                        if ($previousCheckOutDate !== null) {
+                        if ($previousCheckOutDate !== null && $previousCheckOutDate != $booking->check_in_date) {
                             // Calculate free period between previous check_out_date and current check_in_date
                             $freePeriodStart = Carbon::parse($previousCheckOutDate);
                             $freePeriodEnd = Carbon::parse($booking->check_in_date);
-
-                            if ($freePeriodStart->gt($currentDate)) {
+                            
+                            $freePeriodDuration = $freePeriodEnd->diffInDays($freePeriodStart);
+    
+                            if ($freePeriodDuration > 0) {
                                 $freePeriods[] = [
-                                    'start' => $freePeriodStart->gt($currentDate) ? $freePeriodStart : $currentDate,
+                                    'start' => $freePeriodStart,
                                     'end' => $freePeriodEnd,
                                 ];
                             }
                         }
-
+    
                         $previousCheckOutDate = $booking->check_out_date;
-
+    
                         if ($latestCheckOutDate === null || Carbon::parse($booking->check_out_date)->gt($latestCheckOutDate)) {
                             $latestCheckOutDate = $booking->check_out_date;
                         }
                     }
                 }
+    
                 $free_dates = [];
-                $count = 0;
                 foreach ($freePeriods as $freePeriod) {
                     $dateRange = $freePeriod['start']->format('d.m.Y') . "  —  " . $freePeriod['end']->format('d.m.Y');
-                    $free_dates[$count++] = $dateRange;
+                    $free_dates[] = $dateRange;
                 }
-                $last_date = NULL;
-                if ($latestCheckOutDate !== null) {
-                    $last_date = ($latestCheckOutDate > $currentDate ? $latestCheckOutDate : $currentDate);
-                }
+    
+                $last_date = $latestCheckOutDate !== null ? ($latestCheckOutDate > $currentDate ? $latestCheckOutDate : $currentDate) : null;
+    
                 return [$free_dates, $last_date];
             }
         } catch (Exception $e) {
             return null;
         }
     }
+    
 
     public function checkDatesInRange($inputData, $free_dates, $last_date)
     {
@@ -373,8 +384,6 @@ class Bookings
                 ];
             }
             $lastFreeDate = DateTime::createFromFormat('Y-m-d H:i:s', $last_date);
-
-            // Проверяем входит ли диапазон дат в массив или больше ли он последней свободной даты
             $inRange = false;
             foreach ($dates as $dateRange) {
                 if ($inputCheckInDate >= $dateRange['startDate'] && $inputCheckOutDate <= $dateRange['endDate']) {
@@ -423,11 +432,15 @@ class Bookings
                 $result = $booking->update([
                     'total_cost' => $price
                 ]);
+                if (isset($inputData['status'])){
+                    $rooms_obj = new Rooms();
+                    $rooms_obj->changeRoomStatusByBookingStatus($inputData['room_id'], $inputData['status']);
+                }
                 if ($result) return $booking;
                 else return null;
             }
         } catch (Exception $e) {
-            dd($e);
+            return null;
         }
     }
 

@@ -277,4 +277,27 @@ class Rooms
             dd($e);
         }
     }
+
+    public function changeRoomStatusByBookingStatus($room_id, $new_status)
+    {
+        $room = Room::findOrFail($room_id);
+        if ($new_status == "reserved" || $new_status == "active"){
+            $result = $room->update(["status" => "occupied"]);
+            if ($result) return true;
+            else return false;
+        }elseif ($new_status == "deleted"){
+            //case when booking is deleted
+            //checking if exist available reserved booking then mark room like occupied otherwise mark like available
+            $result = Booking::where('room_id', $room_id)->whereIn('status', ['reserved', 'active']);
+            if ($result && $result->count() > 0){
+                $result = $room->update(["status" => "occupied"]);
+            }else $result = $room->update(["status" => "available"]);
+            if ($result) return true;
+            else return false;
+        }else{
+            $result = $room->update(["status" => "available"]);
+            if ($result) return true;
+            else return false;
+        }
+    }
 }

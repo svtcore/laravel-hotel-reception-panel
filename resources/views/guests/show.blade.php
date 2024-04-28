@@ -4,7 +4,12 @@
 @vite(['resources/css/guests-style.css'])
 @endsection
 @section('navbar_header_button')
-<a href="{{ route('guests.create') }}" style="width:400px;" class="add-new-button">Add Guest</a>
+@role('admin')
+<a href="{{ route('admin.guests.create') }}" style="width:400px;" class="add-new-button">Add Guest</a>
+@endrole
+@role('receptionist')
+<a href="{{ route('receptionist.guests.create') }}" style="width:400px;" class="add-new-button">Add Guest</a>
+@endrole
 @endsection
 @section('content')
 <div class="container-fluid mt-5">
@@ -57,52 +62,61 @@
                                         </li>
                                     </ul>
                                 </div>
-                                @isset($guest->guest_document)
                                 <div class="col-md-4">
                                     <ul class="list-group">
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             Doc. country
-                                            <span class="badge bg-secondary badge-big">{{ $guest->guest_document->document_country }}</span>
+                                            <span class="badge bg-secondary badge-big">@isset($guest->guest_document->document_country) {{ $guest->guest_document->document_country }} @endisset</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             Doc. serial
-                                            <span class="badge bg-secondary badge-big">{{ $guest->guest_document->document_serial }}</span>
+                                            <span class="badge bg-secondary badge-big">@isset($guest->guest_document->document_serial) {{ $guest->guest_document->document_serial }} @endisset</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             Doc. number
-                                            <span class="badge bg-secondary badge-big">{{ $guest->guest_document->document_number }}</span>
+                                            <span class="badge bg-secondary badge-big">@isset($guest->guest_document->document_number) {{ $guest->guest_document->document_number }} @endisset</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             Doc. expired
-                                            <span class="badge bg-secondary badge-big">{{ $guest->guest_document->document_expired }}</span>
+                                            <span class="badge bg-secondary badge-big">@isset($guest->guest_document->document_expired) {{ $guest->guest_document->document_expired }} @endisset</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             Doc. issued date
-                                            <span class="badge bg-secondary badge-big">{{ $guest->guest_document->document_issued_date }}</span>
+                                            <span class="badge bg-secondary badge-big">@isset($guest->guest_document->document_issued_date) {{ $guest->guest_document->document_issued_date }} @endisset</span>
                                         </li>
                                         <li class="list-group-item">
                                             <div class="d-flex flex-column">
                                                 <span class="label mb-1 text-left">Doc. issued by:</span>
-                                                <span class="text-left">{{ $guest->guest_document->document_issued_by }}</span>
+                                                <span class="text-left">@isset($guest->guest_document->document_issued_by) {{ $guest->guest_document->document_issued_by }} @endisset</span>
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
-                                @endisset
                                 <div class="col-md-4">
                                     <div class="card no-shadow">
                                         <div class="card-body">
                                             <h5 class="mb-2"><b>Control panel</b></h5>
                                             <ul class="list-group">
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <a href="{{ route('guests.edit', $guest->id) }}" class="btn btn-primary w-100">Edit data</a>
+                                                    @role('admin')
+                                                    <a href="{{ route('admin.guests.edit', $guest->id) }}" class="btn btn-primary w-100">Edit data</a>
+                                                    @endrole
+                                                    @role('receptionist')
+                                                    <a href="{{ route('receptionist.guests.edit', $guest->id) }}" class="btn btn-primary w-100">Edit data</a>
+                                                    @endrole
                                                 </li>
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <form action="{{ route('guests.delete', $guest->id) }}" method="POST" class="w-100">
-                                                        @csrf
+                                                    @role('admin')
+                                                    <form action="{{ route('admin.guests.delete', $guest->id) }}" method="POST" class="w-100">
+                                                    @endrole
+                                                    @role('receptionist')
+                                                    <form action="{{ route('receptionist.guests.delete', $guest->id) }}" method="POST" class="w-100">
+                                                    @endrole     
+                                                    @csrf
                                                         @method('DELETE')
                                                         <button class="btn btn-danger w-100" type="submit">Delete</button>
                                                     </form>
+                                                    
                                                 </li>
                                             </ul>
                                         </div>
@@ -142,7 +156,12 @@
                                     <span class="badge badge-secondary badge-big">{{ $book->status }}</span>
                                     @endif
                                 </td>
-                                <td class="text-center"><a href="{{ route('booking.show', $book->id) }}" class="btn btn-secondary pt-0 pb-0 pr-4 pl-4">Details</a></td>
+                                @role('admin')
+                                <td class="text-center"><a href="{{ route('admin.booking.show', $book->id) }}" class="btn btn-secondary pt-0 pb-0 pr-4 pl-4">Details</a></td>
+                                @endrole
+                                @role('receptionist')
+                                <td class="text-center"><a href="{{ route('receptionist.booking.show', $book->id) }}" class="btn btn-secondary pt-0 pb-0 pr-4 pl-4">Details</a></td>
+                                @endrole
                             </tr>
                             @endforeach
                         </tbody>

@@ -26,7 +26,7 @@
                     </ul>
                 </div>
                 @endif
-                <form action="{{ route('rooms.store') }}" method="POST">
+                <form action="{{ route('admin.rooms.store') }}" method="POST">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card no-shadow">

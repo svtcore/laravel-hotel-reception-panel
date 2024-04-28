@@ -7,7 +7,7 @@ $(document).ready(function () {
         "searching": true,
         "paging": true,
         "ordering": true,
-        "info": true,
+        "info": false,
         "order": [
             [0, 'asc']
         ],
