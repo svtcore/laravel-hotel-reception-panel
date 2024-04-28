@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Hash;
 
 class Users
 {
+    /**
+     * Retrieves all users along with their associated roles.
+     *
+     * @return iterable|null A collection of users with their roles if available; otherwise, null.
+     */
     public function getAll(): ?iterable
     {
         try {
@@ -26,6 +31,12 @@ class Users
         }
     }
 
+    /**
+     * Retrieves a user by their ID along with their associated roles.
+     *
+     * @param int $id The ID of the user to retrieve.
+     * @return object|null The user object with associated roles if found; otherwise, null.
+     */
     public function getById($id): ?object
     {
         try {
@@ -37,6 +48,11 @@ class Users
         }
     }
 
+    /**
+     * Retrieves all roles.
+     *
+     * @return iterable|null A collection of roles if available; otherwise, null.
+     */
     public function getRoles(): ?iterable
     {
         try {
@@ -48,6 +64,13 @@ class Users
         }
     }
 
+    /**
+     * Updates user information and assigns a new role.
+     *
+     * @param array $inputData The data to update the user with.
+     * @param int $id The ID of the user to update.
+     * @return bool True if the user was successfully updated; otherwise, false.
+     */
     public function update($inputData, $id): bool
     {
         try {
@@ -66,17 +89,30 @@ class Users
         }
     }
 
+    /**
+     * Deletes a user by their ID.
+     *
+     * @param int $id The ID of the user to delete.
+     * @return bool True if the user was successfully deleted; otherwise, false.
+     */
     public function deleteById($id): bool
     {
         try {
             $user = User::findOrFail($id);
-            $result = $user->delete($id);
+            $result = $user->delete();
             if ($result) return true;
             else return false;
         } catch (Exception $e) {
             return false;
         }
     }
+
+    /**
+     * Store a new user with the provided data.
+     *
+     * @param array $inputData The data to create the user.
+     * @return bool True if the user was successfully stored; otherwise, false.
+     */
 
     public function store($inputData): bool
     {
@@ -96,6 +132,12 @@ class Users
         }
     }
 
+    /**
+     * Send a confirmation email to the user.
+     *
+     * @param array $inputData The input data containing user email.
+     * @return bool True if the confirmation email was sent successfully; otherwise, false.
+     */
     public function sendConfirmation($inputData): bool
     {
         $user = User::where('email', $inputData['email'])->first();
@@ -113,6 +155,12 @@ class Users
         }
     }
 
+    /**
+     * Send a reset password email to the user.
+     *
+     * @param array $inputData The input data containing user email.
+     * @return bool True if the reset password email was sent successfully; otherwise, false.
+     */
     public function sendResetPassword($inputData): bool
     {
         $user = User::where('email', $inputData['email'])->first();
@@ -127,6 +175,12 @@ class Users
         } else return false;
     }
 
+    /**
+     * Check if the provided confirmation token is valid.
+     *
+     * @param string $token The confirmation token to be checked.
+     * @return bool True if the token is valid; otherwise, false.
+     */
     public function checkConfirmationToken($token): bool
     {
         try {
@@ -138,6 +192,12 @@ class Users
         }
     }
 
+    /**
+     * Confirm user registration by setting a new password and clearing the confirmation token.
+     *
+     * @param array $inputData The input data containing the confirmation token and the new password.
+     * @return bool True if the registration is confirmed successfully; otherwise, false.
+     */
     public function confirmRegistration($inputData): bool
     {
         try {

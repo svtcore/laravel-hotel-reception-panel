@@ -15,7 +15,11 @@ use App\Models\Room;
 
 class Bookings
 {
-
+    /**
+     * Retrieves the last check-in orders for today.
+     *
+     * @return \Illuminate\Support\Collection|null A collection of last check-in orders for today or null if none are found.
+     */
     public function getLastCheckInOrders(): ?iterable
     {
         try {
@@ -40,6 +44,11 @@ class Bookings
         }
     }
 
+    /**
+     * Retrieves the last check-out orders for today.
+     *
+     * @return \Illuminate\Support\Collection|null A collection of last check-out orders for today or null if none are found.
+     */
     public function getLastCheckOutOrders(): ?iterable
     {
         try {
@@ -64,6 +73,13 @@ class Bookings
         }
     }
 
+    /**
+     * Searches bookings by given parameters.
+     *
+     * @param array $inputData An array containing search parameters such as startDate, endDate, phoneNumber, roomNumber, and guestName.
+     * @param bool $trashed A boolean indicating whether to include trashed rooms in the search.
+     * @return \Illuminate\Support\Collection|null A collection of bookings matching the search parameters or null if none are found.
+     */
     public function searchByParams(array $inputData, $trashed): ?iterable
     {
         try {
@@ -130,12 +146,18 @@ class Bookings
         }
     }
 
+    /**
+     * Retrieves a booking by its ID.
+     *
+     * @param int $id The ID of the booking to retrieve.
+     * @return \App\Models\Booking|null The booking with the specified ID or null if not found.
+     */
     public function getById($id): ?Booking
     {
         try {
             $booking = Booking::with([
                 'rooms',
-                'guests' => function($q){
+                'guests' => function ($q) {
                     $q->orderBy('pivot_guest_id', 'asc');
                 },
                 'additional_services'
@@ -149,6 +171,14 @@ class Bookings
             return null;
         }
     }
+
+    /**
+     * Updates a booking with the provided data.
+     *
+     * @param array $validatedData An array containing validated data for updating the booking, including adultsCount, childrenCount, checkInDate, checkOutDate, paymentType, note, status, and additionalServices.
+     * @param int $id The ID of the booking to update.
+     * @return bool|null True if the booking was successfully updated, false if an error occurred, or null if the booking with the specified ID was not found.
+     */
 
     public function update($validatedData, $id): ?bool
     {
@@ -187,6 +217,14 @@ class Bookings
         }
     }
 
+    /**
+     * Calculates the total price for a booking based on the room ID, additional service IDs, and number of days.
+     *
+     * @param int $room_id The ID of the room.
+     * @param array $ids An array of additional service IDs.
+     * @param int $days The number of days for the booking.
+     * @return float|null The total price for the booking or null if an error occurs.
+     */
     public function calculatePrice($room_id, $ids, $days): ?float
     {
         try {
@@ -202,6 +240,13 @@ class Bookings
         }
     }
 
+    /**
+     * Calculates the difference in days between two dates.
+     *
+     * @param string $check_in_date The check-in date in Y-m-d format.
+     * @param string $check_out_date The check-out date in Y-m-d format.
+     * @return int|null The difference in days between the two dates or null if an error occurs.
+     */
     public function diffDate($check_in_date, $check_out_date): ?int
     {
         try {
@@ -218,6 +263,12 @@ class Bookings
         }
     }
 
+    /**
+     * Deletes a booking by its ID.
+     *
+     * @param int $id The ID of the booking to delete.
+     * @return bool True if the booking was successfully deleted, false otherwise.
+     */
     public function deleteById($id): bool
     {
         try {
@@ -233,6 +284,14 @@ class Bookings
         }
     }
 
+    /**
+     * Changes the status of a booking by its ID.
+     *
+     * @param string $status The new status of the booking.
+     * @param int $id The ID of the booking to update.
+     * @return bool True if the status was successfully changed, false otherwise.
+     */
+
     public function changeStatus($status, $id): bool
     {
         try {
@@ -241,14 +300,20 @@ class Bookings
                 'status' => $status,
             ]);
             $rooms_obj = new Rooms();
-            if ($rooms_obj->changeRoomStatusByBookingStatus($booking->room_id, $status)){
+            if ($rooms_obj->changeRoomStatusByBookingStatus($booking->room_id, $status)) {
                 return true;
-            }else return false;
+            } else return false;
         } catch (Exception $e) {
             return false;
         }
     }
 
+    /**
+     * Retrieves bookings associated with a given room ID.
+     *
+     * @param int $room_id The ID of the room.
+     * @return \Illuminate\Support\Collection|null A collection of bookings associated with the specified room ID, or null if none are found.
+     */
     public function getByRoomId($room_id): ?iterable
     {
         try {
@@ -266,6 +331,12 @@ class Bookings
         }
     }
 
+    /**
+     * Retrieves bookings associated with a given guest ID.
+     *
+     * @param int $id The ID of the guest.
+     * @return \Illuminate\Support\Collection|null A collection of bookings associated with the specified guest ID, or null if none are found.
+     */
     public function getByGuestId($id): ?iterable
     {
         try {
@@ -283,6 +354,12 @@ class Bookings
         }
     }
 
+    /**
+     * Searches bookings by room number.
+     *
+     * @param string $room_number The room number to search for.
+     * @return \Illuminate\Support\Collection|null A collection of bookings matching the specified room number, or null if none are found.
+     */
     public function searchByRoomNumber($room_number): ?iterable
     {
         try {
@@ -310,6 +387,12 @@ class Bookings
         }
     }
 
+    /**
+     * Retrieves available dates for booking in a specified room.
+     *
+     * @param int $room_id The ID of the room.
+     * @return array|null An array containing available date ranges for booking and the latest available date, or null if an error occurs.
+     */
     public function getAvailableDate($room_id)
     {
         try {
@@ -321,23 +404,23 @@ class Bookings
                     ->select('check_in_date', 'check_out_date')
                     ->orderBy('check_in_date', 'asc')
                     ->get();
-    
+
                 $currentDate = Carbon::now();
-    
+
                 $freePeriods = [];
-    
+
                 if ($bookings->count() > 0) {
                     $previousCheckOutDate = null;
                     $latestCheckOutDate = null;
-    
+
                     foreach ($bookings as $booking) {
                         if ($previousCheckOutDate !== null && $previousCheckOutDate != $booking->check_in_date) {
                             // Calculate free period between previous check_out_date and current check_in_date
                             $freePeriodStart = Carbon::parse($previousCheckOutDate);
                             $freePeriodEnd = Carbon::parse($booking->check_in_date);
-                            
+
                             $freePeriodDuration = $freePeriodEnd->diffInDays($freePeriodStart);
-    
+
                             if ($freePeriodDuration > 0) {
                                 $freePeriods[] = [
                                     'start' => $freePeriodStart,
@@ -345,32 +428,39 @@ class Bookings
                                 ];
                             }
                         }
-    
+
                         $previousCheckOutDate = $booking->check_out_date;
-    
+
                         if ($latestCheckOutDate === null || Carbon::parse($booking->check_out_date)->gt($latestCheckOutDate)) {
                             $latestCheckOutDate = $booking->check_out_date;
                         }
                     }
                 }
-    
+
                 $free_dates = [];
                 foreach ($freePeriods as $freePeriod) {
                     $dateRange = $freePeriod['start']->format('d.m.Y') . "  —  " . $freePeriod['end']->format('d.m.Y');
                     $free_dates[] = $dateRange;
                 }
-    
+
                 $last_date = $latestCheckOutDate !== null ? ($latestCheckOutDate > $currentDate ? $latestCheckOutDate : $currentDate) : null;
-    
+
                 return [$free_dates, $last_date];
             }
         } catch (Exception $e) {
             return null;
         }
     }
-    
 
-    public function checkDatesInRange($inputData, $free_dates, $last_date)
+    /**
+     * Checks if the input check-in and check-out dates fall within the available date ranges or after the latest available date.
+     *
+     * @param array $inputData An array containing check-in and check-out dates in the format ['checkInDate' => 'YYYY-MM-DD', 'checkOutDate' => 'YYYY-MM-DD'].
+     * @param array $free_dates An array of available date ranges for booking.
+     * @param string|null $last_date The latest available date for booking in the format 'YYYY-MM-DD' or null if no last date is provided.
+     * @return bool True if the input dates fall within the available date ranges or after the latest available date, false otherwise.
+     */
+    public function checkDatesInRange($inputData, $free_dates, ?string $last_date)
     {
         try {
             $inputCheckInDate = DateTime::createFromFormat('Y-m-d', $inputData['checkInDate']);
@@ -383,7 +473,7 @@ class Bookings
                     'endDate' => DateTime::createFromFormat('d.m.Y', explode('  —  ', $free)[1])
                 ];
             }
-            $lastFreeDate = DateTime::createFromFormat('Y-m-d H:i:s', $last_date);
+            $lastFreeDate = ($last_date !== null) ? DateTime::createFromFormat('Y-m-d', $last_date) : null;
             $inRange = false;
             foreach ($dates as $dateRange) {
                 if ($inputCheckInDate >= $dateRange['startDate'] && $inputCheckOutDate <= $dateRange['endDate']) {
@@ -391,7 +481,7 @@ class Bookings
                     break;
                 }
             }
-            $greaterThanLastFree = $inputCheckOutDate > $lastFreeDate;
+            $greaterThanLastFree = ($lastFreeDate !== null) ? ($inputCheckOutDate > $lastFreeDate) : false;
             if ($inRange || $greaterThanLastFree) {
                 return true;
             } else {
@@ -403,6 +493,12 @@ class Bookings
     }
 
 
+    /**
+     * Stores a new booking based on the provided input data.
+     *
+     * @param array $inputData An array containing data for creating the booking, including room_id, adultsCount, childrenCount, paymentType, checkInDate, checkOutDate, note, status, and additionalServices.
+     * @return \App\Models\Booking|null The created booking if successful, or null if an error occurs or the dates are not available.
+     */
     public function store($inputData)
     {
         try {
@@ -432,7 +528,7 @@ class Bookings
                 $result = $booking->update([
                     'total_cost' => $price
                 ]);
-                if (isset($inputData['status'])){
+                if (isset($inputData['status'])) {
                     $rooms_obj = new Rooms();
                     $rooms_obj->changeRoomStatusByBookingStatus($inputData['room_id'], $inputData['status']);
                 }
@@ -444,6 +540,11 @@ class Bookings
         }
     }
 
+    /**
+     * Calculates the total sum of bookings' costs for each day of the current month.
+     *
+     * @return array An associative array where keys represent days of the month and values represent the total sum of bookings' costs for each day.
+     */
     public function bookingsSumByDay()
     {
         $currentDate = now();
@@ -484,6 +585,11 @@ class Bookings
         return $bookingsSumByDay;
     }
 
+    /**
+     * Calculates the count of check-ins for each day of the current month.
+     *
+     * @return array An associative array where keys represent days of the month and values represent the count of check-ins for each day.
+     */
     public function checkInsCountByDay()
     {
         $currentDate = now();
@@ -524,14 +630,20 @@ class Bookings
         return $checkInsCountByDay;
     }
 
+    /**
+     * Deletes the relation between a guest and a booking.
+     *
+     * @param array $inputData An array containing guest_id and booking_id to identify the relation to delete.
+     * @return bool True if the relation was successfully deleted, false otherwise.
+     */
     public function deleteRelation($inputData): bool
     {
         try {
             $guest_id = $inputData['guest_id'];
             $booking_id = $inputData['booking_id'];
-    
+
             $booking = Booking::findOrFail($booking_id);
-    
+
             if ($booking) {
                 $booking->guests()->detach($guest_id);
                 return true;

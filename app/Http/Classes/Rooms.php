@@ -12,8 +12,11 @@ use App\Models\Booking;
 
 class Rooms
 {
-
-
+    /**
+     * Retrieves all available rooms.
+     *
+     * @return iterable|null A collection of available rooms if found, otherwise null.
+     */
     public function getFree(): ?iterable
     {
         try {
@@ -28,6 +31,13 @@ class Rooms
         }
     }
 
+    /**
+     * Retrieves a room by its ID.
+     *
+     * @param int $id The ID of the room to retrieve.
+     * @param bool $trashed Flag indicating whether to include trashed rooms.
+     * @return object|null The room object if found, otherwise null.
+     */
     public function getById($id, $trashed): ?object
     {
         try {
@@ -41,6 +51,13 @@ class Rooms
         }
     }
 
+    /**
+     * Searches for rooms based on various parameters.
+     *
+     * @param array $inputData An array containing search parameters.
+     * @param bool $trashed Flag indicating whether to include trashed rooms.
+     * @return iterable|null A collection of rooms matching the search criteria, or null if no rooms found.
+     */
     public function searchByParams($inputData, $trashed): mixed
     {
         try {
@@ -173,6 +190,12 @@ class Rooms
         }
     }
 
+    /**
+     * Stores a new room record in the database.
+     *
+     * @param array $inputData An array containing room data to be stored.
+     * @return bool|int The ID of the newly created room if successful, otherwise false.
+     */
     public function store($inputData): bool|int
     {
         try {
@@ -197,6 +220,13 @@ class Rooms
         }
     }
 
+    /**
+     * Updates an existing room record in the database.
+     *
+     * @param array $inputData An array containing room data to be updated.
+     * @param int $id The ID of the room to be updated.
+     * @return bool|null True if the update was successful, otherwise false or null.
+     */
     public function update($inputData, $id): ?bool
     {
         try {
@@ -221,7 +251,12 @@ class Rooms
         }
     }
 
-
+    /**
+     * Deletes a room record from the database by its ID.
+     *
+     * @param int $id The ID of the room to be deleted.
+     * @return bool True if the deletion was successful, otherwise false.
+     */
     public function deleteById($id): bool
     {
         try {
@@ -229,10 +264,18 @@ class Rooms
             $result = $room->delete();
             return $result ? true : false;
         } catch (Exception $e) {
-            dd($e);
+            return false;
         }
     }
 
+    /**
+     * Retrieves the count of available and occupied rooms.
+     *
+     * @return array|null An array containing the count of occupied and available rooms. 
+     *                   The first element is the count of occupied rooms, 
+     *                   and the second element is the count of available rooms.
+     *                   Returns null in case of an exception.
+     */
     public function getRoomsAvailabilityCount()
     {
         try {
@@ -247,7 +290,13 @@ class Rooms
         }
     }
 
-    public function getRoomTypesDemand()
+    /**
+     * Retrieves demand for various room types.
+     *
+     * @return array An array containing demand for different room types.
+     *               The keys of the array represent room types, and the values represent the number of bookings for each type.
+     */
+    public function getRoomTypesDemand(): array
     {
         try {
             $roomTypeCounts = Booking::whereIn('status', ['active', 'completed', 'expired'])
@@ -274,27 +323,35 @@ class Rooms
 
             return $roomTypeDemand;
         } catch (Exception $e) {
-            dd($e);
+            return array();
         }
     }
 
+    /**
+     * Changes the status of a room based on the new booking status.
+     *
+     * @param int $room_id The ID of the room whose status is being updated.
+     * @param string $new_status The new status of the booking.
+     *                           Possible values are: "reserved", "active", "deleted", or any other status.
+     * @return bool True if the room status was successfully updated; otherwise, false.
+     */
     public function changeRoomStatusByBookingStatus($room_id, $new_status)
     {
         $room = Room::findOrFail($room_id);
-        if ($new_status == "reserved" || $new_status == "active"){
+        if ($new_status == "reserved" || $new_status == "active") {
             $result = $room->update(["status" => "occupied"]);
             if ($result) return true;
             else return false;
-        }elseif ($new_status == "deleted"){
+        } elseif ($new_status == "deleted") {
             //case when booking is deleted
             //checking if exist available reserved booking then mark room like occupied otherwise mark like available
             $result = Booking::where('room_id', $room_id)->whereIn('status', ['reserved', 'active']);
-            if ($result && $result->count() > 0){
+            if ($result && $result->count() > 0) {
                 $result = $room->update(["status" => "occupied"]);
-            }else $result = $room->update(["status" => "available"]);
+            } else $result = $room->update(["status" => "available"]);
             if ($result) return true;
             else return false;
-        }else{
+        } else {
             $result = $room->update(["status" => "available"]);
             if ($result) return true;
             else return false;
