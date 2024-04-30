@@ -29,6 +29,8 @@ class RoomController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
+     * @return \Illuminate\Contracts\View\View
      */
     public function index()
     {
@@ -37,6 +39,9 @@ class RoomController extends Controller
 
     /**
      * Display the specified resource.
+     *
+     * @param  string  $id
+     * @return \Illuminate\Contracts\View\View
      */
     public function show(string $id)
     {
@@ -47,6 +52,12 @@ class RoomController extends Controller
         ]);
     }
 
+    /**
+     * Search rooms by input parameters.
+     *
+     * @param  SearchRequest  $request
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
+     */
     public function searchByParams(SearchRequest $request)
     {
         try {

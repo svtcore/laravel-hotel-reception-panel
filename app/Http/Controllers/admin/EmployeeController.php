@@ -19,7 +19,9 @@ class EmployeeController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of employees.
+     *
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory Returns the view for displaying a listing of employees.
      */
     public function index()
     {
@@ -29,16 +31,23 @@ class EmployeeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new employee.
+     *
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory Returns the view for creating a new employee.
      */
+
     public function create()
     {
         return view('employees.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created employee in storage.
+     *
+     * @param StoreRequest $request The request containing validated data for creating an employee.
+     * @return \Illuminate\Http\RedirectResponse Returns a redirect response to the employee index page with success message upon successful addition, otherwise redirects back with error message.
      */
+
     public function store(StoreRequest $request)
     {
         try {
@@ -56,15 +65,10 @@ class EmployeeController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified employee.
+     *
+     * @param string $id The ID of the employee to be edited.
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory Returns the view for editing the employee details.
      */
     public function edit(string $id)
     {
@@ -74,8 +78,13 @@ class EmployeeController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified employee in storage.
+     *
+     * @param UpdateRequest $request The request containing validated data for updating an employee.
+     * @param string $id The ID of the employee to be updated.
+     * @return \Illuminate\Http\RedirectResponse Returns a redirect response to the employee index page with success message upon successful update, otherwise redirects back with error message.
      */
+
     public function update(UpdateRequest $request, string $id)
     {
         try {
@@ -93,8 +102,12 @@ class EmployeeController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified employee from storage.
+     *
+     * @param string $id The ID of the employee to be deleted.
+     * @return \Illuminate\Http\RedirectResponse Returns a redirect response to the employee index page with success message upon successful deletion, otherwise redirects back with error message.
      */
+
     public function destroy($id)
     {
         try {

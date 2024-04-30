@@ -28,7 +28,9 @@ class RoomController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of rooms.
+     *
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory Returns the view for displaying a listing of rooms.
      */
     public function index()
     {
@@ -36,7 +38,9 @@ class RoomController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new room.
+     *
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory Returns the view for creating a new room.
      */
     public function create()
     {
@@ -46,7 +50,10 @@ class RoomController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created room in storage.
+     *
+     * @param StoreRequest $request The request containing validated data for creating a room.
+     * @return \Illuminate\Http\RedirectResponse Returns a redirect response to the room details page with success message upon successful addition, otherwise redirects back with error message.
      */
     public function store(StoreRequest $request)
     {
@@ -66,7 +73,10 @@ class RoomController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified room.
+     *
+     * @param string $id The ID of the room to be displayed.
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory Returns the view for displaying the room details.
      */
     public function show(string $id)
     {
@@ -78,7 +88,10 @@ class RoomController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified room.
+     *
+     * @param string $id The ID of the room to be edited.
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory Returns the view for editing the room details.
      */
     public function edit(string $id)
     {
@@ -89,7 +102,11 @@ class RoomController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified room in storage.
+     *
+     * @param UpdateRequest $request The request containing validated data for updating a room.
+     * @param string $id The ID of the room to be updated.
+     * @return \Illuminate\Http\RedirectResponse Returns a redirect response to the room details page with success message upon successful update, otherwise redirects back with error message.
      */
     public function update(UpdateRequest $request, string $id)
     {
@@ -108,7 +125,10 @@ class RoomController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified room from storage.
+     *
+     * @param string $id The ID of the room to be deleted.
+     * @return \Illuminate\Http\RedirectResponse Returns a redirect response to the room index page with success message upon successful deletion, otherwise redirects back with error message.
      */
     public function destroy(string $id)
     {
@@ -117,8 +137,12 @@ class RoomController extends Controller
         } else return redirect()->back()->withErrors(['error' => __('The requested resource could not be found.')]);
     }
 
-    //
-
+    /**
+     * Search for rooms by input parameters.
+     *
+     * @param SearchRequest $request The request containing validated search parameters.
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory Returns a view displaying search results with input parameters if records are found, otherwise redirects back with error message.
+     */
     public function searchByParams(SearchRequest $request)
     {
         try {

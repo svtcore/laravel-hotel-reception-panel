@@ -30,6 +30,8 @@ class BookingController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
+     * @return \Illuminate\Contracts\View\View
      */
     public function index()
     {
@@ -41,6 +43,9 @@ class BookingController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Contracts\View\View
      */
     public function create($id)
     {
@@ -58,6 +63,9 @@ class BookingController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param  StoreRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreRequest $request)
     {
@@ -75,6 +83,9 @@ class BookingController extends Controller
     /**
      * Display the specified resource.
      * ID validation through routes
+     *
+     * @param  int  $id
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function show($id)
     {
@@ -96,6 +107,9 @@ class BookingController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
+     * @param  string  $id
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function edit(string $id)
     {
@@ -107,6 +121,10 @@ class BookingController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param  UpdateRequest  $request
+     * @param  string  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateRequest $request, string $id)
     {
@@ -124,6 +142,9 @@ class BookingController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param  string  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(string $id)
     {
@@ -131,8 +152,12 @@ class BookingController extends Controller
             return redirect()->route('receptionist.booking.index')->with('success', 'Record successful deleted');
         } else return redirect()->back()->withErrors(['error' => __('The requested resource could not be found.')]);
     }
+
     /**
-     * Search Booking by input params
+     * Search Booking by input params.
+     *
+     * @param  SearchRequest  $request
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function searchByParams(SearchRequest $request)
     {
@@ -151,6 +176,13 @@ class BookingController extends Controller
         }
     }
 
+    /**
+     * Change the status of the specified booking.
+     *
+     * @param  ChangeStatusRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function changeStatus(ChangeStatusRequest $request, $id)
     {
         try {

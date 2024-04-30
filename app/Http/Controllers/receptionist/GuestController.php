@@ -29,6 +29,8 @@ class GuestController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
+     * @return \Illuminate\Contracts\View\View
      */
     public function index()
     {
@@ -39,6 +41,8 @@ class GuestController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Contracts\View\View
      */
     public function create()
     {
@@ -47,10 +51,13 @@ class GuestController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param  StoreRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreRequest $request)
     {
-        try{
+        try {
             $validatedData = $request->validated();
 
             if ($validatedData === null) {
@@ -60,14 +67,16 @@ class GuestController extends Controller
             if ($result) {
                 return redirect()->route('receptionist.guests.show', $result)->with('success', 'Guest data successful added');
             } else return redirect()->back()->withErrors(['error' => 'There is error in while added record']);
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             dd($e);
         }
     }
 
     /**
      * Display the specified resource.
+     *
+     * @param  string  $id
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function show(string $id)
     {
@@ -79,6 +88,9 @@ class GuestController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
+     * @param  string  $id
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function edit(string $id)
     {
@@ -89,6 +101,10 @@ class GuestController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param  UpdateRequest  $request
+     * @param  string  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateRequest $request, string $id)
     {
@@ -108,6 +124,9 @@ class GuestController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param  string  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(string $id)
     {
@@ -116,6 +135,12 @@ class GuestController extends Controller
         } else return redirect()->back()->withErrors(['error' => __('The requested resource could not be found.')]);
     }
 
+    /**
+     * Search for related bookings by room number.
+     *
+     * @param  SearchRelationRequest  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function relation(SearchRelationRequest $request)
     {
         $validatedData = $request->validated();
@@ -130,7 +155,10 @@ class GuestController extends Controller
     }
 
     /**
-     * Search Guests by input params
+     * Search guests by input parameters.
+     *
+     * @param  SearchRequest  $request
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function searchByParams(SearchRequest $request)
     {
@@ -149,58 +177,74 @@ class GuestController extends Controller
         }
     }
 
-    public function deleteRelation(DeleteRelationRequest $request){
-        try{
+    /**
+     * Delete a relation between bookings and guests.
+     *
+     * @param  DeleteRelationRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteRelation(DeleteRelationRequest $request)
+    {
+        try {
             $validatedData = $request->validated();
 
             if ($validatedData === null) {
                 return response()->json(['error' => 'true', 'message' => 'validation_failed']);
             }
-            if ($this->bookings->deleteRelation($validatedData)){
+            if ($this->bookings->deleteRelation($validatedData)) {
                 return redirect()->back()->with(['success' => 'Relation successful deleted']);
-            }else return redirect()->back()->withErrors(['errors' => 'There is no error while deleting relation']);
-        }
-        catch(Exception $e){
+            } else return redirect()->back()->withErrors(['errors' => 'There is no error while deleting relation']);
+        } catch (Exception $e) {
             return null;
         }
-        
     }
 
-    public function searchRelation(SearchRelationGuest $request){
-        try{
+    /**
+     * Search for guest relation.
+     *
+     * @param  SearchRelationGuest  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function searchRelation(SearchRelationGuest $request)
+    {
+        try {
             $validatedData = $request->validated();
 
             if ($validatedData === null) {
                 return response()->json(['error' => 'true', 'message' => 'validation_failed']);
             }
             $guest = $this->guests->searchRelationGuest($validatedData);
-            if ($guest != null){
+            if ($guest != null) {
                 return $guest;
-            }else return null;
-        }
-        catch(Exception $e){
+            } else return null;
+        } catch (Exception $e) {
             return null;
         }
     }
 
-    public function submitRelation(SubmitRelationRequest $request){
-        try{
-            try{
+    /**
+     * Submit guest relation.
+     *
+     * @param  SubmitRelationRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function submitRelation(SubmitRelationRequest $request)
+    {
+        try {
+            try {
                 $validatedData = $request->validated();
-    
+
                 if ($validatedData === null) {
                     return redirect()->back()->withErrors(['errors' => 'There is no error while deleting relation']);
                 }
                 $guest = $this->guests->submitRelation($validatedData);
-                if ($guest != null){
+                if ($guest != null) {
                     return redirect()->back()->with(['success', 'Relation successful added']);
-                }else return redirect()->back()->withErrors(['errors' => 'There is no error while deleting relation']);
-            }
-            catch(Exception $e){
+                } else return redirect()->back()->withErrors(['errors' => 'There is no error while deleting relation']);
+            } catch (Exception $e) {
                 return redirect()->back()->withErrors(['errors' => 'There is no error while deleting relation']);
             }
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             return redirect()->back()->withErrors(['errors' => 'There is no error while deleting relation']);
         }
     }

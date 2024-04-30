@@ -16,6 +16,8 @@ class EmployeeController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
+     * @return \Illuminate\Contracts\View\View
      */
     public function index()
     {

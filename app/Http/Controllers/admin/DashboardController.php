@@ -20,7 +20,13 @@ class DashboardController extends Controller
         $this->rooms = new Rooms();
     }
 
-    public function index(){
+    /**
+     * Display the dashboard with various booking and room statistics.
+     *
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory Returns the dashboard view with data on bookings, room demand, room availability, and check-ins by day.
+     */
+    public function index()
+    {
         return view('dashboard')->with([
             'sum_by_day' => json_encode(array_values($this->booking->bookingsSumByDay())) ?? array(),
             'room_data' => json_encode(array_values($this->rooms->getRoomTypesDemand())) ?? array(),

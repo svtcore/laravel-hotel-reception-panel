@@ -20,7 +20,9 @@ class UserController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of users.
+     *
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory Returns the view for displaying a listing of users.
      */
     public function index()
     {
@@ -31,6 +33,8 @@ class UserController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Contracts\View\View
      */
     public function create()
     {
@@ -41,6 +45,9 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param  StoreRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreRequest $request)
     {
@@ -59,15 +66,10 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
+     *
+     * @param  string  $id
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function edit(string $id)
     {
@@ -79,6 +81,10 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param  UpdateRequest  $request
+     * @param  string  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateRequest $request, string $id)
     {
@@ -98,6 +104,9 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param  string  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(string $id)
     {
@@ -106,6 +115,12 @@ class UserController extends Controller
         } else return redirect()->back()->withErrors(['error' => __('The requested resource could not be found.')]);
     }
 
+    /**
+     * Send the reset password link to the specified email.
+     *
+     * @param  MailRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function sendResetLinkToEmail(MailRequest $request)
     {
         try {

@@ -28,7 +28,9 @@ class GuestController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of guests.
+     *
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory Returns the view for displaying a listing of guests.
      */
     public function index()
     {
@@ -38,7 +40,9 @@ class GuestController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new guest.
+     *
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory Returns the view for creating a new guest.
      */
     public function create()
     {
@@ -46,7 +50,10 @@ class GuestController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created guest in storage.
+     *
+     * @param StoreRequest $request The request containing validated data for creating a guest.
+     * @return \Illuminate\Http\RedirectResponse Returns a redirect response to the guest details page with success message upon successful addition, otherwise redirects back with error message.
      */
     public function store(StoreRequest $request)
     {
@@ -65,8 +72,12 @@ class GuestController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified guest data.
+     *
+     * @param string $id The ID of the guest to be displayed.
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory Returns the view for displaying the guest details.
      */
+
     public function show(string $id)
     {
         return view('guests.show')->with([
@@ -76,7 +87,10 @@ class GuestController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified guest.
+     *
+     * @param string $id The ID of the guest to be edited.
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory Returns the view for editing the guest details.
      */
     public function edit(string $id)
     {
@@ -86,8 +100,13 @@ class GuestController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified guest in storage.
+     *
+     * @param UpdateRequest $request The request containing validated data for updating a guest.
+     * @param string $id The ID of the guest to be updated.
+     * @return \Illuminate\Http\RedirectResponse Returns a redirect response to the guest details page with success message upon successful update, otherwise redirects back with error message.
      */
+
     public function update(UpdateRequest $request, string $id)
     {
         try {
@@ -105,7 +124,10 @@ class GuestController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified guest from storage.
+     *
+     * @param string $id The ID of the guest to be deleted.
+     * @return \Illuminate\Http\RedirectResponse Returns a redirect response to the guest index page with success message upon successful deletion, otherwise redirects back with error message.
      */
     public function destroy(string $id)
     {
@@ -114,6 +136,12 @@ class GuestController extends Controller
         } else return redirect()->back()->withErrors(['error' => __('The requested resource could not be found.')]);
     }
 
+    /**
+     * Search bookings by room number relation.
+     *
+     * @param SearchRelationRequest $request The request containing validated data for searching bookings by room number.
+     * @return \Illuminate\Http\JsonResponse Returns JSON response with search result if found, otherwise returns error message.
+     */
     public function relation(SearchRelationRequest $request)
     {
         $validatedData = $request->validated();
@@ -128,7 +156,10 @@ class GuestController extends Controller
     }
 
     /**
-     * Search Guests by input params
+     * Search for guests by input parameters.
+     *
+     * @param SearchRequest $request The request containing validated search parameters.
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory Returns a view displaying search results with input parameters if records are found, otherwise redirects back with error message.
      */
     public function searchByParams(SearchRequest $request)
     {
@@ -147,6 +178,12 @@ class GuestController extends Controller
         }
     }
 
+    /**
+     * Delete relation between bookings and guests.
+     *
+     * @param DeleteRelationRequest $request The request containing validated data for deleting relation between bookings and guests.
+     * @return \Illuminate\Http\RedirectResponse Returns a redirect response back to the previous page with success message upon successful deletion, otherwise redirects back with error message.
+     */
     public function deleteRelation(DeleteRelationRequest $request)
     {
         try {
@@ -163,6 +200,12 @@ class GuestController extends Controller
         }
     }
 
+    /**
+     * Search for guest relation by input parameters.
+     *
+     * @param SearchRelationGuest $request The request containing validated search parameters.
+     * @return \Illuminate\Http\JsonResponse|null Returns JSON response with guest relation if found, otherwise returns null.
+     */
     public function searchRelation(SearchRelationGuest $request)
     {
         try {
@@ -180,6 +223,12 @@ class GuestController extends Controller
         }
     }
 
+    /**
+     * Submit guest relation based on input parameters.
+     *
+     * @param SubmitRelationRequest $request The request containing validated data for submitting guest relation.
+     * @return \Illuminate\Http\RedirectResponse Returns a redirect response back to the previous page with success message upon successful submission, otherwise redirects back with error message.
+     */
     public function submitRelation(SubmitRelationRequest $request)
     {
         try {
