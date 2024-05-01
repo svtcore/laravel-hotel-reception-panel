@@ -36,6 +36,11 @@
     "src": "resources/css/bookings-style.css",
     "isEntry": true
   },
+  "resources/css/forms.css": {
+    "file": "assets/forms-CAwKEmSL.css",
+    "src": "resources/css/forms.css",
+    "isEntry": true
+  },
   "resources/css/guests-style.css": {
     "file": "assets/guests-style-d7vovrA4.css",
     "src": "resources/css/guests-style.css",

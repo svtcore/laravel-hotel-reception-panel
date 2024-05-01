@@ -16,11 +16,13 @@
     <div class="content-container">
         <div class="content-header">
             <div class="container-fluid mt-4">
+                <!-- Display success message if any -->
                 @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
                 @endif
+                <!-- Display error messages if any -->
                 @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -31,6 +33,7 @@
                 </div>
                 @endif
                 <div>
+                    <!-- Employees table -->
                     <table id="employees-table" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -39,12 +42,14 @@
                                 <th class="text-center">Phone number</th>
                                 <th class="text-center">Position</th>
                                 <th class="text-center">Status</th>
+                                <!-- Display action column for admin users only -->
                                 @role('admin')
                                 <th class="text-center">Action</th>
                                 @endrole
                             </tr>
                         </thead>
                         <tbody>
+                            <!-- Loop through employees data -->
                             @foreach ($employees as $employee)
                             <tr>
                                 <td class="text-center">{{ $employee->first_name }} {{ $employee->last_name }}</td>
@@ -52,6 +57,7 @@
                                 <td class="text-center">{{ $employee->phone_number }}</td>
                                 <td class="text-center">{{ ucfirst($employee->position) }}</td>
                                 <td class="text-center">{{ ucfirst($employee->status) }}</td>
+                                <!-- Display actions for admin users only -->
                                 @role('admin')
                                 <td class="text-center">
                                     <form action="{{ route('admin.employees.delete', $employee->id) }}" method="POST">

@@ -12,11 +12,13 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid mt-4">
+                <!-- Success message -->
                 @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
                 @endif
+                <!-- Error messages -->
                 @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -26,6 +28,7 @@
                     </ul>
                 </div>
                 @endif
+                <!-- Form for editing employee data -->
                 <form id="editForm" class="ml-4 mr-4 mt-5" action="{{ route('admin.employees.store') }}" method="POST">
                     <div class="row justify-content-center ml-5 mr-5">
                         <div class="col-md-6">
@@ -34,20 +37,24 @@
                                     <h4 class="card-title pl-4"><b>Employee data</b></h4><br /><br />
                                     @csrf
                                     <div class="row mb-3 ml-2 mr-2">
+                                        <!-- First Name input -->
                                         <div class="col-sm-6">
                                             <label for="firstName" class="form-label">First Name</label>
                                             <input type="text" class="form-control text-center" id="firstName" name="firstName" value="" required maxlength="255">
                                         </div>
+                                        <!-- Last Name input -->
                                         <div class="col-sm-6">
                                             <label for="lastName" class="form-label">Last Name</label>
                                             <input type="text" class="form-control text-center" id="lastName" name="lastName" value="" required maxlength="255">
                                         </div>
                                     </div>
                                     <div class="row mb-3 ml-2 mr-2">
+                                        <!-- Date of Birth input -->
                                         <div class="col-sm-6">
                                             <label for="dob" class="form-label">DOB</label>
                                             <input type="date" class="form-control" id="dob" name="dob" value="" required>
                                         </div>
+                                        <!-- Status select -->
                                         <div class="col-sm-6">
                                             <label for="status" class="form-label">Status</label>
                                             <select class="form-select text-center" id="status" name="status">
@@ -59,6 +66,7 @@
                                         </div>
                                     </div>
                                     <div class="row justify-content-center">
+                                        <!-- Submit button -->
                                         <div class="col-sm-12">
                                             <button type="submit" class="btn btn-primary w-100">Confirm data</button>
                                         </div>
@@ -71,12 +79,14 @@
                                 <div class="card-body">
                                     <h4 class="card-title pl-4"><b>Details</b></h4><br /><br />
                                     <div class="row ml-2 mr-2 mb-4">
+                                        <!-- Phone Number input -->
                                         <div class="col-sm-12">
                                             <label for="phoneNumber" class="form-label">Phone number</label>
                                             <input type="text" class="form-control text-center" id="phoneNumber" name="phoneNumber" value="" required maxlength="20">
                                         </div>
                                     </div>
                                     <div class="row mb-5 ml-2 mr-2">
+                                        <!-- Position input -->
                                         <div class="col-sm-12">
                                             <label for="position" class="form-label">Position</label>
                                             <input type="text" class="form-control text-center" id="position" name="position" value="" maxlength="255">

@@ -87,14 +87,9 @@
                     </div>
                 </form>
             </div>
+        </section>
     </div>
 </div>
-</div>
-</div>
-</section>
-</div>
-</div>
-
 @section('custom-scripts')
 @endsection
 

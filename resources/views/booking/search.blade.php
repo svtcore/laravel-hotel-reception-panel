@@ -11,11 +11,13 @@
     <div class="content-container">
         <div class="content-header">
             <div class="container-fluid mt-4">
+                <!-- Success message -->
                 @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
                 @endif
+                <!-- Error messages -->
                 @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -27,14 +29,17 @@
                 @endif
                 <div class="content-container text-center">
                     <h4 class="font-weight-bold">Search form</h4>
+                    <!-- Form for searching bookings by admin -->
                     @role('admin')
                     <form id="searchForm" method="POST" action="{{ route('admin.booking.search') }}">
                         @endrole
+                        <!-- Form for searching bookings by receptionist -->
                         @role('receptionist')
                         <form id="searchForm" method="POST" action="{{ route('receptionist.booking.search') }}">
                             @endrole
                             @csrf
                             <div class="row mt-5">
+                                <!-- Toggle switches for search options -->
                                 <div class="col-md-4">
                                     <label class="toggle">
                                         <input class="toggle-checkbox" id="switch-by-date" type="checkbox">
@@ -65,6 +70,7 @@
                                 </div>
                                 <div class="col-md-2"></div>
                             </div>
+                            <!-- Search input fields -->
                             <div class="form-row">
                                 <div class="col-md-2 mb-2 mt-2 date-block">
                                     <label for="startDate">Start date</label>
@@ -102,6 +108,7 @@
                             </div>
                         </form>
                 </div>
+                <!-- Search results section -->
                 <div class="mt-4 text-center">
                     <h4><b>Search results</b></h4>
                 </div>

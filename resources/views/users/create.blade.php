@@ -10,12 +10,12 @@
 @section('navbar_header_button')
 <span class="nav-page-info">Edit user data</span>
 @endsection
-
 <div class="container-fluid mt-5">
     <div class="content-container">
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid mt-4">
+                <!-- Session Messages Handling -->
                 @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
@@ -30,6 +30,7 @@
                     </ul>
                 </div>
                 @endif
+                <!-- User Data Edit Form -->
                 <form id="editForm" class="" action="{{ route('admin.users.store') }}" method="POST">
                     <div class="row justify-content-center ml-5 mr-5">
                         <div class="col-md-8">
@@ -37,6 +38,7 @@
                                 <div class="card-body">
                                     <h4 class="card-title pl-4"><b>User data</b></h4><br /><br />
                                     @csrf
+                                    <!-- Input fields for name and email -->
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-6">
                                             <label for="name" class="form-label">Name</label>
@@ -47,6 +49,7 @@
                                             <input type="email" class="form-control text-center" id="email" name="email" required maxlength="255">
                                         </div>
                                     </div>
+                                    <!-- Select field for role -->
                                     <div class="row mb-4 ml-2 mr-2">
                                         <div class="col-sm-6">
                                             <label for="role" class="form-label">Role</label>
@@ -60,13 +63,14 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Save changes button -->
                         <div class="col-md-4">
                             <div class="card no-shadow">
                                 <div class="card-body">
-                                    <h4 class="card-title pl-4"><b>User data</b></h4><br /><br />
+                                    <h4 class="card-title pl-4"><b>Actions</b></h4><br /><br />
                                     <div class="row mb-4 ml-2 mr-2">
                                         <div class="col-sm-12">
-                                            <button type="submit" class="btn btn-success w-100">Save changes</button>
+                                            <button type="submit" class="btn btn-success w-100">Submit user data</button>
                                         </div>
                                     </div>
                                 </div>
@@ -78,7 +82,6 @@
         </section>
     </div>
 </div>
-
 @section('custom-scripts')
 @vite(['resources/js/guests/edit.js'])
 @endsection

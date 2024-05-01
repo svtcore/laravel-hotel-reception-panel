@@ -20,6 +20,7 @@
     <div class="content-container">
         <div class="content-header">
             <div class="container-fluid">
+                <!-- Session Messages Handling -->
                 @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
@@ -40,11 +41,12 @@
                         <div class="room-info-table">
                             <h4 class="mb-4"><b>Room Information</b></h4>
 
+                            <!-- Display message if room is deleted -->
                             @if (isset($room->deleted_at))
                             <div class="row pl-4 mt-2 mb-2 pr-4">
                                 <div class="col-md-12">
                                     <ul class="list-group">
-                                        <li class="list-group-item d-flex justify-content-center align-items-center"> <!-- Изменен класс здесь -->
+                                        <li class="list-group-item d-flex justify-content-center align-items-center">
                                             <span class="badge bg-danger badge-big">This room has been deleted and no longer available</span>
                                         </li>
                                     </ul>
@@ -54,6 +56,7 @@
                             <div class="row pl-4 pr-4">
                                 <div @if (!isset($room->deleted_at)) class="col-md-4" @else class="col-md-6" @endif>
                                     <ul class="list-group">
+                                        <!-- Display basic room information -->
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             Room number
                                             <span class="badge bg-secondary badge-big">{{ $room->room_number }}</span>
@@ -74,6 +77,7 @@
                                 </div>
                                 <div @if (!isset($room->deleted_at)) class="col-md-4" @else class="col-md-6" @endif>
                                     <ul class="list-group">
+                                        <!-- Display beds count, price, and status -->
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             Adults beds
                                             <span class="badge bg-secondary badge-big">{{ $room->adults_beds_count }}</span>
@@ -88,6 +92,7 @@
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             Current Status
+                                            <!-- Display room status -->
                                             @if ($room->status == 'available')
                                             <span class="badge badge-success badge-big">Available</span>
                                             @elseif ($room->status == 'occupied')
@@ -100,6 +105,7 @@
                                         </li>
                                     </ul>
                                 </div>
+                                <!-- Display room control options -->
                                 @if (!isset($room->deleted_at))
                                 <div class="col-md-4">
                                     <div class="card no-shadow">
@@ -132,6 +138,7 @@
                                 </div>
                                 @endif
                             </div>
+                            <!-- Display additional room properties -->
                             @if (count($room->room_properties) > 0)
                             <h5 class="@if (count($room->room_properties) < 3) text-left pl-5 @else text-center @endif mt-4"><b>Additional properties</b></h5>
                             <div class="row pl-4 pr-4 mt-4">
@@ -180,6 +187,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <!-- Display booking history -->
                                         @foreach($booking as $book)
                                         <tr>
                                             <?php
@@ -197,6 +205,7 @@
                                             <td class="text-center">{{ $date_check_out}}</td>
                                             <td class="text-center">{{ $book->total_cost}}</td>
                                             <td class="text-center">
+                                                <!-- Display booking status -->
                                                 @if ($book->status == 'active' || $book->status == 'completed')
                                                 <span class="badge badge-success badge-big">{{ $book->status }}</span>
                                                 @elseif ($book->status == 'canceled')
@@ -207,27 +216,26 @@
                                             </td>
                                             @role('admin')
                                             <td class="text-center">
+                                                <!-- Display actions for admin users -->
                                                 <form action="{{ route('admin.booking.delete', $book->id) }}" method="POST">
                                                     <a href="{{ route('admin.booking.show', $book->id) }}" class="btn btn-secondary pt-0 pb-0 pr-4 pl-4">Details</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button class="btn btn-danger pt-0 pb-0" type="submit"><i class="fas fa-trash"></i>
-                                                    </button>
+                                                    <button class="btn btn-danger pt-0 pb-0" type="submit"><i class="fas fa-trash"></i></button>
                                                 </form>
                                             </td>
                                             @endrole
                                             @role('receptionist')
                                             <td class="text-center">
+                                                <!-- Display actions for receptionist users -->
                                                 <form action="{{ route('receptionist.booking.delete', $book->id) }}" method="POST">
                                                     <a href="{{ route('receptionist.booking.show', $book->id) }}" class="btn btn-secondary pt-0 pb-0 pr-4 pl-4">Details</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button class="btn btn-danger pt-0 pb-0" type="submit"><i class="fas fa-trash"></i>
-                                                    </button>
+                                                    <button class="btn btn-danger pt-0 pb-0" type="submit"><i class="fas fa-trash"></i></button>
                                                 </form>
                                             </td>
                                             @endrole
-
                                         </tr>
                                         @endforeach
                                     </tbody>

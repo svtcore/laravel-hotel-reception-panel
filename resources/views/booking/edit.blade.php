@@ -11,11 +11,13 @@
     <div class="content-container">
         <section class="content">
             <div class="container-fluid mt-4">
+                <!-- Success message -->
                 @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
                 @endif
+                <!-- Error messages -->
                 @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -25,11 +27,14 @@
                     </ul>
                 </div>
                 @endif
+                <!-- Reservation details form -->
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card no-shadow">
                             <div class="card-body">
+                                <!-- Title for reservation details -->
                                 <h4 class="card-title pl-4"><b>Reservation Details</b></h4><br /><br />
+                                <!-- Form for updating reservation details -->
                                 @role('admin')
                                 <form action="{{ route('admin.booking.update', $booking_data->id) }}" method="POST">
                                     @endrole
@@ -39,6 +44,7 @@
                                         @csrf
                                         @method('PUT')
                                         <input type="hidden" name="booking_id" value="{{ $booking_data->id }}">
+                                        <!-- Room information -->
                                         <div class="row mb-3 ml-2 mr-2">
                                             <div class="col-sm-12">
                                                 <table class="table">
@@ -55,6 +61,7 @@
                                                 </table>
                                             </div>
                                         </div>
+                                        <!-- Number of adults and children -->
                                         <div class="row mb-3 ml-2 mr-2">
                                             <div class="col-sm-6">
                                                 <label for="adultsCount" class="form-label">Adults</label>
@@ -65,10 +72,11 @@
                                                 <input type="number" class="form-control" id="childrenCount" name="childrenCount" value="{{ $booking_data->children_count }}">
                                             </div>
                                         </div>
-                                        <?php
+                                        <!-- Check-in and Check-out dates -->
+                                        @php
                                         $date_check_in = date('Y-m-d', strtotime($booking_data->check_in_date));
                                         $date_check_out = date('Y-m-d', strtotime($booking_data->check_out_date));
-                                        ?>
+                                        @endphp
                                         <div class="row mb-3 ml-2 mr-2">
                                             <div class="col-sm-6">
                                                 <label for="checkInDate" class="form-label">Check-in Date</label>
@@ -79,6 +87,7 @@
                                                 <input type="date" class="form-control" id="checkOutDate" name="checkOutDate" value="{{ $date_check_out }}">
                                             </div>
                                         </div>
+                                        <!-- Payment type and total cost -->
                                         <div class="row mb-3 ml-2 mr-2">
                                             <div class="col-sm-6">
                                                 <label for="paymentType" class="form-label">Payment type</label>
@@ -93,6 +102,7 @@
                                                 <input type="text" class="form-control" id="totalCost" name="totalCost" value="{{ $booking_data->total_cost }}" disabled>
                                             </div>
                                         </div>
+                                        <!-- Note and status -->
                                         <div class="row mb-3 ml-2 mr-2">
                                             <div class="col-sm-12">
                                                 <textarea class="form-control" name="note">{{ $booking_data->note }}</textarea>
@@ -108,6 +118,7 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <!-- Save Changes button -->
                                         <div class="row ml-2 mr-2">
                                             <div class="col-sm-12">
                                                 <button type="submit" class="btn btn-primary w-100">Save Changes</button>
@@ -117,20 +128,24 @@
                         </div>
                     </div>
 
+                    <!-- Additional Services -->
                     <div class="col-md-6">
                         <div class="card no-shadow">
                             <div class="card-body">
                                 <h4 class="card-title pl-4"><b>Additional Services</b></h4>
                                 <br /><br />
                                 <div class="row">
+                                    <!-- Loop through available services -->
                                     @php $count = 0 @endphp
                                     @foreach ($avaliable_services as $service)
+                                    <!-- Group services into rows -->
                                     @if ($count % 2 == 0)
                                     @if ($count != 0)
                                 </div>
                                 <div class="row">
                                     @endif
                                     @endif
+                                    <!-- Display service checkbox -->
                                     <div class="col-md-6 pl-4 pr-4">
                                         <div class="form-check mt-2">
                                             @php
@@ -153,7 +168,7 @@
                                 </div>
                             </div>
                         </div>
-                        </form>
+                        <!-- Related Guests -->
                         <div class="card no-shadow">
                             <div class="card-body">
                                 <h4 class="card-title mb-4 pl-4"><b>Guests</b></h4>
@@ -162,6 +177,7 @@
                                     <div class="col-sm-12">
                                         <table class="table">
                                             <tbody>
+                                                <!-- Guest information -->
                                                 <tr>
                                                     <th scope="row">Full name</th>
                                                     @role('admin')
@@ -175,9 +191,10 @@
                                                     <th scope="row">Contact phone number</th>
                                                     <td class="text-left">{{ $booking_data->guests[0]->phone_number }}</td>
                                                 </tr>
+                                                <!-- Form for relating guests -->
                                                 <tr>
-                                                        @role('admin')
-                                                        <form action="{{ route('admin.guests.relation.submit') }}" method="POST">
+                                                    @role('admin')
+                                                    <form action="{{ route('admin.guests.relation.submit') }}" method="POST">
                                                         @endrole
                                                         @role('receptionist')
                                                         <form action="{{ route('receptionist.guests.relation.submit') }}" method="POST">
@@ -204,12 +221,15 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <!-- Related guests -->
                                         @if (count($booking_data->guests) > 1)
                                         <h5 class="card-title mt-2">Related</h5>
                                         <table class="table">
                                             <tbody>
+                                                <!-- Loop through related guests -->
                                                 @foreach ($booking_data->guests as $index => $guest)
                                                 <tr>
+                                                    <!-- Display related guest names -->
                                                     @if ($index >= 1)
                                                     <td>
                                                         <div class="d-flex justify-content-between align-items-center">
@@ -223,6 +243,7 @@
                                                                         {{ $guest->first_name }} {{ $guest->last_name }}
                                                                     </a>
                                                             </div>
+                                                            <!-- Delete relation button -->
                                                             <div>
                                                     </td>
                                                     <td class="text-right">
@@ -234,8 +255,10 @@
                                                                 @endrole
                                                                 @csrf
                                                                 @method('DELETE')
+                                                                <!-- Hidden fields for guest and booking IDs -->
                                                                 <input type="hidden" name="guest_id" id="guest_id" value="{{ $guest->id }}" />
                                                                 <input type="hidden" name="booking_id" id="booking_id" value="{{ $booking_data->id }}" />
+                                                                <!-- Delete button -->
                                                                 <button type="submit" class="btn btn-outline-danger btn-sm">
                                                                     <i class="fa-solid fa-ban"></i>
                                                                 </button>
@@ -251,6 +274,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Available dates -->
                         <div class="card no-shadow">
                             <div class="card-body">
                                 <h4 class="card-title mb-4 pl-4"><b>Avaliable dates</b></h4>
@@ -259,6 +283,7 @@
                                     <div class="col-sm-12">
                                         <table class="table">
                                             <tbody>
+                                                <!-- Loop through free dates -->
                                                 @isset($free_dates)
                                                 @foreach($free_dates as $free)
                                                 <tr>
@@ -270,6 +295,7 @@
                                                 </tr>
                                                 @endforeach
                                                 @endisset
+                                                <!-- Last free date -->
                                                 <tr>
                                                     <td class="text-left">
                                                         <b>{{ \Carbon\Carbon::parse($last_free_date)->format('d.m.Y') }}</b> and later
@@ -287,6 +313,7 @@
         </section>
     </div>
 </div>
+
 @section('custom-scripts')
 @vite(['resources/js/guests/search.js'])
 @endsection

@@ -8,6 +8,7 @@ export default defineConfig({
                 'resources/sass/app.scss',
                 'resources/js/app.js',
                 'resources/css/main-style.css',
+                'resources/css/forms.css',
                 'resources/css/bookings-style.css',
                 'resources/css/rooms-style.css',
                 'resources/css/guests-style.css',

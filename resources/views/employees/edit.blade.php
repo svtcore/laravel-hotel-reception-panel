@@ -31,6 +31,7 @@
                         <div class="col-md-6">
                             <div class="card no-shadow">
                                 <div class="card-body">
+                                    <!-- Employee data -->
                                     <h4 class="card-title pl-4"><b>Employee data</b></h4><br /><br />
                                     @csrf
                                     @method('PUT')
@@ -71,6 +72,7 @@
                         <div class="col-md-6">
                             <div class="card no-shadow">
                                 <div class="card-body">
+                                    <!-- Details -->
                                     <h4 class="card-title pl-4"><b>Details</b></h4><br /><br />
                                     <div class="row ml-2 mr-2 mb-4">
                                         <div class="col-sm-12">
