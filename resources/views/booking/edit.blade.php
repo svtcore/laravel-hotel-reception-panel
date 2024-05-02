@@ -98,6 +98,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-sm-6">
+                                                <input type="hidden" id="price_per_night" value="{{ $booking_data->rooms->price }}" />
                                                 <label for="totalCost" class="form-label">Total cost</label>
                                                 <input type="text" class="form-control" id="totalCost" name="totalCost" value="{{ $booking_data->total_cost }}" disabled>
                                             </div>
@@ -157,7 +158,7 @@
                                             }
                                             }
                                             @endphp
-                                            <input class="form-check-input" type="checkbox" value="{{ $service->id }}" id="service{{ $service->id }}" name="additionalServices[]" @if ($checked) checked @endif>
+                                            <input class="form-check-input additionalServices" type="checkbox" data-price="{{ $service->price }}" value="{{ $service->id }}" id="service{{ $service->id }}" name="additionalServices[]" @if ($checked) checked @endif>
                                             <label class="form-check-label" for="service{{ $service->id }}">
                                                 {{ strtoupper($service->name) }} [ + {{ strtoupper($service->price) }}]
                                             </label>
@@ -316,5 +317,6 @@
 
 @section('custom-scripts')
 @vite(['resources/js/guests/search.js'])
+@vite(['resources/js/booking/calculate_price.js'])
 @endsection
 @endsection
