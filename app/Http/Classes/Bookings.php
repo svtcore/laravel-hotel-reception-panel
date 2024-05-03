@@ -419,9 +419,7 @@ class Bookings
                             $freePeriodStart = Carbon::parse($previousCheckOutDate);
                             $freePeriodEnd = Carbon::parse($booking->check_in_date);
 
-                            $freePeriodDuration = $freePeriodEnd->diffInDays($freePeriodStart);
-
-                            if ($freePeriodDuration > 0) {
+                            if ($freePeriodEnd > $freePeriodStart) { // Check if end date is greater than start date
                                 $freePeriods[] = [
                                     'start' => $freePeriodStart,
                                     'end' => $freePeriodEnd,
@@ -439,8 +437,10 @@ class Bookings
 
                 $free_dates = [];
                 foreach ($freePeriods as $freePeriod) {
-                    $dateRange = $freePeriod['start']->format('d.m.Y') . "  —  " . $freePeriod['end']->format('d.m.Y');
-                    $free_dates[] = $dateRange;
+                    if ($freePeriod['start'] > $currentDate) { // Check if start date is greater than current date
+                        $dateRange = $freePeriod['start']->format('d.m.Y') . "  —  " . $freePeriod['end']->format('d.m.Y');
+                        $free_dates[] = $dateRange;
+                    }
                 }
 
                 $last_date = $latestCheckOutDate !== null ? ($latestCheckOutDate > $currentDate ? $latestCheckOutDate : $currentDate) : null;
@@ -451,6 +451,7 @@ class Bookings
             return null;
         }
     }
+
 
     /**
      * Checks if the input check-in and check-out dates fall within the available date ranges or after the latest available date.

@@ -264,7 +264,7 @@
                                         <td class="text-center">{{ $booking->total_cost }}</td>
                                         <!-- Check-out date -->
                                         <td class="text-center">
-                                            {{ \Carbon\Carbon::parse($booking->check_out_date)->format('Y-m-d') }}
+                                            {{ \Carbon\Carbon::parse($booking->check_out_date)->format('d-m-Y') }}
                                         </td>
                                         <!-- Action buttons -->
                                         <td class="text-center">

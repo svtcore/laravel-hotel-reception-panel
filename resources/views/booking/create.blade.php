@@ -80,11 +80,11 @@
                                         <div class="row mb-3 ml-2 mr-2">
                                             <div class="col-sm-6">
                                                 <label for="adultsCount" class="form-label">Adults</label>
-                                                <input type="number" class="form-control" id="adultsCount" name="adultsCount" value="1" min="1" max="{{ $room->adults_beds_count }}">
+                                                <input type="number" class="form-control" id="adultsCount" name="adultsCount" value="1" min="1" max="{{ $room->adults_beds_count }}" value="{{ old('adultsCount') }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="childrenCount" class="form-label">Children</label>
-                                                <input type="number" class="form-control" id="childrenCount" name="childrenCount" value="0" min="0" max="{{ $room->children_beds_count }}">
+                                                <input type="number" class="form-control" id="childrenCount" name="childrenCount" value="0" min="0" max="{{ $room->children_beds_count }}" value="{{ old('childrenCount') }}">
                                             </div>
                                         </div>
 
@@ -135,7 +135,7 @@
                                         <!-- Save Changes button -->
                                         <div class="row ml-2 mr-2">
                                             <div class="col-sm-12">
-                                                <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                                                <button type="submit" class="btn btn-primary w-100">Complete reservation</button>
                                             </div>
                                         </div>
                                     </div>
