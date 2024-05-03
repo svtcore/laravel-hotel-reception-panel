@@ -23,6 +23,77 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        AdditionalService::factory()->create([
+            'name' => 'Wi-Fi',
+        ]);
+        AdditionalService::factory()->create([
+            'name' => 'Air Conditioning',
+        ]);
+        AdditionalService::factory()->create([
+            'name' => 'Television',
+        ]);
+        AdditionalService::factory()->create([
+            'name' => 'Hair Dryer',
+        ]);
+        AdditionalService::factory()->create([
+            'name' => 'Iron',
+        ]);
+        AdditionalService::factory()->create([
+            'name' => 'Safe',
+        ]);
+        AdditionalService::factory()->create([
+            'name' => 'Mini-bar',
+        ]);
+        AdditionalService::factory()->create([
+            'name' => 'Kettle',
+        ]);
+        AdditionalService::factory()->create([
+            'name' => 'Extra Pillows or Blankets',
+        ]);
+        AdditionalService::factory()->create([
+            'name' => 'Alarm Clock',
+        ]);
+        AdditionalService::factory()->create([
+            'name' => 'Mini Refrigerator',
+        ]);
+        AdditionalService::factory()->create([
+            'name' => 'Press Conference Service',
+        ]);
+        AdditionalService::factory()->create([
+            'name' => 'Welcome Fruits or Snacks',
+        ]);
+        AdditionalService::factory()->create([
+            'name' => 'Laundry and Dry Cleaning Services',
+        ]);
+        AdditionalService::factory()->create([
+            'name' => 'Massage Chair',
+        ]);
+        AdditionalService::factory()->create([
+            'name' => 'Courier Services',
+        ]);
+        AdditionalService::factory()->create([
+            'name' => 'Taxi or Airport Transfer Services',
+        ]);
+
+        RoomProperty::factory()->create([
+            'name' => 'View on the Street',
+        ]);
+        $roles_list = ['admin', 'receptionist'];
+        //Generate roles
+        Role::create(['name' => 'admin']);
+        Role::create(['name' => 'receptionist']);
+        $user = User::factory()->create([
+            'name' => 'John Doe',
+            'email' => 'admin@admin.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('password'),
+            'remember_token' => '',
+        ]);
+        $user->assignRole('admin');
+    }
+
+    /*public function run(): void
+    {
         $config = [
             'user' => 10,
             'rooms' => 50,
@@ -62,5 +133,5 @@ class DatabaseSeeder extends Seeder
             $booking->guests()->attach(rand(1, $config['guests']));
             $booking->additional_services()->attach(rand(1, $config['additional_services']));
         }
-    }
+    }*/
 }

@@ -15,8 +15,9 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name');
             $table->unsignedFloat('price');
-            $table->boolean('avaliable')->default(1);
+            $table->boolean('available')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

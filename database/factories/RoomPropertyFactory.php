@@ -18,7 +18,7 @@ class RoomPropertyFactory extends Factory
     {
         return [
             'name' => $this->faker->word(),
-            'avaliable' => $this->faker->numberBetween(0,1),
+            'available' => $this->faker->numberBetween(0,1),
         ];
     }
 }

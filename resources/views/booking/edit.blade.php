@@ -138,7 +138,7 @@
                                 <div class="row">
                                     <!-- Loop through available services -->
                                     @php $count = 0 @endphp
-                                    @foreach ($avaliable_services as $service)
+                                    @foreach ($available_services as $service)
                                     <!-- Group services into rows -->
                                     @if ($count % 2 == 0)
                                     @if ($count != 0)
@@ -278,7 +278,7 @@
                         <!-- Available dates -->
                         <div class="card no-shadow">
                             <div class="card-body">
-                                <h4 class="card-title mb-4 pl-4"><b>Avaliable dates</b></h4>
+                                <h4 class="card-title mb-4 pl-4"><b>Available dates</b></h4>
                                 <br /><br />
                                 <div class="row mb-3 ml-2 mr-2">
                                     <div class="col-sm-12">

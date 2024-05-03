@@ -72,6 +72,14 @@ Route::middleware(['role:admin'])->group(function () {
                 Route::post('/', 'UserController@store')->name('admin.users.store');
                 Route::post('/password/reset', 'UserController@sendResetLinkToEmail')->name('admin.users.reset_password');
             });
+            Route::prefix('services')->group(function () {
+                Route::get('/', 'AdditionalServiceController@index')->name('admin.services.index');
+                Route::post('/', 'AdditionalServiceController@store')->name('admin.services.store');
+                Route::get('/create', 'AdditionalServiceController@create')->name('admin.services.create');
+                Route::get('/{id}/edit', 'AdditionalServiceController@edit')->name('admin.services.edit')->where('id', '^[1-9][0-9]{0,9}$');
+                Route::put('/{id}', 'AdditionalServiceController@update')->name('admin.services.update')->where('id', '^[1-9][0-9]{0,9}$');
+                Route::delete('/{id}', 'AdditionalServiceController@destroy')->name('admin.services.delete')->where('id', '^[1-9][0-9]{0,9}$');
+            });
             Route::get('/dashboard', 'DashboardController@index')->name('admin.dashboard');
         });
     });

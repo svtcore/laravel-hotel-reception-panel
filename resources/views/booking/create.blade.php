@@ -150,7 +150,7 @@
                                         <br /><br />
                                         <div class="row">
                                             @php $count = 0 @endphp
-                                            @foreach ($avaliable_services as $service)
+                                            @foreach ($available_services as $service)
                                             @if ($count % 2 == 0)
                                             @if ($count != 0)
                                         </div>

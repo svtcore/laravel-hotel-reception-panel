@@ -93,6 +93,12 @@
                                 <p>Rooms</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.services.index') }}" class="nav-link nav-custom @yield('services_navbar_state')">
+                                <i class="nav-icon fas fa-bed"></i>
+                                <p>Additional Services</p>
+                            </a>
+                        </li>
                         @endrole
                         @role('receptionist')
                         <li class="nav-item">

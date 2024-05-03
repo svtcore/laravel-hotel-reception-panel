@@ -20,7 +20,7 @@ class AdditionalServiceFactory extends Factory
         return [
             'name' => $this->faker->sentence(3),
             'price' => $this->faker->numberBetween(10, 100),
-            'avaliable' => $this->faker->numberBetween(0, 1)
+            'available' => $this->faker->numberBetween(0, 1)
         ];
     }
 }

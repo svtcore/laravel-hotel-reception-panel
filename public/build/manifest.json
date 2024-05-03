@@ -56,6 +56,12 @@
     "src": "resources/css/rooms-style.css",
     "isEntry": true
   },
+  "resources/js/additional_services/index.js": {
+    "file": "assets/index-Ds8GVPQ2.js",
+    "name": "index",
+    "src": "resources/js/additional_services/index.js",
+    "isEntry": true
+  },
   "resources/js/app.js": {
     "file": "assets/app-lkUo2uVu.js",
     "name": "app",
@@ -74,7 +80,7 @@
     ]
   },
   "resources/js/booking/calculate_price.js": {
-    "file": "assets/calculate_price-BATvKSHZ.js",
+    "file": "assets/calculate_price-DEr3WfN_.js",
     "name": "calculate_price",
     "src": "resources/js/booking/calculate_price.js",
     "isEntry": true

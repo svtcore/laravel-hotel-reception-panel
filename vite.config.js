@@ -27,7 +27,8 @@ export default defineConfig({
                 'resources/js/dashboard/income.js',
                 'resources/js/dashboard/rooms.js',
                 'resources/js/dashboard/rooms_availability.js',
-                'resources/js/dashboard/bookings.js'
+                'resources/js/dashboard/bookings.js',
+                'resources/js/additional_services/index.js',
             ],
             refresh: true,
         }),

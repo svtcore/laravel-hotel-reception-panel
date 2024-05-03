@@ -58,7 +58,7 @@ class BookingController extends Controller
         [$free_dates, $last_date] = $this->booking->getAvailableDate($id);
         if ($room) {
             return view('booking.create')->with([
-                'avaliable_services' => $this->additional_services->getAvaliable() ?? array(),
+                'available_services' => $this->additional_services->getAvailable() ?? array(),
                 'room' => $room,
                 'free_dates' => $free_dates,
                 'last_free_date' =>  $last_date
@@ -122,7 +122,7 @@ class BookingController extends Controller
         [$free_dates, $last_date] = $this->booking->getAvailableDate($id);
         return view('booking.edit')->with([
             'booking_data' => $this->booking->getById($id) ?? abort(404),
-            'avaliable_services' => $this->additional_services->getAvaliable() ?? array(),
+            'available_services' => $this->additional_services->getAvailable() ?? array(),
             'free_dates' => $free_dates,
             'last_free_date' =>  $last_date
         ]);
