@@ -163,6 +163,12 @@
     "src": "resources/js/rooms/index.js",
     "isEntry": true
   },
+  "resources/js/rooms/properties/index.js": {
+    "file": "assets/index-BQquUpnY.js",
+    "name": "index",
+    "src": "resources/js/rooms/properties/index.js",
+    "isEntry": true
+  },
   "resources/js/rooms/show.js": {
     "file": "assets/show-D8Yva4ka.js",
     "name": "show",

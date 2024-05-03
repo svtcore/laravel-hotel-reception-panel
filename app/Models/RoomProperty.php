@@ -9,6 +9,11 @@ class RoomProperty extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'available',
+    ];
+
     public function rooms()
     {
         return $this->belongsToMany(Room::class,'rooms_room_properties');

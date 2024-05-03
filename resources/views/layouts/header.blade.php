@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,6 +43,7 @@
         }
     </style>
 </head>
+
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
         <!-- Navbar -->
@@ -94,8 +96,14 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('admin.rooms.properties.index') }}" class="nav-link nav-custom @yield('room_properties_navbar_state')">
+                                <i class="nav-icon fas fa-door-open"></i>
+                                <p>Room properties</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('admin.services.index') }}" class="nav-link nav-custom @yield('services_navbar_state')">
-                                <i class="nav-icon fas fa-bed"></i>
+                                <i class="nav-icon fas fa-concierge-bell"></i>
                                 <p>Additional Services</p>
                             </a>
                         </li>
@@ -195,4 +203,5 @@
     <script src="https://cdn.datatables.net/responsive/3.0.0/js/dataTables.responsive.min.js"></script>
     @yield('custom-scripts')
 </body>
+
 </html>

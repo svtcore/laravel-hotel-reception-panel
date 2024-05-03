@@ -29,6 +29,7 @@ export default defineConfig({
                 'resources/js/dashboard/rooms_availability.js',
                 'resources/js/dashboard/bookings.js',
                 'resources/js/additional_services/index.js',
+                'resources/js/rooms/properties/index.js',
             ],
             refresh: true,
         }),

@@ -39,6 +39,14 @@ Route::middleware(['role:admin'])->group(function () {
                 Route::get('/create', 'RoomController@create')->name('admin.rooms.create');
                 Route::post('/', 'RoomController@store')->name('admin.rooms.store');
                 Route::get('/', 'RoomController@index')->name('admin.rooms.index');
+                Route::prefix('properties')->group(function () {
+                    Route::get('/', 'RoomPropertyController@index')->name('admin.rooms.properties.index');
+                    Route::get('/create', 'RoomPropertyController@create')->name('admin.rooms.properties.create');
+                    Route::post('/', 'RoomPropertyController@store')->name('admin.rooms.properties.store');
+                    Route::get('/{id}/edit', 'RoomPropertyController@edit')->name('admin.rooms.properties.edit')->where('id', '^[1-9][0-9]{0,9}$');
+                    Route::put('/{id}', 'RoomPropertyController@update')->name('admin.rooms.properties.update')->where('id', '^[1-9][0-9]{0,9}$');
+                    Route::delete('/{id}', 'RoomPropertyController@destroy')->name('admin.rooms.properties.delete')->where('id', '^[1-9][0-9]{0,9}$');
+                });
             });
             Route::prefix('guests')->group(function () {
                 Route::get('/', 'GuestController@index')->name('admin.guests.index');

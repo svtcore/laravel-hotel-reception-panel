@@ -14,14 +14,12 @@
         <form method="POST" action="{{ route('confirm.submit') }}">
             @csrf
             <input type="hidden" name="token" value="{{ $token }}">
-            <div class="form-header">Registration almost complete. Input your password</div>
+            <div class="form-header">Almost complete. Set up your password</div>
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" class="form-control" required>
+                <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
             </div>
             <div class="form-group">
-                <label for="password-confirm">Confirm password</label>
-                <input type="password" name="password_confirmation" id="password-confirm" class="form-control" required>
+                <input type="password" name="password_confirmation" id="password-confirm" class="form-control" placeholder="Confirm password" required>
             </div>
             <button type="submit" class="btn btn-primary w-100">Submit</button>
         </form>
