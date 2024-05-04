@@ -113,9 +113,12 @@ class BookingController extends Controller
      */
     public function edit(string $id)
     {
+        [$free_dates, $last_date] = $this->booking->getAvailableDate($id);
         return view('booking.edit')->with([
             'booking_data' => $this->booking->getById($id) ?? abort(404),
-            'available_services' => $this->additional_services->getAvailable() ?? array()
+            'available_services' => $this->additional_services->getAvailable() ?? array(),
+            'free_dates' => $free_dates,
+            'last_free_date' =>  $last_date
         ]);
     }
 

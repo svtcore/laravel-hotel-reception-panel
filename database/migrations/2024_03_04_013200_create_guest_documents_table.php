@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('guest_documents', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('guest_id');
-            $table->string('document_country');
+            $table->string('document_country')->nullable();
             $table->string('document_serial')->nullable();
             $table->string('document_number')->nullable();
             $table->date('document_expired')->nullable();

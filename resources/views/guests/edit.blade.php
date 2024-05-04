@@ -89,7 +89,7 @@
                                         <input type="hidden" name="guest_id" value="{{ $guest->id }}">
                                         <div class="row mb-3 ml-2 mr-2">
                                             <div class="col-sm-6">
-                                                <input type="hidden" id="documentCountry" value="{{ $guest->guest_document->document_country }}"> <label for="countryCode" class="form-label">Country</label>
+                                                <input type="hidden" id="documentCountry" @isset($guest->guest_document->document_country) value="{{ $guest->guest_document->document_country }}" @endisset > <label for="countryCode" class="form-label">Country</label>
                                                 <select class="form-select" id="countryCode" name="countryCode">
                                                     <option value="">Select Country Code</option>
                                                 </select>
@@ -98,25 +98,25 @@
                                         <div class="row mb-3 ml-2 mr-2">
                                             <div class="col-sm-4">
                                                 <label for="documentSerial" class="form-label">Document Serial</label>
-                                                <input type="text" class="form-control text-center" id="documentSerial" name="documentSerial" value="{{ $guest->guest_document->document_serial }}" maxlength="255">
+                                                <input type="text" class="form-control text-center" id="documentSerial" name="documentSerial" @isset($guest->guest_document->document_serial) value="{{ $guest->guest_document->document_serial }}" @endisset maxlength="255">
                                             </div>
                                             <div class="col-sm-4">
                                                 <label for="documentNumber" class="form-label">Doc. number</label>
-                                                <input type="text" class="form-control text-center" id="documentNumber" name="documentNumber" value="{{ $guest->guest_document->document_number }}" maxlength="255">
+                                                <input type="text" class="form-control text-center" id="documentNumber" name="documentNumber" @isset($guest->guest_document->document_number) value="{{ $guest->guest_document->document_number }}" @endisset maxlength="255">
                                             </div>
                                             <div class="col-sm-4">
                                                 <label for="documentExpired" class="form-label">Document Expired</label>
-                                                <input type="date" class="form-control text-center" id="documentExpired" name="documentExpired" value="{{ $guest->guest_document->document_expired }}">
+                                                <input type="date" class="form-control text-center" id="documentExpired" name="documentExpired" @isset($guest->guest_document->document_expired) value="{{ $guest->guest_document->document_expired }} @endisset">
                                             </div>
                                         </div>
                                         <div class="row mb-5 ml-2 mr-2">
                                             <div class="col-sm-8">
                                                 <label for="documentIssuedBy" class="form-label">Document Issued By</label>
-                                                <input type="text" class="form-control text-center" id="documentIssuedBy" name="documentIssuedBy" value="{{ $guest->guest_document->document_issued_by }}" maxlength="255">
+                                                <input type="text" class="form-control text-center" id="documentIssuedBy" name="documentIssuedBy" @isset($guest->guest_document->document_issued_by) value="{{ $guest->guest_document->document_issued_by }}" @endisset maxlength="255">
                                             </div>
                                             <div class="col-sm-4 mb-1">
                                                 <label for="documentIssuedDate" class="form-label">Document Issued Date</label>
-                                                <input type="date" class="form-control text-center" id="documentIssuedDate" name="documentIssuedDate" value="{{ $guest->guest_document->document_issued_date }}">
+                                                <input type="date" class="form-control text-center" id="documentIssuedDate" name="documentIssuedDate" @isset($guest->guest_document->document_issued_date) value="{{ $guest->guest_document->document_issued_date }}" @endisset>
                                             </div>
                                         </div>
                                     </div>

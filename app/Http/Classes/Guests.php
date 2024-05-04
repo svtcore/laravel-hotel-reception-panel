@@ -88,7 +88,7 @@ class Guests
                 'phone_number' => $inputData['phoneNumber'],
                 'dob' => $inputData['dob'],
             ]);
-            if ($result) {
+            if ($result && isset($inputData['countryCode'])) {
                 $guest->guest_document->update([
                     'document_country' => $inputData['countryCode'],
                     'document_serial' => $inputData['documentSerial'],

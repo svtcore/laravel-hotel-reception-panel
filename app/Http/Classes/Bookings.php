@@ -444,7 +444,6 @@ class Bookings
                 }
 
                 $last_date = $latestCheckOutDate !== null ? ($latestCheckOutDate > $currentDate ? $latestCheckOutDate : $currentDate) : null;
-
                 return [$free_dates, $last_date];
             }
         } catch (Exception $e) {

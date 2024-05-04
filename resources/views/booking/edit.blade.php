@@ -169,6 +169,7 @@
                                 </div>
                             </div>
                         </div>
+                    </form>
                         <!-- Related Guests -->
                         <div class="card no-shadow">
                             <div class="card-body">
@@ -195,11 +196,11 @@
                                                 <!-- Form for relating guests -->
                                                 <tr>
                                                     @role('admin')
-                                                    <form action="{{ route('admin.guests.relation.submit') }}" method="POST">
-                                                        @endrole
-                                                        @role('receptionist')
+                                                        <form action="{{ route('admin.guests.relation.submit') }}" method="POST">
+                                                    @endrole
+                                                    @role('receptionist')
                                                         <form action="{{ route('receptionist.guests.relation.submit') }}" method="POST">
-                                                            @endrole
+                                                    @endrole
                                                             @csrf
                                                             <td class="text-left">
                                                                 <div class="input-group">
@@ -251,9 +252,9 @@
                                                         @role('admin')
                                                         <form action="{{ route('admin.guests.relation.delete') }}" method="POST">
                                                             @endrole
-                                                            @role('receptionist')
+                                                        @role('receptionist')
                                                             <form action="{{ route('receptionist.guests.relation.delete') }}" method="POST">
-                                                                @endrole
+                                                            @endrole
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <!-- Hidden fields for guest and booking IDs -->
