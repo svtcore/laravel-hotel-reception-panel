@@ -12,8 +12,8 @@
 @endrole
 @endsection
 @section('content')
-<div class="container-fluid mt-3">
-    <div class="content-container">
+<div class="container-fluid">
+    <div class="content-container main-container">
         <div class="content-header">
             <div class="container-fluid mt-4">
                 <!-- Display success message if any -->

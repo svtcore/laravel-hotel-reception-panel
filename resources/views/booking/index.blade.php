@@ -7,8 +7,8 @@
 <span class="header-navbar">Booking</span>
 @endsection
 @section('content')
-<div class="container-fluid mt-5">
-    <div class="content-container">
+<div class="container-fluid">
+    <div class="content-container main-container">
         <div class="content-header">
             <div class="container-fluid mt-4">
                 <!-- Success message -->

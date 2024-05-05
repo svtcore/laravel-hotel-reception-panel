@@ -4,11 +4,11 @@
 @endsection
 @section('content')
 @section('navbar_header_button')
-<span class="nav-page-info">Edit user data</span>
+<span class="header-navbar ml-5 mt-1 mb-1 p-0">Edit user data</span>
 @endsection
 
-<div class="container-fluid mt-5">
-    <div class="content-container">
+<div class="container-fluid">
+    <div class="content-container main-container">
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid mt-4">

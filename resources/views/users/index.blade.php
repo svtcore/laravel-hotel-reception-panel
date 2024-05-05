@@ -3,12 +3,12 @@
 @section('additional_style')
 @endsection
 @section('navbar_header_button')
-<a href="{{ route('admin.users.create') }}" style="width:400px;" class="add-new-button">Add User</a>
+<a href="{{ route('admin.users.create') }}" style="width:500px;" class="add-new-button">Add User</a>
 @endsection
 
 @section('content')
-<div class="container-fluid mt-3">
-    <div class="content-container">
+<div class="container-fluid">
+    <div class="content-container main-container">
         <div class="content-header">
             <div class="container-fluid mt-4">
                 <!-- Session Messages Handling -->

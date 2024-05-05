@@ -3,12 +3,12 @@
 @section('additional_style')
 @endsection
 @section('navbar_header_button')
-<h5 class="header-navbar mt-1 mb-1 p-0">Statistics</h5>
+<h5 class="header-navbar ml-5 mt-1 mb-1 p-0">Statistics</h5>
 @endsection
 
 @section('content')
-<div class="container-fluid mt-5">
-    <div class="content-container">
+<div class="container-fluid">
+    <div class="content-container main-container">
         <div class="content-header">
             <!-- Display success message if exists -->
             @if (session('success'))

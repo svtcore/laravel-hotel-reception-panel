@@ -12,9 +12,9 @@
 @endrole
 @endsection
 @section('content')
-<div class="container-fluid mt-5">
+<div class="container-fluid">
     <!-- Main container -->
-    <div class="content-container">
+    <div class="content-container main-container">
         <!-- Content container -->
         <div class="content-header">
             <!-- Content header -->

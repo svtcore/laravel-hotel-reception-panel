@@ -15,8 +15,8 @@
 
 <!-- Main content -->
 @section('content')
-<div class="container-fluid mt-5">
-    <div class="content-container">
+<div class="container-fluid">
+    <div class="content-container main-container">
         <section class="content">
             <div class="container-fluid mt-4">
 
