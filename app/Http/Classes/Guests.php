@@ -89,14 +89,17 @@ class Guests
                 'dob' => $inputData['dob'],
             ]);
             if ($result && isset($inputData['countryCode'])) {
-                $guest->guest_document->update([
-                    'document_country' => $inputData['countryCode'],
-                    'document_serial' => $inputData['documentSerial'],
-                    'document_number' => $inputData['documentNumber'],
-                    'document_expired' => $inputData['documentExpired'],
-                    'document_issued_by' => $inputData['documentIssuedBy'],
-                    'document_issued_date' => $inputData['documentIssuedDate'],
-                ]);
+                $guest->guest_document()->updateOrCreate(
+                    ['guest_id' => $guest->id],
+                    [
+                        'document_country' => $inputData['countryCode'],
+                        'document_serial' => $inputData['documentSerial'],
+                        'document_number' => $inputData['documentNumber'],
+                        'document_expired' => $inputData['documentExpired'],
+                        'document_issued_by' => $inputData['documentIssuedBy'],
+                        'document_issued_date' => $inputData['documentIssuedDate'],
+                    ]
+                );
                 return true;
             } else return true;
         } catch (Exception $e) {
