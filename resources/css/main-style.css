@@ -38,14 +38,15 @@ body {
     text-align: center;
     background-color: #28a745;
     color: #fff;
-    border: none;
+    border: 0;
     padding: 6px;
     border-radius: 0;
     font-size: 16px;
     display: block;
     transition: background-color 0.3s ease;
     border-radius: 30px;
-    width:500px;
+    width:400px;
+    font-weight: bold;
 }
 .header-navbar{
     text-align: center;
@@ -53,16 +54,7 @@ body {
     padding: 5px;
     font-size: 18px;
     display: block;
-}
-.nav-page-info{
-    text-align: center;
-    color: #fff;
-    padding: 0.4em 20px;
-    border-radius: 0;
-    font-size: 16px;
-    display: block;
-    font-weight: bolder;
-    transition: background-color 0.3s ease;
+    font-weight: bold;
 }
 
 .add-new-button:hover {

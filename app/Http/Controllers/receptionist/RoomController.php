@@ -34,7 +34,10 @@ class RoomController extends Controller
      */
     public function index()
     {
-        return view('rooms.index')->with(['rooms' => $this->rooms->getFree() ?? array(), 'room_properties' => $this->room_properties->getAll() ?? array()]);
+        return view('rooms.index')->with([
+            'rooms' => $this->rooms->getFree() ?? array(), 
+            'room_properties' => $this->room_properties->getAll() ?? array()
+        ]);
     }
 
     /**
@@ -63,15 +66,16 @@ class RoomController extends Controller
         try {
             $validatedData = $request->validated();
 
-            if ($validatedData === null) {
-                return response()->withErrors(['errors' => 'Validation failed']);
-            }
             $searchResult = $this->rooms->searchByParams($validatedData, true);
             if ($searchResult != null) {
-                return view('rooms.search')->with(['result' => $searchResult ?? array(), 'room_properties' => $this->room_properties->getAll() ?? array(), 'inputData' => $validatedData]);
-            } else return redirect()->route('receptionist.rooms.index')->withErrors(['errors' => 'There is no records found']);
-        } catch (ValidationException $e) {
-            return response()->json(['errors' => $e->errors()], 422);
+                return view('rooms.search')->with([
+                    'result' => $searchResult ?? array(),
+                    'room_properties' => $this->room_properties->getAll() ?? array(),
+                    'inputData' => $validatedData
+                ]);
+            } else return redirect()->route('receptionist.rooms.index')->withErrors(['error' => 'No records found']);
+        } catch (ValidationException $e) { 
+            return redirect()->back()->withErrors(['error' => 'Error occurred while processing your request']);
         }
     }
 }

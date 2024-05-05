@@ -10,7 +10,7 @@
 
 <!-- Navbar header button -->
 @section('navbar_header_button')
-<span class="header-navbar">Add booking</span>
+<span class="header-navbar">Adding new booking</span>
 @endsection
 
 <!-- Main content -->

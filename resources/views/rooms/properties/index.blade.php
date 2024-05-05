@@ -4,7 +4,7 @@
 @section('additional_style')
 @endsection
 @section('navbar_header_button')
-<a href="{{ route('admin.rooms.properties.create') }}" class="add-new-button">Add property</a>
+<a href="{{ route('admin.rooms.properties.create') }}" class="add-new-button">Add new room property</a>
 @endsection
 
 @section('content')

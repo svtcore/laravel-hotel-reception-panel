@@ -58,10 +58,10 @@ class UserController extends Controller
                 return response()->withErrors(['errors' => 'Validation failed']);
             }
             if ($this->users->store($validatedData)) {
-                return redirect()->route('admin.users.index')->with('success', 'Confirmation has been sent');
-            } else return redirect()->back()->withErrors(['error' => 'There is error in while adding record']);
+                return redirect()->route('admin.users.index')->with('success', 'The confirmation email has been sent');
+            } else return redirect()->back()->withErrors(['error' => 'There was an error while adding the record and sending the confirmation email']);
         } catch (Exception $e) {
-            return response()->withErrors(['errors' => 'Error in update user controller']);
+            return response()->withErrors(['error' => 'Error occurred while processing your request']);
         }
     }
 
@@ -91,14 +91,11 @@ class UserController extends Controller
         try {
             $validatedData = $request->validated();
 
-            if ($validatedData === null) {
-                return response()->withErrors(['errors' => 'Validation failed']);
-            }
             if ($this->users->update($validatedData, $id)) {
-                return redirect()->route('admin.users.index', $id)->with('success', 'User data successful updated');
-            } else return redirect()->back()->withErrors(['error' => 'There is error in while updating record']);
+                return redirect()->route('admin.users.index', $id)->with('success', 'User data successfully updated');
+            } else return redirect()->back()->withErrors(['error' => 'There is an error while updating the record']);
         } catch (Exception $e) {
-            return redirect()->back()->withErrors(['error' => 'There is error in while updating record']);
+            return redirect()->back()->withErrors(['error' => 'Error occurred while processing your request']);
         }
     }
 
@@ -111,8 +108,8 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         if ($this->users->deleteById($id)) {
-            return redirect()->route('admin.users.index')->with('success', 'Record successful deleted');
-        } else return redirect()->back()->withErrors(['error' => __('The requested resource could not be found.')]);
+            return redirect()->route('admin.users.index')->with('success', 'The record has been successfully deleted');
+        } else return redirect()->back()->withErrors(['error' => 'There is an error while deleting the record']);
     }
 
     /**
@@ -126,14 +123,11 @@ class UserController extends Controller
         try {
             $validatedData = $request->validated();
 
-            if ($validatedData === null) {
-                return response()->withErrors(['errors' => 'Validation failed']);
-            }
             if ($this->users->sendResetPassword($validatedData))
-                return back()->with('success', 'Reset password link sent successfully');
-            else return back()->with('error', 'There is error while sending email to reset password');
+                return back()->with('success', 'The reset password link has been successfully sent to your emaily');
+            else return back()->withErrors(['error' => 'There was an error while sending the email to reset your password']);
         } catch (Exception $e) {
-            return back()->with('error', 'There is error while sending email to reset password');
+            return redirect()->back()->withErrors(['error' => 'Error occurred while processing your request']);
         }
     }
 }

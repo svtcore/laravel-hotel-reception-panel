@@ -6,7 +6,7 @@
 
 @section('content')
 @section('navbar_header_button')
-<span class="nav-page-info">Add new property</span>
+<span class="nav-page-info">Add new room property</span>
 @endsection
 <div class="container-fluid">
     <div class="content-container main-container">

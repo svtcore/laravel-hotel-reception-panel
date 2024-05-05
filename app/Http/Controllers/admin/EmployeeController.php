@@ -53,14 +53,11 @@ class EmployeeController extends Controller
         try {
             $validatedData = $request->validated();
 
-            if ($validatedData === null) {
-                return response()->withErrors(['errors' => 'Validation failed']);
-            }
             if ($this->employees->store($validatedData)) {
-                return redirect()->route('admin.employees.index')->with('success', 'Employee data successful added');
-            } else return redirect()->back()->withErrors(['error' => 'There is error in while adding record']);
+                return redirect()->route('admin.employees.index')->with('success', 'Employee data successfully added');
+            } else return redirect()->back()->withErrors(['error' => 'There was an error while adding the record']);
         } catch (Exception $e) {
-            return response()->withErrors(['errors' => 'Error in adding employee controller']);
+            return response()->withErrors(['error' => 'Error occurred while processing your request']);
         }
     }
 
@@ -90,14 +87,11 @@ class EmployeeController extends Controller
         try {
             $validatedData = $request->validated();
 
-            if ($validatedData === null) {
-                return response()->withErrors(['errors' => 'Validation failed']);
-            }
             if ($this->employees->update($validatedData, $id)) {
-                return redirect()->route('admin.employees.index')->with('success', 'Employee data successful updated');
-            } else return redirect()->back()->withErrors(['error' => 'There is error in while updating record']);
+                return redirect()->route('admin.employees.index')->with('success', 'Employee data successfully updated');
+            } else return redirect()->back()->withErrors(['error' => 'There was an error while updating the record']);
         } catch (Exception $e) {
-            return response()->withErrors(['errors' => 'Error in update employee controller']);
+            return response()->withErrors(['error' => 'Error occurred while processing your request']);
         }
     }
 
@@ -113,9 +107,9 @@ class EmployeeController extends Controller
         try {
             if ($this->employees->delete($id))
                 return redirect()->route('admin.employees.index')->with('success', 'Employee deleted successfully');
-            else return redirect()->route('admin.employees.index')->with('error', 'Error while deleting record');
+            else return redirect()->route('admin.employees.index')->withErrors(['error' => 'There was an error while deleting the record']);
         } catch (Exception $e) {
-            return redirect()->route('admin.employees.index')->with('error', 'Error while deleting record');
+            return redirect()->route('admin.employees.index')->withErrors(['error' => 'Error occurred while processing your request']);
         }
     }
 }

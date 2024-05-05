@@ -5,7 +5,7 @@
 @endsection
 @section('navbar_header_button')
 @role('admin')
-<a href="{{ route('admin.employees.create') }}" style="width:400px;" class="add-new-button">Add Employee</a>
+<a href="{{ route('admin.employees.create') }}" class="add-new-button">Add new employee</a>
 @endrole
 @role('receptionist')
 <span class="header-navbar">Employees</span>

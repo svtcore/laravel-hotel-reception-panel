@@ -4,7 +4,7 @@
 @section('additional_style')
 @endsection
 @section('navbar_header_button')
-<a href="{{ route('admin.users.create') }}" class="add-new-button">Add User</a>
+<a href="{{ route('admin.users.create') }}" class="add-new-button">Add new user</a>
 @endsection
 
 @section('content')

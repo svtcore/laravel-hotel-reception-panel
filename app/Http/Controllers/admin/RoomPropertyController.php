@@ -44,11 +44,11 @@ class RoomPropertyController extends Controller
         try{
             $validateData = $request->validated();
             if ($this->room_properties->store($validateData)){
-                return redirect()->route('admin.rooms.properties.index')->with('success', 'Room property successful added');
-            }else return redirect()->back()->withErrors(['errors' => 'There is error while adding room property data']);
+                return redirect()->route('admin.rooms.properties.index')->with('success', 'Room property successfully added');
+            }else return redirect()->back()->withErrors(['error' => 'There was an error while adding room property data']);
         }
         catch(Exception $e){
-            return redirect()->back()->withErrors(['errors' => $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => 'Error occurred while processing your request']);
         }
     }
 
@@ -70,11 +70,11 @@ class RoomPropertyController extends Controller
         try{
             $validateData = $request->validated();
             if ($this->room_properties->update($validateData, $id)){
-                return redirect()->route('admin.rooms.properties.index')->with('success', 'Property data successful updated');
-            }else return redirect()->back()->withErrors(['error' => 'There is error while update room property']);
+                return redirect()->route('admin.rooms.properties.index')->with('success', 'Room property data successfully updated');
+            }else return redirect()->back()->withErrors(['error' => 'There was an error while updating the room property']);
         }
         catch(Exception $e){
-            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => 'Error occurred while processing your request']);
         }
     }
 
@@ -85,11 +85,11 @@ class RoomPropertyController extends Controller
     {
         try{
             if ($this->room_properties->destory($id)){
-                return redirect()->route('admin.rooms.properties.index')->with('success', 'Room property successful deleted');
-            }else return redirect()->back()->withErrors(['error' => 'There is error while deleting record']);
+                return redirect()->route('admin.rooms.properties.index')->with('success', 'Room property successfully deleted');
+            }else return redirect()->back()->withErrors(['error' => 'There was an error while deleting the room property record']);
         }
         catch(Exception $e){
-            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => 'Error occurred while processing your request']);
         }
     }
 }

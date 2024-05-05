@@ -6,10 +6,10 @@
 @endsection
 @section('navbar_header_button')
 @role('admin')
-<a href="{{ route('admin.guests.create') }}" class="add-new-button">Add Guest</a>
+<a href="{{ route('admin.guests.create') }}" class="add-new-button">Add new guest</a>
 @endrole
 @role('receptionist')
-<a href="{{ route('receptionist.guests.create') }}" class="add-new-button">Add Guest</a>
+<a href="{{ route('receptionist.guests.create') }}" class="add-new-button">Add new guest</a>
 @endrole
 @endsection
 @section('content')

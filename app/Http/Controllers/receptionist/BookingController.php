@@ -71,13 +71,10 @@ class BookingController extends Controller
     {
         $validatedData = $request->validated();
 
-        if ($validatedData === null) {
-            return response()->json(['errors' => 'Validation failed.'], 422);
-        }
         $booking = $this->booking->store($validatedData);
         if ($booking) {
-            return redirect()->route('receptionist.booking.show', $booking->id)->with('success', 'Booking data successful added');
-        } else return redirect()->back()->withErrors(['error' => 'There is error in controller store']);
+            return redirect()->route('receptionist.booking.show', $booking->id)->with('success', 'The booking data has been successfully added');
+        } else return redirect()->back()->withErrors(['error' => 'There was an error adding the record']);
     }
 
     /**
@@ -133,14 +130,10 @@ class BookingController extends Controller
     {
         $validatedData = $request->validated();
 
-        if ($validatedData === null) {
-            return response()->json(['errors' => 'Validation failed.'], 422);
-        }
-
         $update_result = $this->booking->update($validatedData, $id);
         if ($update_result) {
-            return redirect()->route('receptionist.booking.show', $id)->with('success', 'Booking data successful updated');
-        } else return redirect()->back()->withErrors(['error' => 'There is error in controller update']);
+            return redirect()->route('receptionist.booking.show', $id)->with('success', 'The booking data has been successfully updated');
+        } else return redirect()->back()->withErrors(['error' => 'There was an error updating the record']);
     }
 
     /**
@@ -152,8 +145,8 @@ class BookingController extends Controller
     public function destroy(string $id)
     {
         if ($this->booking->deleteById($id)) {
-            return redirect()->route('receptionist.booking.index')->with('success', 'Record successful deleted');
-        } else return redirect()->back()->withErrors(['error' => __('The requested resource could not be found.')]);
+            return redirect()->route('receptionist.booking.index')->with('success', 'The record has been successfully deleted');
+        } else return redirect()->back()->withErrors(['error' => 'Failed to delete the record']);
     }
 
     /**
@@ -167,15 +160,12 @@ class BookingController extends Controller
         try {
             $validatedData = $request->validated();
 
-            if ($validatedData === null) {
-                return response()->withErrors(['errors' => 'Validation failed']);
-            }
             $searchResult = $this->booking->searchByParams($validatedData, true);
             if (is_countable($searchResult) > 0) {
                 return view('booking.search')->with(['result' => $searchResult, 'inputData' => $validatedData]);
-            } else return redirect()->back()->withErrors(['errors' => 'There is no records found']);
+            } else return redirect()->back()->withErrors(['error' => 'No records found']);
         } catch (ValidationException $e) {
-            return response()->json(['errors' => $e->errors()], 422);
+            return redirect()->back()->withErrors(['error' => 'Error occurred while processing your request']);
         }
     }
 
@@ -191,14 +181,11 @@ class BookingController extends Controller
         try {
             $validatedData = $request->validated();
 
-            if ($validatedData === null) {
-                return response()->json(['errors' => 'Validation failed.'], 422);
-            }
             if ($this->booking->changeStatus($validatedData['status'], $id)) {
-                return redirect()->back()->with('success', 'Booking status successful updated');
-            } else return redirect()->back()->withErrors(['errors' => 'Failed to change status']);
+                return redirect()->back()->with('success', 'The booking status has been successfully updated');
+            } else return redirect()->back()->withErrors(['error' => 'Failed to change status']);
         } catch (Exception $e) {
-            return response()->json(['errors' => 'changeStatus controller exception' + "\n" + $e], 422);
+            return redirect()->back()->withErrors(['error' => 'Error occurred while processing your request']);
         }
     }
 }

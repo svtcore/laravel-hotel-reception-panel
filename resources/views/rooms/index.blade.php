@@ -6,7 +6,7 @@
 @endsection
 @section('navbar_header_button')
 @role('admin')
-<a href="{{ route('admin.rooms.create') }}" class="add-new-button">Add New Room</a>
+<a href="{{ route('admin.rooms.create') }}" class="add-new-button">Add new room</a>
 @endrole
 @role('receptionist')
 <span class="header-navbar">Rooms</span>

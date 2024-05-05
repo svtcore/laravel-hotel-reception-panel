@@ -52,10 +52,10 @@ class AdditionalServiceController extends Controller
             $validatedData = $request->validated();
 
             if ($this->services->store($validatedData)) {
-                return redirect()->route('admin.services.index')->with(['success' => 'Record successful added']);
-            } else return redirect()->back()->withErrors(['errors' => 'Unknown error while adding service']);
+                return redirect()->route('admin.services.index')->with(['success' => 'Additional service successfully added']);
+            } else return redirect()->back()->withErrors(['error' => 'Failed to add additional service']);
         } catch (Exception $e) {
-            return redirect()->back()->withErrors(['errors', 'Unknown controller error while adding service']);
+            return redirect()->back()->withErrors(['errors' => 'Error occurred while processing your request']);
         }
     }
 
@@ -72,7 +72,7 @@ class AdditionalServiceController extends Controller
                 'service' => $this->services->getById($id) ?? abort(404),
             ]);
         } catch (Exception $e) {
-            return redirect()->back()->withErrors(['errors', 'Error while loading edit page']);
+            return redirect()->back()->withErrors(['error' =>'Error occurred while processing your request']);
         }
     }
 
@@ -88,10 +88,10 @@ class AdditionalServiceController extends Controller
         try {
             $validatedData = $request->validated();
             if ($this->services->update($validatedData, $id)) {
-                return redirect()->route('admin.services.index')->with('success', 'Record succesful updated');
-            } else return redirect()->back()->withErrors(['error' => 'There is error while updating service record']);
+                return redirect()->route('admin.services.index')->with('success', 'Additional service successfully updated');
+            } else return redirect()->back()->withErrors(['error' => 'Failed to add additional service']);
         } catch (Exception $e) {
-            return redirect()->back()->withErrors(['error' => 'There is error while update service data']);
+            return redirect()->back()->withErrors(['error' => 'Error occurred while processing your request']);
         }
     }
 
@@ -106,10 +106,10 @@ class AdditionalServiceController extends Controller
     {
         try {
             if ($this->services->destroy($id)) {
-                return redirect()->route('admin.services.index')->with('success', 'Service has been succesful deleted');
+                return redirect()->route('admin.services.index')->with('success', 'Additional service successfully deleted');
             }
         } catch (Exception $e) {
-            return redirect()->back()->withErrors(['error' => 'There is error while deleting service']);
+            return redirect()->back()->withErrors(['error' => 'Error occurred while processing your request']);
         }
     }
 }

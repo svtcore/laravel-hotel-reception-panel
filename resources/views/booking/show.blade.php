@@ -5,7 +5,7 @@
 @vite(['resources/css/bookings-style.css'])
 @endsection
 @section('navbar_header_button')
-<span class="header-navbar">Booking</span>
+<span class="header-navbar">Booking details</span>
 @endsection
 @section('content')
 <div class="container-fluid">

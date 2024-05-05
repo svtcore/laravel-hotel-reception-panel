@@ -5,7 +5,7 @@
 @endsection
 @section('content')
 @section('navbar_header_button')
-<span class="nav-page-info">Edit user data</span>
+<span class="nav-page-info">Adding user data</span>
 @endsection
 <div class="container-fluid">
     <div class="content-container main-container">
