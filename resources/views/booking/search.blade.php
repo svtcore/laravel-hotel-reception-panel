@@ -1,4 +1,5 @@
 @extends('layouts.header')
+@section('title', 'Booking search')
 @section('booking_navbar_state', 'active')
 @section('additional_style')
 @vite(['resources/css/bookings-style.css'])
@@ -10,7 +11,7 @@
 <div class="container-fluid">
     <div class="content-container main-container">
         <div class="content-header">
-            <div class="container-fluid mt-4">
+            <div class="container-fluid">
                 <!-- Success message -->
                 @if (session('success'))
                 <div class="alert alert-success">
@@ -19,8 +20,8 @@
                 @endif
                 <!-- Error messages -->
                 @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
+                <div class="custom-error-message">
+                    <ul class="error-list">
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach
@@ -74,29 +75,29 @@
                             <div class="form-row">
                                 <div class="col-md-2 mb-2 mt-2 date-block">
                                     <label for="startDate">Start date</label>
-                                    <input type="date" class="form-control" id="startDate" name="startDate" disabled @if (isset($inputData['startDate'])) value="{{ $inputData['startDate'] }}" @else value="{{ \Carbon\Carbon::now()->toDateString() }}" @endif required>
+                                    <input type="date" class="form-control @error('startDate') is-invalid @enderror" id="startDate" name="startDate" disabled @if (isset($inputData['startDate'])) value="{{ $inputData['startDate'] }}" @else value="{{ \Carbon\Carbon::now()->toDateString() }}" @endif required>
                                 </div>
                                 <div class="col-md-2 mb-2 mt-2 date-block">
                                     <label for="endDate">End date</label>
-                                    <input type="date" class="form-control" id="endDate" name="endDate" disabled @if (isset($inputData['endDate'])) value="{{ $inputData['endDate'] }}" @else value="{{ \Carbon\Carbon::now()->toDateString() }}" @endif required>
+                                    <input type="date" class="form-control @error('endDate') is-invalid @enderror" id="endDate" name="endDate" disabled @if (isset($inputData['endDate'])) value="{{ $inputData['endDate'] }}" @else value="{{ \Carbon\Carbon::now()->toDateString() }}" @endif required>
                                 </div>
                                 <div class="col-md-2 pt-2">
                                     <label for="guestName">Guest name</label>
-                                    <input type="text" class="form-control" id="guestName" name="guestName" @if (isset($inputData['guestName'])) value="{{ $inputData['guestName'] }}" @endif placeholder="Full name" disabled minlength="2" maxlength="255" required>
+                                    <input type="text" class="form-control @error('guestName') is-invalid @enderror" id="guestName" name="guestName" @if (isset($inputData['guestName'])) value="{{ $inputData['guestName'] }}" @endif placeholder="Full name" disabled minlength="2" maxlength="255" required>
                                     <div class="invalid-feedback">
                                         Please provide a valid guest name.
                                     </div>
                                 </div>
                                 <div class="col-md-2 pt-2">
                                     <label for="roomNumber">Room number</label>
-                                    <input type="text" class="form-control" id="roomNumber" name="roomNumber" @if (isset($inputData['roomNumber'])) value="{{ $inputData['roomNumber'] }}" @endif placeholder="Room number" required minlength="1" maxlength="3" required>
+                                    <input type="text" class="form-control @error('roomNumber') is-invalid @enderror" id="roomNumber" name="roomNumber" @if (isset($inputData['roomNumber'])) value="{{ $inputData['roomNumber'] }}" @endif placeholder="Room number" required minlength="1" maxlength="3" required>
                                     <div class="invalid-feedback">
                                         Please provide a valid room number.
                                     </div>
                                 </div>
                                 <div class="col-md-2 pt-2">
                                     <label for="phoneNumber">Phone number</label>
-                                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" @if (isset($inputData['phoneNumber'])) value="{{ $inputData['phoneNumber'] }}" @endif placeholder="Phone number" disabled required minlength="10" maxlength="15">
+                                    <input type="number" class="form-control @error('phoneNumber') is-invalid @enderror" id="phoneNumber" name="phoneNumber" @if (isset($inputData['phoneNumber'])) value="{{ $inputData['phoneNumber'] }}" @endif placeholder="Phone number" disabled required minlength="10" maxlength="15">
                                     <div class="invalid-feedback">
                                         Please provide a valid phone number.
                                     </div>
@@ -139,7 +140,18 @@
                                 </td>
                                 <td class="text-center">
                                     @isset($booking->guests[0]->first_name)
-                                    {{ $booking->guests[0]->first_name }} {{ $booking->guests[0]->last_name }}
+                                    @role('admin')
+                                    <a href="{{ route('admin.guests.show', $booking->guests[0]->id) }}">
+                                        {{ $booking->guests[0]->first_name }}
+                                        {{ $booking->guests[0]->last_name }}
+                                    </a>
+                                    @endrole
+                                    @role('receptionist')
+                                    <a href="{{ route('receptionist.guests.show', $booking->guests[0]->id) }}">
+                                        {{ $booking->guests[0]->first_name }}
+                                        {{ $booking->guests[0]->last_name }}
+                                    </a>
+                                    @endrole
                                     @endisset
                                 </td>
                                 <td class="text-center">{{ ucfirst($booking->rooms->type) }}</td>

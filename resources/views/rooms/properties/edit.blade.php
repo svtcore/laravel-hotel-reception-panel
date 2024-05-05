@@ -1,4 +1,5 @@
 @extends('layouts.header')
+@section('title', 'Edit room property')
 @section('room_properties_navbar_state', 'active')
 @section('additional_style')
 @endsection
@@ -19,8 +20,8 @@
                 </div>
                 @endif
                 @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
+                <div class="custom-error-message">
+                    <ul class="error-list">
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach
@@ -39,11 +40,12 @@
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-6">
                                             <label for="name" class="form-label">Name</label>
-                                            <input type="text" class="form-control text-center" id="name" name="name" required maxlength="255" value="{{ $property->name }}">
+                                            <input type="text" class="form-control text-center @error('name') is-invalid @enderror" id="name" name="name" required maxlength="255" value="{{ $property->name }}">
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="status" class="form-label">Available</label>
-                                            <select class="form-select text-center" id="status" name="status" required value="{{ $property->available }}">
+                                            <select class="form-select text-center @error('status') is-invalid @enderror" id="status" name="status" required value="{{ $property->available }}">
+                                                <option value="" @if ($property->available != 1 && $property->available != 0) selected @endif > -- Select status -- </option>
                                                 <option value="1" @if ($property->available == 1) selected @endif >Yes</option>
                                                 <option value="0" @if ($property->available == 0) selected @endif >No</option>
                                             </select>
@@ -56,7 +58,7 @@
                         <div class="col-md-4">
                             <div class="card no-shadow">
                                 <div class="card-body">
-                                    <h4 class="card-title pl-4"><b>Actions</b></h4><br /><br />
+                                    <h4 class="card-title pl-4"><b>Action</b></h4><br /><br />
                                     <div class="row mt-4 mb-4 ml-2 mr-2">
                                         <div class="col-sm-12">
                                             <button type="submit" class="btn btn-success w-100">Save changes</button>

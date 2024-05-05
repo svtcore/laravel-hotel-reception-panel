@@ -1,4 +1,5 @@
 @extends('layouts.header')
+@section('title', 'Edit booking')
 @section('booking_navbar_state', 'active')
 @section('additional_style')
 @vite(['resources/css/bookings-style.css'])
@@ -10,7 +11,7 @@
 <div class="container-fluid">
     <div class="content-container main-container">
         <section class="content">
-            <div class="container-fluid mt-4">
+            <div class="container-fluid">
                 <!-- Success message -->
                 @if (session('success'))
                 <div class="alert alert-success">
@@ -19,8 +20,8 @@
                 @endif
                 <!-- Error messages -->
                 @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
+                <div class="custom-error-message">
+                    <ul class="error-list">
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach
@@ -33,14 +34,14 @@
                         <div class="card no-shadow">
                             <div class="card-body">
                                 <!-- Title for reservation details -->
-                                <h4 class="card-title pl-4"><b>Reservation Details</b></h4><br /><br />
+                                <h4 class="card-title pl-4"><b>Booking information</b></h4><br /><br />
                                 <!-- Form for updating reservation details -->
                                 @role('admin')
-                                <form action="{{ route('admin.booking.update', $booking_data->id) }}" method="POST">
-                                    @endrole
-                                    @role('receptionist')
+                                    <form action="{{ route('admin.booking.update', $booking_data->id) }}" method="POST">
+                                @endrole
+                                @role('receptionist')
                                     <form action="{{ route('receptionist.booking.update', $booking_data->id) }}" method="POST">
-                                        @endrole
+                                @endrole
                                         @csrf
                                         @method('PUT')
                                         <input type="hidden" name="booking_id" value="{{ $booking_data->id }}">
@@ -50,11 +51,11 @@
                                                 <table class="table">
                                                     <tbody>
                                                         <tr>
-                                                            <th scope="row">Room number</th>
+                                                            <th scope="row">Room number:</th>
                                                             <td class="text-left">{{ $booking_data->rooms->room_number }}</td>
                                                         </tr>
                                                         <tr>
-                                                            <th scope="row">Room type</th>
+                                                            <th scope="row">Room type:</th>
                                                             <td class="text-left">{{ strtoupper($booking_data->rooms->type) }}</td>
                                                         </tr>
                                                     </tbody>
@@ -64,12 +65,12 @@
                                         <!-- Number of adults and children -->
                                         <div class="row mb-3 ml-2 mr-2">
                                             <div class="col-sm-6">
-                                                <label for="adultsCount" class="form-label">Adults</label>
-                                                <input type="number" class="form-control" id="adultsCount" name="adultsCount" value="{{ $booking_data->adults_count }}">
+                                                <label for="adultsCount" class="form-label">Adults:</label>
+                                                <input type="number" class="form-control text-center @error('adultsCount') is-invalid @enderror" min="1" max="10" id="adultsCount" name="adultsCount" value="{{ $booking_data->adults_count }}" required>
                                             </div>
                                             <div class="col-sm-6">
-                                                <label for="childrenCount" class="form-label">Children</label>
-                                                <input type="number" class="form-control" id="childrenCount" name="childrenCount" value="{{ $booking_data->children_count }}">
+                                                <label for="childrenCount" class="form-label">Children:</label>
+                                                <input type="number" class="form-control text-center @error('childrenCount') is-invalid @enderror" min="0" max="10" id="childrenCount" name="childrenCount" value="{{ $booking_data->children_count }}" required>
                                             </div>
                                         </div>
                                         <!-- Check-in and Check-out dates -->
@@ -79,19 +80,19 @@
                                         @endphp
                                         <div class="row mb-3 ml-2 mr-2">
                                             <div class="col-sm-6">
-                                                <label for="checkInDate" class="form-label">Check-in Date</label>
-                                                <input type="date" class="form-control" id="checkInDate" name="checkInDate" value="{{ $date_check_in }}">
+                                                <label for="checkInDate" class="form-label">Check-in Date:</label>
+                                                <input type="date" class="form-control text-center @error('checkInDate') is-invalid @enderror" id="checkInDate" name="checkInDate" value="{{ $date_check_in }}" required>
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="checkOutDate" class="form-label">Check-out Date</label>
-                                                <input type="date" class="form-control" id="checkOutDate" name="checkOutDate" value="{{ $date_check_out }}">
+                                                <input type="date" class="form-control text-center @error('checkOutDate') is-invalid @enderror" id="checkOutDate" name="checkOutDate" value="{{ $date_check_out }}" required>
                                             </div>
                                         </div>
                                         <!-- Payment type and total cost -->
                                         <div class="row mb-3 ml-2 mr-2">
                                             <div class="col-sm-6">
-                                                <label for="paymentType" class="form-label">Payment type</label>
-                                                <select class="form-select" id="paymentType" name="paymentType">
+                                                <label for="paymentType" class="form-label">Payment type:</label>
+                                                <select class="form-select text-center @error('paymentType') is-invalid @enderror" id="paymentType" name="paymentType" required>
                                                     <option value="credit_card" {{ $booking_data->payment_type == 'credit_card' ? 'selected' : '' }}>Credit Card</option>
                                                     <option value="cash" {{ $booking_data->payment_type == 'cash' ? 'selected' : '' }}>Cash</option>
                                                     <option value="discount" {{ $booking_data->payment_type == 'discount' ? 'selected' : '' }}>Discount</option>
@@ -99,18 +100,18 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <input type="hidden" id="price_per_night" value="{{ $booking_data->rooms->price }}" />
-                                                <label for="totalCost" class="form-label">Total cost</label>
-                                                <input type="text" class="form-control" id="totalCost" name="totalCost" value="{{ $booking_data->total_cost }}" disabled>
+                                                <label for="totalCost" class="form-label">Total cost:</label>
+                                                <input type="text" class="form-control text-center" id="totalCost" name="totalCost" value="{{ $booking_data->total_cost }}" disabled>
                                             </div>
                                         </div>
                                         <!-- Note and status -->
                                         <div class="row mb-3 ml-2 mr-2">
                                             <div class="col-sm-12">
-                                                <textarea class="form-control" name="note">{{ $booking_data->note }}</textarea>
+                                                <textarea class="form-control @error('note') is-invalid @enderror" name="note" id="note">{{ $booking_data->note }}</textarea>
                                             </div>
                                             <div class="col-sm-6">
-                                                <label for="status" class="form-label">Status</label>
-                                                <select class="form-select" id="status" name="status">
+                                                <label for="status" class="form-label">Status:</label>
+                                                <select class="form-select text-center @error('status') is-invalid @enderror" id="status" name="status" required>
                                                     <option value="reserved" {{ $booking_data->status == 'reserved' ? 'selected' : '' }}>Reserved</option>
                                                     <option value="cancelled" {{ $booking_data->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                                                     <option value="active" {{ $booking_data->status == 'active' ? 'selected' : '' }}>Active</option>
@@ -122,7 +123,7 @@
                                         <!-- Save Changes button -->
                                         <div class="row ml-2 mr-2">
                                             <div class="col-sm-12">
-                                                <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                                                <button type="submit" class="btn btn-primary w-100">Save changes</button>
                                             </div>
                                         </div>
                             </div>
@@ -133,7 +134,7 @@
                     <div class="col-md-6">
                         <div class="card no-shadow">
                             <div class="card-body">
-                                <h4 class="card-title pl-4"><b>Additional Services</b></h4>
+                                <h4 class="card-title pl-4"><b>Additional services</b></h4>
                                 <br /><br />
                                 <div class="row">
                                     <!-- Loop through available services -->
@@ -181,7 +182,7 @@
                                             <tbody>
                                                 <!-- Guest information -->
                                                 <tr>
-                                                    <th scope="row">Full name</th>
+                                                    <th scope="row">Full name:</th>
                                                     @role('admin')
                                                     <td class="text-left"><a href="{{ route('admin.guests.show', $booking_data->guests[0]->id) }}">{{ $booking_data->guests[0]->first_name }} {{ $booking_data->guests[0]->last_name }}</a></td>
                                                     @endrole
@@ -190,7 +191,7 @@
                                                     @endrole
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row">Contact phone number</th>
+                                                    <th scope="row">Contact phone number:</th>
                                                     <td class="text-left">{{ $booking_data->guests[0]->phone_number }}</td>
                                                 </tr>
                                                 <!-- Form for relating guests -->
@@ -212,7 +213,7 @@
                                                                     @endrole
                                                                     <input type="hidden" name="related_guest_id" id="related_guest_id" />
                                                                     <input type="hidden" name="booking_id" id="booking_id" value="{{ $booking_data->id }}" />
-                                                                    <input type="text" class="form-control search-input" name="guestName" style="height: 33px;" placeholder="Relate guest: Guest name">
+                                                                    <input type="text" class="form-control search-input text-center @error('guestName') is-invalid @enderror" name="guestName" style="height: 33px;" placeholder="Relate guest: Guest name">
                                                                 </div>
                                                                 <div class="search-results"></div>
                                                             </td>

@@ -1,9 +1,10 @@
 @extends('layouts.header')
+@section('title', 'Dashboard')
 @section('dashboard_navbar_state', 'active')
 @section('additional_style')
 @endsection
 @section('navbar_header_button')
-<h5 class="header-navbar ml-5 mt-1 mb-1 p-0">Statistics</h5>
+<h5 class="header-navbar">Statistics</h5>
 @endsection
 
 @section('content')

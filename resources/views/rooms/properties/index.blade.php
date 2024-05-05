@@ -1,9 +1,10 @@
 @extends('layouts.header')
+@section('title', 'Room properties')
 @section('room_properties_navbar_state', 'active')
 @section('additional_style')
 @endsection
 @section('navbar_header_button')
-<a href="{{ route('admin.rooms.properties.create') }}" style="width:400px;" class="add-new-button">Add property</a>
+<a href="{{ route('admin.rooms.properties.create') }}" class="add-new-button">Add property</a>
 @endsection
 
 @section('content')
@@ -27,7 +28,7 @@
                 </div>
                 @endif
                 <div class="mt-4 text-center">
-                    <h4><b>Additional properties</b></h4>
+                    <h4><b>Room additional properties</b></h4>
                 </div>
                 <div>
                     <table id="properties-table" class="table table-bordered table-striped">

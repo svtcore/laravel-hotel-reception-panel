@@ -1,14 +1,15 @@
 @extends('layouts.header')
+@section('title', 'Guest information')
 @section('guests_navbar_state', 'active')
 @section('additional_style')
 @vite(['resources/css/guests-style.css'])
 @endsection
 @section('navbar_header_button')
 @role('admin')
-<a href="{{ route('admin.guests.create') }}" style="width:400px;" class="add-new-button">Add Guest</a>
+<a href="{{ route('admin.guests.create') }}" class="add-new-button">Add Guest</a>
 @endrole
 @role('receptionist')
-<a href="{{ route('receptionist.guests.create') }}" style="width:400px;" class="add-new-button">Add Guest</a>
+<a href="{{ route('receptionist.guests.create') }}" class="add-new-button">Add Guest</a>
 @endrole
 @endsection
 @section('content')
@@ -24,8 +25,8 @@
                 @endif
                 <!-- Display error messages if any -->
                 @if ($errors->any())
-                <div class="alert alert-danger w-100">
-                    <ul>
+                <div class="custom-error-message">
+                    <ul class="error-list">
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach
@@ -36,19 +37,19 @@
                 <div id="main-container">
                     <div class="content-container text-center">
                         <div class="room-info-table">
-                            <h4 class="mb-4"><b>Guest data</b></h4>
+                            <h4 class="mb-4"><b>Guest information</b></h4>
 
                             <div class="row pl-4 pr-4">
                                 <!-- Guest information -->
                                 <div class="col-md-4">
                                     <ul class="list-group">
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            Full name
+                                            Full name:
                                             <!-- Display guest's full name -->
                                             <span class="badge bg-secondary badge-big">{{ $guest->first_name }} {{ $guest->last_name }}</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            Gender
+                                            Gender:
                                             <!-- Display guest's gender -->
                                             <span class="badge bg-secondary badge-big">
                                                 @if ($guest->gender == "M") Male
@@ -58,12 +59,12 @@
                                             </span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            Date of Birthday
+                                            Date of Birthday:
                                             <!-- Display guest's date of birth -->
                                             <span class="badge bg-secondary badge-big">{{ $guest->dob }}</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            Phone number
+                                            Phone number:
                                             <!-- Display guest's phone number -->
                                             <span class="badge bg-secondary badge-big">{{ $guest->phone_number }}</span>
                                         </li>
@@ -73,27 +74,27 @@
                                 <div class="col-md-4">
                                     <ul class="list-group">
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            Doc. country
+                                            Doc. country:
                                             <!-- Display guest's document country -->
                                             <span class="badge bg-secondary badge-big">@isset($guest->guest_document->document_country) {{ $guest->guest_document->document_country }} @endisset</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            Doc. serial
+                                            Doc. serial:
                                             <!-- Display guest's document serial -->
                                             <span class="badge bg-secondary badge-big">@isset($guest->guest_document->document_serial) {{ $guest->guest_document->document_serial }} @endisset</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            Doc. number
+                                            Doc. number:
                                             <!-- Display guest's document number -->
                                             <span class="badge bg-secondary badge-big">@isset($guest->guest_document->document_number) {{ $guest->guest_document->document_number }} @endisset</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            Doc. expired
+                                            Doc. expired:
                                             <!-- Display guest's document expiry date -->
                                             <span class="badge bg-secondary badge-big">@isset($guest->guest_document->document_expired) {{ $guest->guest_document->document_expired }} @endisset</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            Doc. issued date
+                                            Doc. issued date:
                                             <!-- Display guest's document issued date -->
                                             <span class="badge bg-secondary badge-big">@isset($guest->guest_document->document_issued_date) {{ $guest->guest_document->document_issued_date }} @endisset</span>
                                         </li>

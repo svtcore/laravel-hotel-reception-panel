@@ -1,11 +1,12 @@
 @extends('layouts.header')
+@section('title', 'Rooms')
 @section('rooms_navbar_state', 'active')
 @section('additional_style')
 @vite(['resources/css/rooms-style.css'])
 @endsection
 @section('navbar_header_button')
 @role('admin')
-<a href="{{ route('admin.rooms.create') }}" class="add-new-button" style="width:400px;">Add New Room</a>
+<a href="{{ route('admin.rooms.create') }}" class="add-new-button">Add New Room</a>
 @endrole
 @role('receptionist')
 <span class="header-navbar">Rooms</span>
@@ -27,9 +28,8 @@
                 </div>
                 @endif
                 @if ($errors->any())
-                <div class="alert alert-danger">
-                    <!-- Error -->
-                    <ul>
+                <div class="custom-error-message">
+                    <ul class="error-list">
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach
@@ -67,11 +67,11 @@
                     <div class="form-row">
                         <div class="col-md-2 pt-2">
                             <label for="roomNumber"></label>
-                            <input type="text" class="form-control text-center" id="roomNumber" name="roomNumber" placeholder="Room number" disabled required maxlength="255">
+                            <input type="text" class="form-control text-center @error('roomNumber') is-invalid @enderror" id="roomNumber" name="roomNumber" placeholder="Room number" disabled required maxlength="255">
                         </div>
                         <div class="col-md-4 pt-2">
                             <label for="guestName"></label>
-                            <input type="text" class="form-control text-center" id="guestName" name="guestName" placeholder="Guest name" disabled required maxlength="255">
+                            <input type="text" class="form-control text-center @error('guestName') is-invalid @enderror" id="guestName" name="guestName" placeholder="Guest name" disabled required maxlength="255">
                         </div>
                         <div class="col-md-6 mt-2 d-none" id="searchTopBlock">
                             <label for="searchTopBlock"></label>
@@ -83,17 +83,17 @@
                         <div class="form-row">
                             <div class="col-md-2 mb-2 date-block">
                                 <label for="startDate">Start date</label>
-                                <input type="date" class="form-control" id="startDate" name="startDate" value="{{ \Carbon\Carbon::now()->toDateString() }}" required>
+                                <input type="date" class="form-control @error('startDate') is-invalid @enderror" id="startDate" name="startDate" value="{{ \Carbon\Carbon::now()->toDateString() }}" required>
                             </div>
                             <div class="col-md-2 mb-2 date-block">
                                 <label for="endDate">End date</label>
-                                <input type="date" class="form-control" id="endDate" name="endDate" value="{{ \Carbon\Carbon::now()->addDay()->toDateString() }}" required>
+                                <input type="date" class="form-control @error('endDate') is-invalid @enderror" id="endDate" name="endDate" value="{{ \Carbon\Carbon::now()->addDay()->toDateString() }}" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col-md-2 pt-2">
                                 <label for="type">Type</label>
-                                <select class="form-select text-center" id="type" name="type" required>
+                                <select class="form-select text-center @error('type') is-invalid @enderror" id="type" name="type" required>
                                     <option value="0">Any</option>
                                     <option value="standard">Standard</option>
                                     <option value="deluxe">Deluxe</option>
@@ -103,7 +103,7 @@
                             </div>
                             <div class="col-md-2 pt-2">
                                 <label for="status">Status</label>
-                                <select class="form-select text-center" id="status" name="status" required>
+                                <select class="form-select text-center @error('status') is-invalid @enderror" id="status" name="status" required>
                                     <option value="0">Any</option>
                                     <option value="available">Available</option>
                                     <option value="occupied">Occupied</option>
@@ -112,7 +112,7 @@
                             </div>
                             <div class="col-md-2 pt-2">
                                 <label for="adultsBedsCount">Adults beds</label>
-                                <select class="form-select text-center" id="adultsBedsCount" name="adultsBedsCount" required>
+                                <select class="form-select text-center @error('adultsBedsCount') is-invalid @enderror" id="adultsBedsCount" name="adultsBedsCount" required>
                                     <option value="0">Any</option>
                                     @for ($i = 1; $i <= 10; $i++) <option value="{{ $i }}">{{ $i }} persons</option>
                                         @endfor
@@ -120,7 +120,7 @@
                             </div>
                             <div class="col-md-2 pt-2">
                                 <label for="childrenBedsCount">Children beds</label>
-                                <select class="form-select text-center" id="childrenBedsCount" name="childrenBedsCount" required>
+                                <select class="form-select text-center @error('childrenBedsCount') is-invalid @enderror" id="childrenBedsCount" name="childrenBedsCount" required>
                                     <option value="-1" selected>Any</option>
                                     <option value="0">NO CHILD BED</option>
                                     @for ($i = 1; $i <= 10; $i++) <option value="{{ $i }}">{{ $i }} child bed</option>
@@ -201,10 +201,10 @@
                                         @endrole
                                         @endif
                                         @role('admin')
-                                        <a href="{{ route('admin.rooms.show', $room->id) }}" class="btn btn-primary">Details</a>
+                                        <a href="{{ route('admin.rooms.show', $room->id) }}" class="btn btn-secondary">Details</a>
                                         @endrole
                                         @role('receptionist')
-                                        <a href="{{ route('receptionist.rooms.show', $room->id) }}" class="btn btn-primary">Details</a>
+                                        <a href="{{ route('receptionist.rooms.show', $room->id) }}" class="btn btn-secondary">Details</a>
                                         @endrole
                                         @role('admin')
                                         <a href="{{ route('admin.rooms.edit', $room->id) }}" class="btn btn-warning"><i class="fas fa-pen"></i></a>

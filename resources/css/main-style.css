@@ -39,19 +39,20 @@ body {
     background-color: #28a745;
     color: #fff;
     border: none;
-    padding: 0.4em 20px;
+    padding: 6px;
     border-radius: 0;
     font-size: 16px;
     display: block;
     transition: background-color 0.3s ease;
     border-radius: 30px;
+    width:500px;
 }
 .header-navbar{
     text-align: center;
     color: #fff;
-    border: none;
-    padding: 0.4em 20px;
-    font-size: 22px;
+    padding: 5px;
+    font-size: 18px;
+    display: block;
 }
 .nav-page-info{
     text-align: center;
@@ -118,4 +119,25 @@ a {
 }
 .main-container{
     margin-top:70px;
+}
+.is-invalid {
+    border-color: rgb(212, 48, 48);
+}
+.custom-error-message {
+    background-color: #f8d7da;
+    border: 1px solid #cfcdcd;
+    color: #721c24;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.custom-error-message ul.error-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.custom-error-message ul.error-list li {
+    color: #721c24;
 }

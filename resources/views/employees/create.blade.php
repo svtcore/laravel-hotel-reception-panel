@@ -1,17 +1,18 @@
 @extends('layouts.header')
+@section('title', 'Add employee')
 @section('employees_navbar_state', 'active')
 @section('additional_style')
 @vite(['resources/css/guests-style.css'])
 @endsection
 @section('content')
 @section('navbar_header_button')
-<span class="nav-page-info">Edit employee data</span>
+<span class="header-navbar">Edit employee data</span>
 @endsection
 <div class="container-fluid">
     <div class="content-container main-container">
         <!-- Main content -->
         <section class="content">
-            <div class="container-fluid mt-4">
+            <div class="container-fluid">
                 <!-- Success message -->
                 @if (session('success'))
                 <div class="alert alert-success">
@@ -20,8 +21,8 @@
                 @endif
                 <!-- Error messages -->
                 @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
+                <div class="custom-error-message">
+                    <ul class="error-list">
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach
@@ -34,30 +35,30 @@
                         <div class="col-md-6">
                             <div class="card no-shadow">
                                 <div class="card-body">
-                                    <h4 class="card-title pl-4"><b>Employee data</b></h4><br /><br />
+                                    <h4 class="card-title pl-4"><b>Employee information</b></h4><br /><br />
                                     @csrf
                                     <div class="row mb-3 ml-2 mr-2">
                                         <!-- First Name input -->
                                         <div class="col-sm-6">
-                                            <label for="firstName" class="form-label">First Name</label>
-                                            <input type="text" class="form-control text-center" id="firstName" name="firstName" value="" required maxlength="255">
+                                            <label for="firstName" class="form-label">First name:</label>
+                                            <input type="text" class="form-control text-center @error('firstName') is-invalid @enderror" id="firstName" name="firstName" value="{{ old('firstName') }}" required maxlength="255">
                                         </div>
                                         <!-- Last Name input -->
                                         <div class="col-sm-6">
-                                            <label for="lastName" class="form-label">Last Name</label>
-                                            <input type="text" class="form-control text-center" id="lastName" name="lastName" value="" required maxlength="255">
+                                            <label for="lastName" class="form-label">Last name:</label>
+                                            <input type="text" class="form-control text-center @error('lastName') is-invalid @enderror" id="lastName" name="lastName" value="" required maxlength="255" value="{{ old('lastName') }}">
                                         </div>
                                     </div>
                                     <div class="row mb-3 ml-2 mr-2">
                                         <!-- Date of Birth input -->
                                         <div class="col-sm-6">
-                                            <label for="dob" class="form-label">DOB</label>
-                                            <input type="date" class="form-control" id="dob" name="dob" value="" required>
+                                            <label for="dob" class="form-label">DOB:</label>
+                                            <input type="date" class="form-control @error('dob') is-invalid @enderror" id="dob" name="dob" value="{{ old('dob') }}" required>
                                         </div>
                                         <!-- Status select -->
                                         <div class="col-sm-6">
-                                            <label for="status" class="form-label">Status</label>
-                                            <select class="form-select text-center" id="status" name="status">
+                                            <label for="status" class="form-label">Status:</label>
+                                            <select class="form-select text-center @error('status') is-invalid @enderror" id="status" name="status">
                                                 <option value="active">Active</option>
                                                 <option value="fired">Fired</option>
                                                 <option value="vacation">On Vacation</option>
@@ -68,7 +69,7 @@
                                     <div class="row justify-content-center">
                                         <!-- Submit button -->
                                         <div class="col-sm-12">
-                                            <button type="submit" class="btn btn-primary w-100">Confirm data</button>
+                                            <button type="submit" class="btn btn-primary w-100">Confirm employee data</button>
                                         </div>
                                     </div>
                                 </div>
@@ -81,15 +82,15 @@
                                     <div class="row ml-2 mr-2 mb-4">
                                         <!-- Phone Number input -->
                                         <div class="col-sm-12">
-                                            <label for="phoneNumber" class="form-label">Phone number</label>
-                                            <input type="text" class="form-control text-center" id="phoneNumber" name="phoneNumber" value="" required maxlength="20">
+                                            <label for="phoneNumber" class="form-label">Phone number:</label>
+                                            <input type="number" class="form-control text-center @error('phoneNumber') is-invalid @enderror" id="phoneNumber" name="phoneNumber" value="{{ old('phoneNumber') }}" required maxlength="20">
                                         </div>
                                     </div>
                                     <div class="row mb-5 ml-2 mr-2">
                                         <!-- Position input -->
                                         <div class="col-sm-12">
-                                            <label for="position" class="form-label">Position</label>
-                                            <input type="text" class="form-control text-center" id="position" name="position" value="" maxlength="255">
+                                            <label for="position" class="form-label">Position:</label>
+                                            <input type="text" class="form-control text-center @error('position') is-invalid @enderror" id="position" name="position" value="{{ old('position') }}" maxlength="255">
                                         </div>
                                     </div>
                                 </div>
@@ -102,6 +103,5 @@
     </div>
 </div>
 @section('custom-scripts')
-@vite(['resources/js/guests/edit.js'])
 @endsection
 @endsection

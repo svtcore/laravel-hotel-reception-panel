@@ -1,17 +1,18 @@
 @extends('layouts.header')
+@section('title', 'Add room data')
 @section('rooms_navbar_state', 'active')
 @section('additional_style')
 @vite(['resources/css/rooms-style.css'])
 @endsection
 @section('navbar_header_button')
-    <span class="header-navbar">Create new room data</span>
+<span class="header-navbar">Add new room data</span>
 @endsection
 @section('content')
 <div class="container-fluid">
     <div class="content-container main-container">
         <!-- Main content -->
         <section class="content">
-            <div class="container-fluid mt-4">
+            <div class="container-fluid">
                 <!-- Display success message if any -->
                 @if (session('success'))
                 <div class="alert alert-success">
@@ -20,8 +21,8 @@
                 @endif
                 <!-- Display error messages if any -->
                 @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
+                <div class="custom-error-message">
+                    <ul class="error-list">
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach
@@ -34,26 +35,26 @@
                     <div class="col-md-6">
                         <div class="card no-shadow">
                             <div class="card-body">
-                                <h4 class="card-title pl-4"><b>Room Details</b></h4><br /><br />
+                                <h4 class="card-title pl-4"><b>Room information</b></h4><br /><br />
                                     @csrf
                                     <input type="hidden" name="room_id" value="">
                                     <!-- Room details inputs -->
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-6">
-                                            <label for="roomNumber" class="form-label">Room number</label>
-                                            <input type="text" class="form-control text-center" id="roomNumber" name="roomNumber" required>
+                                            <label for="roomNumber" class="form-label">Room number:</label>
+                                            <input type="text" class="form-control text-center @error('roomNumber') is-invalid @enderror" id="roomNumber" name="roomNumber" value="{{ old('roomNumber') }}" required>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="floorNumber" class="form-label">Floor</label>
-                                            <input type="text" class="form-control text-center" id="floorNumber" name="floorNumber" required>
+                                            <label for="floorNumber" class="form-label">Floor:</label>
+                                            <input type="text" class="form-control text-center @error('floorNumber') is-invalid @enderror" id="floorNumber" name="floorNumber" value="{{ old('floorNumber') }}" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-6">
-                                            <label for="type" class="form-label">Type</label>
+                                            <label for="type" class="form-label">Type:</label>
                                             <!-- Select room type -->
-                                            <select class="form-select text-center" id="type" name="type" required>
-                                                <option value="standard">Standard</option>
+                                            <select class="form-select text-center @error('type') is-invalid @enderror" id="type" name="type" required>
+                                                <option value="standard" selected>Standard</option>
                                                 <option value="deluxe">Deluxe</option>
                                                 <option value="suite">Suite</option>
                                                 <option value="penthouse">Penthouse</option>
@@ -62,32 +63,32 @@
                                         <div class="col-sm-6">
                                             <label for="totalRooms" class="form-label">Total rooms</label>
                                             <!-- Input for total number of rooms -->
-                                            <input type="number" class="form-control text-center" id="totalRooms" name="totalRooms" required>
+                                            <input type="number" class="form-control text-center @error('totalRooms') is-invalid @enderror" id="totalRooms" name="totalRooms" value="{{ old('totalRooms') }}" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-6">
                                             <label for="adultsBedsCount" class="form-label">Adult beds</label>
                                             <!-- Input for number of adult beds -->
-                                            <input type="number" class="form-control text-center" id="adultsBedsCount" name="adultsBedsCount" required>
+                                            <input type="number" class="form-control text-center @error('adultsBedsCount') is-invalid @enderror" id="adultsBedsCount" name="adultsBedsCount" value="{{ old('adultsBedsCount') }}" required>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="roomChild" class="form-label">Child beds</label>
                                             <!-- Input for number of child beds -->
-                                            <input type="number" class="form-control text-center" id="childrenBedsCount" name="childrenBedsCount" required>
+                                            <input type="number" class="form-control text-center @error('childrenBedsCount') is-invalid @enderror" id="childrenBedsCount" name="childrenBedsCount" value="{{ old('childrenBedsCount') }}" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-6">
                                             <label for="price" class="form-label">Price per night</label>
                                             <!-- Input for price per night -->
-                                            <input type="number" class="form-control text-center" min="0" step="1" id="price" name="price" required>
+                                            <input type="number" class="form-control text-center @error('price') is-invalid @enderror" min="0" step="1" id="price" name="price" value="{{ old('price') }}" required>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="status" class="form-label">Status</label>
                                             <!-- Select room status -->
-                                            <select class="form-select text-center" id="status" name="status" required>
-                                                <option value="available">Available</option>
+                                            <select class="form-select text-center @error('status') is-invalid @enderror" id="status" name="status" required>
+                                                <option value="available" selected>Available</option>
                                                 <option value="occupied">Occupied</option>
                                                 <option value="under_maintenance">Maintenance</option>
                                             </select>
@@ -96,7 +97,7 @@
                                     <div class="row ml-2 mr-2">
                                         <div class="col-sm-12">
                                             <!-- Button to submit form -->
-                                            <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                                            <button type="submit" class="btn btn-primary w-100">Confirm room data</button>
                                         </div>
                                     </div>
                             </div>

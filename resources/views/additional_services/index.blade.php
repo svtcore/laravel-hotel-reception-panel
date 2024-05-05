@@ -1,16 +1,17 @@
 @extends('layouts.header')
+@section('title', 'Additional services')
 @section('services_navbar_state', 'active')
 @section('additional_style')
 @endsection
 @section('navbar_header_button')
-<a href="{{ route('admin.services.create') }}" style="width:400px;" class="add-new-button">Add Service</a>
+<a href="{{ route('admin.services.create') }}" class="add-new-button">Add service</a>
 @endsection
 
 @section('content')
-<div class="container-fluid mt-3">
-    <div class="content-container">
+<div class="container-fluid">
+    <div class="content-container main-container">
         <div class="content-header">
-            <div class="container-fluid mt-4">
+            <div class="container-fluid">
                 <!-- Session Messages Handling -->
                 @if (session('success'))
                 <div class="alert alert-success">
@@ -18,8 +19,8 @@
                 </div>
                 @endif
                 @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
+                <div class="custom-error-message">
+                    <ul class="error-list">
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach
@@ -27,8 +28,8 @@
                 </div>
                 @endif
                 <!-- Services Table -->
-                <div class="mt-4 text-center">
-                    <h4><b>Additional Services</b></h4>
+                <div class="text-center mb-4">
+                    <h4>Additional services</h4>
                 </div>
                 <div>
                     <table id="services-table" class="table table-bordered table-striped">

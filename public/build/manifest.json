@@ -47,7 +47,7 @@
     "isEntry": true
   },
   "resources/css/main-style.css": {
-    "file": "assets/main-style-C4vbcz2A.css",
+    "file": "assets/main-style-4kNZF3k2.css",
     "src": "resources/css/main-style.css",
     "isEntry": true
   },
@@ -134,13 +134,13 @@
     "isEntry": true
   },
   "resources/js/guests/create.js": {
-    "file": "assets/create-BPxUFqCf.js",
+    "file": "assets/create-Ch0wOyod.js",
     "name": "create",
     "src": "resources/js/guests/create.js",
     "isEntry": true
   },
   "resources/js/guests/edit.js": {
-    "file": "assets/edit-CVtaio5s.js",
+    "file": "assets/edit-Bz58eQqx.js",
     "name": "edit",
     "src": "resources/js/guests/edit.js",
     "isEntry": true

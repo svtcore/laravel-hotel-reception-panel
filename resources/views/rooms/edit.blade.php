@@ -1,4 +1,5 @@
 @extends('layouts.header')
+@section('title', 'Edit room data')
 @section('rooms_navbar_state', 'active')
 @section('additional_style')
 @vite(['resources/css/rooms-style.css'])
@@ -20,8 +21,8 @@
                 @endif
                 <!-- Display error messages if any -->
                 @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
+                <div class="custom-error-message">
+                    <ul class="error-list">
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach
@@ -34,28 +35,28 @@
                     <div class="col-md-6">
                         <div class="card no-shadow">
                             <div class="card-body">
-                                <h4 class="card-title pl-4"><b>Room Details</b></h4><br /><br />
+                                <h4 class="card-title pl-4"><b>Room information</b></h4><br /><br />
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="room_id" value="{{ $room_data->id }}">
                                     <!-- Room details inputs -->
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-6">
-                                            <label for="roomNumber" class="form-label">Room number</label>
+                                            <label for="roomNumber" class="form-label">Room number:</label>
                                             <!-- Input for room number -->
-                                            <input type="text" class="form-control text-center" id="roomNumber" name="roomNumber" value="{{ $room_data->room_number }}" required>
+                                            <input type="text" class="form-control text-center @error('roomNumber') is-invalid @enderror" id="roomNumber" name="roomNumber" value="{{ $room_data->room_number }}" required>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="floorNumber" class="form-label">Floor</label>
+                                            <label for="floorNumber" class="form-label">Floor:</label>
                                             <!-- Input for floor number -->
-                                            <input type="text" class="form-control text-center" id="floorNumber" name="floorNumber" value="{{ $room_data->floor_number }}" required>
+                                            <input type="text" class="form-control text-center @error('floorNumber') is-invalid @enderror" id="floorNumber" name="floorNumber" value="{{ $room_data->floor_number }}" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-6">
-                                            <label for="type" class="form-label">Type</label>
+                                            <label for="type" class="form-label">Type:</label>
                                             <!-- Select room type -->
-                                            <select class="form-select text-center" id="type" name="type" required>
+                                            <select class="form-select text-center @error('type') is-invalid @enderror" id="type" name="type" required>
                                                 <option value="standard" {{ $room_data->type == 'standard' ? 'selected' : '' }}>Standard</option>
                                                 <option value="deluxe" {{ $room_data->type == 'deluxe' ? 'selected' : '' }}>Deluxe</option>
                                                 <option value="suite" {{ $room_data->type == 'suite' ? 'selected' : '' }}>Suite</option>
@@ -63,33 +64,33 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="totalRooms" class="form-label">Total rooms</label>
+                                            <label for="totalRooms" class="form-label">Total rooms:</label>
                                             <!-- Input for total number of rooms -->
-                                            <input type="number" class="form-control text-center" id="totalRooms" name="totalRooms" value="{{ $room_data->total_rooms }}" required>
+                                            <input type="number" class="form-control text-center @error('totalRooms') is-invalid @enderror" id="totalRooms" name="totalRooms" value="{{ $room_data->total_rooms }}" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-6">
-                                            <label for="adultsBedsCount" class="form-label">Adult beds</label>
+                                            <label for="adultsBedsCount" class="form-label">Adult beds:</label>
                                             <!-- Input for number of adult beds -->
-                                            <input type="number" class="form-control text-center" id="adultsBedsCount" name="adultsBedsCount" value="{{ $room_data->adults_beds_count }}" required>
+                                            <input type="number" class="form-control text-center @error('adultsBedsCount') is-invalid @enderror" id="adultsBedsCount" name="adultsBedsCount" value="{{ $room_data->adults_beds_count }}" required>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="roomChild" class="form-label">Child beds</label>
+                                            <label for="roomChild" class="form-label">Child beds:</label>
                                             <!-- Input for number of child beds -->
-                                            <input type="number" class="form-control text-center" id="childrenBedsCount" name="childrenBedsCount" value="{{ $room_data->children_beds_count }}" required>
+                                            <input type="number" class="form-control text-center @error('childrenBedsCount') is-invalid @enderror" id="childrenBedsCount" name="childrenBedsCount" value="{{ $room_data->children_beds_count }}" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-6">
-                                            <label for="price" class="form-label">Price per night</label>
+                                            <label for="price" class="form-label">Price per night:</label>
                                             <!-- Input for price per night -->
-                                            <input type="number" class="form-control text-center" min="0" step="1" id="price" name="price" value="{{ $room_data->price }}" required>
+                                            <input type="number" class="form-control text-center @error('price') is-invalid @enderror" min="0" step="1" id="price" name="price" value="{{ $room_data->price }}" required>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="status" class="form-label">Status</label>
+                                            <label for="status" class="form-label">Status:</label>
                                             <!-- Select room status -->
-                                            <select class="form-select text-center" id="status" name="status" required>
+                                            <select class="form-select text-center @error('status') is-invalid @enderror" id="status" name="status" required>
                                                 <option value="available" {{ $room_data->status == 'available' ? 'selected' : '' }}>
                                                 Available</option>
                                                 <option value="occupied" {{ $room_data->status == 'occupied' ? 'selected' : '' }}>
@@ -102,7 +103,7 @@
                                     <div class="row ml-2 mr-2">
                                         <div class="col-sm-12">
                                             <!-- Button to submit form -->
-                                            <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                                            <button type="submit" class="btn btn-primary w-100">Save changes</button>
                                         </div>
                                     </div>
                             </div>

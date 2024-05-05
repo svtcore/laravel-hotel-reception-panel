@@ -1,9 +1,10 @@
 @extends('layouts.header')
+@section('title', 'Users')
 @section('users_navbar_state', 'active')
 @section('additional_style')
 @endsection
 @section('navbar_header_button')
-<a href="{{ route('admin.users.create') }}" style="width:500px;" class="add-new-button">Add User</a>
+<a href="{{ route('admin.users.create') }}" class="add-new-button">Add User</a>
 @endsection
 
 @section('content')

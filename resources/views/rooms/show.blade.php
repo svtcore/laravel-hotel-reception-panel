@@ -7,7 +7,7 @@
 @endsection
 @section('navbar_header_button')
 @role('admin')
-<a href="{{ route('admin.rooms.create') }}" style="width:400px;" class="add-new-button">Add New Room</a>
+<a href="{{ route('admin.rooms.create') }}" class="add-new-button">Add New Room</a>
 @endrole
 @role('receptionist')
 <span class="header-navbar">Rooms</span>
@@ -27,8 +27,8 @@
                 </div>
                 @endif
                 @if ($errors->any())
-                <div class="alert alert-danger w-100">
-                    <ul>
+                <div class="custom-error-message">
+                    <ul class="error-list">
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach

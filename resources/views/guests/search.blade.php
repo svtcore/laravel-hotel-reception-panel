@@ -1,21 +1,22 @@
 @extends('layouts.header')
+@section('title', 'Search results')
 @section('guests_navbar_state', 'active')
 @section('additional_style')
 @vite(['resources/css/guests-style.css'])
 @endsection
 @section('navbar_header_button')
 @role('admin')
-<a href="{{ route('admin.guests.create') }}" style="width:400px;" class="add-new-button">Add Guest</a>
+<a href="{{ route('admin.guests.create') }}" class="add-new-button">Add guest</a>
 @endrole
 @role('receptionist')
-<a href="{{ route('receptionist.guests.create') }}" style="width:400px;" class="add-new-button">Add Guest</a>
+<a href="{{ route('receptionist.guests.create') }}" class="add-new-button">Add guest</a>
 @endrole
 @endsection
 @section('content')
 <div class="container-fluid">
     <div class="content-container main-container">
         <div class="content-header">
-            <div class="container-fluid mt-4">
+            <div class="container-fluid">
                 <!-- Display success message if any -->
                 @if (session('success'))
                 <div class="alert alert-success">
@@ -24,8 +25,8 @@
                 @endif
                 <!-- Display error messages if any -->
                 @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
+                <div class="custom-error-message">
+                    <ul class="error-list">
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach
@@ -64,7 +65,7 @@
                             <div class="col-md-4 pt-2">
                                 <label for="guestName">Guest name</label>
                                 <!-- Input for guest name -->
-                                <input type="text" class="form-control" id="guestName" name="guestName" placeholder="Full name" required minlength="2" maxlength="255" @isset($inputData['guestName']) value="{{ $inputData['guestName'] }}" @endisset">
+                                <input type="text" class="form-control @error('guestName') is-invalid @enderror" id="guestName" name="guestName" placeholder="Full name" required minlength="2" maxlength="255" @isset($inputData['guestName']) value="{{ $inputData['guestName'] }}" @endisset">
                                 <div class="invalid-feedback">
                                     Please provide a valid guest name.
                                 </div>
@@ -72,13 +73,13 @@
                             <div class="col-md-3 pt-2">
                                 <label for="phoneNumber">Phone number</label>
                                 <!-- Input for phone number -->
-                                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Phone number" disabled required minlength="10" maxlength="15" @isset($inputData['phoneNumber']) value="{{ $inputData['phoneNumber'] }}" @endisset>
+                                <input type="text" class="form-control @error('phoneNumber') is-invalid @enderror" id="phoneNumber" name="phoneNumber" placeholder="Phone number" disabled required minlength="10" maxlength="15" @isset($inputData['phoneNumber']) value="{{ $inputData['phoneNumber'] }}" @endisset>
                                 <div class="invalid-feedback">
                                     Please provide a valid phone number.
                                 </div>
                             </div>
                             <div class="col-md-5 pt-2 mt-2">
-                                <label for="phoneNumber"></label>
+                                <label for="searchButton"></label>
                                 <!-- Submit button for searching -->
                                 <button type="submit" class="btn btn-primary w-100">Search</button>
                             </div>
@@ -120,7 +121,7 @@
                                     <form action="{{ route('admin.guests.delete', $guest->id) }}" method="POST">
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
                                             <!-- Button for viewing guest details -->
-                                            <a href="{{ route('admin.guests.show', $guest->id) }}" class="btn btn-primary">Details</a>
+                                            <a href="{{ route('admin.guests.show', $guest->id) }}" class="btn btn-secondary">Details</a>
                                             <!-- Button for editing guest details -->
                                             <a href="{{ route('admin.guests.edit', $guest->id) }}" type="button" class="btn btn-warning">
                                                 <i class="fas fa-pen"></i>

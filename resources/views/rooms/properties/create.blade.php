@@ -1,4 +1,5 @@
 @extends('layouts.header')
+@section('title', 'Add property')
 @section('room_properties_navbar_state', 'active')
 @section('additional_style')
 @endsection
@@ -11,7 +12,7 @@
     <div class="content-container main-container">
         <!-- Main content -->
         <section class="content">
-            <div class="container-fluid mt-4">
+            <div class="container-fluid">
                 <!-- Session Messages Handling -->
                 @if (session('success'))
                 <div class="alert alert-success">
@@ -19,8 +20,8 @@
                 </div>
                 @endif
                 @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
+                <div class="custom-error-message">
+                    <ul class="error-list">
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach
@@ -37,12 +38,12 @@
                                     <!-- Input fields for name and email -->
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-6">
-                                            <label for="name" class="form-label">Name</label>
-                                            <input type="text" class="form-control text-center" id="name" name="name" required maxlength="255">
+                                            <label for="name" class="form-label">Name:</label>
+                                            <input type="text" class="form-control text-center @error('name') is-invalid @enderror" id="name" name="name" maxlength="255" value="{{ old('name') }}" required>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="status" class="form-label">Available</label>
-                                            <select class="form-select text-center" id="status" name="status" required>
+                                            <label for="status" class="form-label">Available:</label>
+                                            <select class="form-select text-center @error('status') is-invalid @enderror" id="status" name="status" required>
                                                 <option value="1" selected>Yes</option>
                                                 <option value="0">No</option>
                                             </select>

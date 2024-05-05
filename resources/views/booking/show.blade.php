@@ -1,4 +1,5 @@
 @extends('layouts.header')
+@section('title', 'Booking information')
 @section('booking_navbar_state', 'active')
 @section('additional_style')
 @vite(['resources/css/bookings-style.css'])
@@ -10,7 +11,7 @@
 <div class="container-fluid">
     <div class="content-container main-container">
         <section class="content">
-            <div class="container-fluid mt-4">
+            <div class="container-fluid">
                 <!-- Success message -->
                 @if (session('success'))
                 <div class="alert alert-success">
@@ -19,8 +20,8 @@
                 @endif
                 <!-- Error messages -->
                 @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
+                <div class="custom-error-message">
+                    <ul class="error-list">
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach
@@ -31,14 +32,14 @@
                     <div class="col-md-8">
                         <div class="card no-shadow">
                             <div class="card-body">
-                                <h4 class="ml-4"><b>Reservation info</b></h4>
+                                <h4 class="ml-4"><b>Booking information</b></h4>
                                 <hr/>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <ul class="list-group list-group-flush pl-3 pr-3">
                                             <!-- Room Number -->
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                Room Number
+                                                Room Number:
                                                 <!-- Link to room details -->
                                                 @role('admin')
                                                 <span class="badge bg-secondary badge-big">@isset($booking_data->rooms->room_number) <a href="{{ route('admin.rooms.show', $booking_data->rooms->id) }}">{{ $booking_data->rooms->room_number }}</a> @endisset</span>
@@ -49,27 +50,27 @@
                                             </li>
                                             <!-- Room type -->
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                Room type
+                                                Room type:
                                                 <span class="badge bg-secondary badge-big">@isset($booking_data->rooms->type) {{ ucfirst($booking_data->rooms->type) }} @endisset</span>
                                             </li>
                                             <!-- Adults -->
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                Adults
+                                                Adults:
                                                 <span class="badge bg-secondary badge-big">{{ $booking_data->adults_count }}</span>
                                             </li>
                                             <!-- Children -->
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                Children
+                                                Children:
                                                 <span class="badge bg-secondary badge-big">{{ $booking_data->children_count }}</span>
                                             </li>
                                             <!-- Check-in Date -->
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                Check-in Date
+                                                Check-in Date:
                                                 <span class="badge bg-secondary badge-big">{{ \Carbon\Carbon::parse($booking_data->check_in_date)->format('d-m-Y') }}</span>
                                             </li>
                                             <!-- Check-out Date -->
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                Check-out Date
+                                                Check-out Date:
                                                 <span class="badge bg-secondary badge-big">{{ \Carbon\Carbon::parse($booking_data->check_out_date)->format('d-m-Y') }}</span>
                                             </li>
                                         </ul>
@@ -78,22 +79,22 @@
                                         <ul class="list-group list-group-flush pl-2 pr-2">
                                             <!-- Contact Number -->
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                Contact Number
+                                                Contact Number:
                                                 <span class="badge bg-secondary badge-big">@isset($booking_data->guests[0]->phone_number) {{ $booking_data->guests[0]->phone_number }} @endisset</span>
                                             </li>
                                             <!-- Payment type -->
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                Payment type
+                                                Payment type:
                                                 <span class="badge bg-secondary badge-big">{{ ucfirst(str_replace('_', ' ', $booking_data->payment_type)) }}</span>
                                             </li>
                                             <!-- Total cost -->
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                Total cost
+                                                Total cost:
                                                 <span class="badge bg-secondary badge-big">{{ $booking_data->total_cost }}</span>
                                             </li>
                                             <!-- Status -->
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                Status
+                                                Status:
                                                 <!-- Dynamic badge class based on status -->
                                                 @php
                                                 $status = $booking_data->status;

@@ -58,12 +58,18 @@ $(document).ready(function () {
         method: 'GET',
         success: function(data) {
             const selectCountryCode = $('#countryCode');
+    
+            data.sort(function(a, b) {
+                return a.name.common.localeCompare(b.name.common);
+            });
+    
             $.each(data, function(index, country) {
                 const countryCode = country.callingCodes ? country.callingCodes[0] : ''; 
                 const optionText = countryCode ? ` (+${countryCode})` : '';
                 const option = $('<option>').val(country.cca2).text(country.name.common + optionText);
                 selectCountryCode.append(option);
             });
+    
             const countryCode = $('#documentCountry').val();
             if (countryCode) {
                 selectCountryCode.val(countryCode);
@@ -72,5 +78,5 @@ $(document).ready(function () {
         error: function(error) {
             console.error('Error fetching countries:', error);
         }
-    });
+    });    
 });

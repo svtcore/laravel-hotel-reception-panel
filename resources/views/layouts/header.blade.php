@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title')</title>
 
     <!-- Styles -->
 
@@ -49,7 +49,7 @@
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-dark navbar-primary fixed-top">
             <div class="container-fluid">
-                <ul class="navbar-nav mx-auto mt-1 pb-0">
+                <ul class="navbar-nav mx-auto">
                     <li class="nav-item w-100">
                         @yield('navbar_header_button')
                     </li>

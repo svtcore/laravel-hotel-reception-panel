@@ -1,4 +1,5 @@
 @extends('layouts.header')
+@section('title', 'Booking')
 @section('booking_navbar_state', 'active')
 @section('additional_style')
 @vite(['resources/css/bookings-style.css'])
@@ -10,7 +11,7 @@
 <div class="container-fluid">
     <div class="content-container main-container">
         <div class="content-header">
-            <div class="container-fluid mt-4">
+            <div class="container-fluid">
                 <!-- Success message -->
                 @if (session('success'))
                 <div class="alert alert-success">
@@ -19,8 +20,8 @@
                 @endif
                 <!-- Error messages -->
                 @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
+                <div class="custom-error-message">
+                    <ul class="error-list">
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach
@@ -73,35 +74,35 @@
                                 <!-- Search inputs -->
                                 <div class="col-md-2 mb-2 mt-2 date-block">
                                     <label for="startDate">Start date</label>
-                                    <input type="date" class="form-control" id="startDate" name="startDate" disabled value="{{ \Carbon\Carbon::now()->toDateString() }}" required>
+                                    <input type="date" class="form-control text-center @error('startDate') is-invalid @enderror" id="startDate" name="startDate" disabled value="{{ \Carbon\Carbon::now()->toDateString() }}" required>
                                 </div>
                                 <div class="col-md-2 mb-2 mt-2 date-block">
                                     <label for="endDate">End date</label>
-                                    <input type="date" class="form-control" id="endDate" name="endDate" disabled value="{{ \Carbon\Carbon::now()->toDateString() }}" required>
+                                    <input type="date" class="form-control text-center @error('endDate') is-invalid @enderror" id="endDate" name="endDate" disabled value="{{ \Carbon\Carbon::now()->toDateString() }}" required>
                                 </div>
                                 <div class="col-md-2 pt-2">
                                     <label for="guestName">Guest name</label>
-                                    <input type="text" class="form-control" id="guestName" name="guestName" disabled placeholder="Full name" minlength="2" maxlength="255" required>
+                                    <input type="text" class="form-control text-center @error('guestName') is-invalid @enderror" id="guestName" name="guestName" disabled placeholder="Full name" minlength="2" maxlength="255" required>
                                     <div class="invalid-feedback">
                                         Please provide a valid guest name.
                                     </div>
                                 </div>
                                 <div class="col-md-2 pt-2">
                                     <label for="roomNumber">Room number</label>
-                                    <input type="text" class="form-control" id="roomNumber" name="roomNumber" placeholder="Room number" required minlength="1" maxlength="3">
+                                    <input type="text" class="form-control text-center @error('roomNumber') is-invalid @enderror" id="roomNumber" name="roomNumber" placeholder="Room number" required minlength="1" maxlength="3" required>
                                     <div class="invalid-feedback">
                                         Please provide a valid room number.
                                     </div>
                                 </div>
                                 <div class="col-md-2 pt-2">
                                     <label for="phoneNumber">Phone number</label>
-                                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Phone number" disabled required minlength="10" maxlength="15">
+                                    <input type="number" class="form-control text-center @error('phoneNumber') is-invalid @enderror" id="phoneNumber" name="phoneNumber" placeholder="Phone number" disabled minlength="10" maxlength="15" required>
                                     <div class="invalid-feedback">
                                         Please provide a valid phone number.
                                     </div>
                                 </div>
                                 <div class="col-md-2 pt-2 mt-2">
-                                    <label for="phoneNumber"></label>
+                                    <label for="searchButton"></label>
                                     <button type="submit" class="btn btn-primary w-100">Search</button>
                                 </div>
                             </div>
@@ -161,8 +162,18 @@
                                         <!-- Guest name -->
                                         <td class="text-center">
                                             @isset($booking->guests[0]->first_name)
-                                            {{ $booking->guests[0]->first_name }}
-                                            {{ $booking->guests[0]->last_name }}
+                                            @role('admin')
+                                            <a href="{{ route('admin.guests.show', $booking->guests[0]->id) }}">
+                                                {{ $booking->guests[0]->first_name }}
+                                                {{ $booking->guests[0]->last_name }}
+                                            </a>
+                                            @endrole
+                                            @role('receptionist')
+                                            <a href="{{ route('receptionist.guests.show', $booking->guests[0]->id) }}">
+                                                {{ $booking->guests[0]->first_name }}
+                                                {{ $booking->guests[0]->last_name }}
+                                            </a>
+                                            @endrole
                                             @endisset
                                         </td>
                                         <!-- Number of persons -->
@@ -211,7 +222,7 @@
                                                         @method('DELETE')
                                                         <!-- Delete button -->
                                                         <button type="submit" class="btn btn-danger">
-                                                            <i class="fas fa-ban"></i>
+                                                            <i class="fas fa-trash"></i>
                                                         </button>
                                                     </div>
                                                 </form>

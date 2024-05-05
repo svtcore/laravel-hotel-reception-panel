@@ -1,11 +1,12 @@
 @extends('layouts.header')
+@section('title', 'Edit employee data')
 @section('employees_navbar_state', 'active')
 @section('additional_style')
 @vite(['resources/css/guests-style.css'])
 @endsection
 @section('content')
 @section('navbar_header_button')
-<span class="nav-page-info">Edit employee data</span>
+<span class="header-navbar">Edit employee data</span>
 @endsection
 <div class="container-fluid">
     <div class="content-container main-container">
@@ -18,8 +19,8 @@
                 </div>
                 @endif
                 @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
+                <div class="custom-error-message">
+                    <ul class="error-list">
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach
@@ -32,28 +33,28 @@
                             <div class="card no-shadow">
                                 <div class="card-body">
                                     <!-- Employee data -->
-                                    <h4 class="card-title pl-4"><b>Employee data</b></h4><br /><br />
+                                    <h4 class="card-title pl-4"><b>Employee information</b></h4><br /><br />
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="employee_id" value="{{ $employee->id }}">
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-6">
-                                            <label for="firstName" class="form-label">First Name</label>
-                                            <input type="text" class="form-control text-center" id="firstName" name="firstName" value="{{ $employee->first_name }}" required maxlength="255">
+                                            <label for="firstName" class="form-label">First name:</label>
+                                            <input type="text" class="form-control text-center @error('firstName') is-invalid @enderror" id="firstName" name="firstName" value="{{ $employee->first_name }}" maxlength="255" required>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="lastName" class="form-label">Last Name</label>
-                                            <input type="text" class="form-control text-center" id="lastName" name="lastName" value="{{ $employee->last_name }}" required maxlength="255">
+                                            <label for="lastName" class="form-label">Last name:</label>
+                                            <input type="text" class="form-control text-center @error('lastName') is-invalid @enderror" id="lastName" name="lastName" value="{{ $employee->last_name }}" maxlength="255" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-6">
-                                            <label for="dob" class="form-label">DOB</label>
-                                            <input type="date" class="form-control" id="dob" name="dob" value="{{ $employee->dob }}" required>
+                                            <label for="dob" class="form-label">DOB:</label>
+                                            <input type="date" class="form-control @error('lastName') is-invalid @enderror" id="dob" name="dob" value="{{ $employee->dob }}" required>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="status" class="form-label">Status</label>
-                                            <select class="form-select text-center" id="status" name="status">
+                                            <label for="status" class="form-label">Status:</label>
+                                            <select class="form-select text-center @error('status') is-invalid @enderror" id="status" name="status" required>
                                                 <option value="active" {{ $employee->status == 'active' ? 'selected' : '' }}>Active</option>
                                                 <option value="fired" {{ $employee->status == 'fired' ? 'selected' : '' }}>Fired</option>
                                                 <option value="vacation" {{ $employee->status == 'vacation' ? 'selected' : '' }}>On Vacation</option>
@@ -63,7 +64,7 @@
                                     </div>
                                     <div class="row justify-content-center">
                                         <div class="col-sm-12">
-                                            <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                                            <button type="submit" class="btn btn-primary w-100">Save changes</button>
                                         </div>
                                     </div>
                                 </div>
@@ -76,14 +77,14 @@
                                     <h4 class="card-title pl-4"><b>Details</b></h4><br /><br />
                                     <div class="row ml-2 mr-2 mb-4">
                                         <div class="col-sm-12">
-                                            <label for="phoneNumber" class="form-label">Phone number</label>
-                                            <input type="text" class="form-control text-center" id="phoneNumber" name="phoneNumber" value="{{ $employee->phone_number }}" required maxlength="20">
+                                            <label for="phoneNumber" class="form-label">Phone number:</label>
+                                            <input type="number" class="form-control text-center @error('phoneNumber') is-invalid @enderror" id="phoneNumber" name="phoneNumber" value="{{ $employee->phone_number }}" maxlength="20" required>
                                         </div>
                                     </div>
                                     <div class="row mb-5 ml-2 mr-2">
                                         <div class="col-sm-12">
-                                            <label for="position" class="form-label">Position</label>
-                                            <input type="text" class="form-control text-center" id="position" name="position" value="{{ $employee->position }}" maxlength="255">
+                                            <label for="position" class="form-label">Position:</label>
+                                            <input type="text" class="form-control text-center @error('position') is-invalid @enderror" id="position" name="position" value="{{ $employee->position }}" maxlength="255" required>
                                         </div>
                                     </div>
                                 </div>
@@ -96,6 +97,5 @@
     </div>
 </div>
 @section('custom-scripts')
-@vite(['resources/js/guests/edit.js'])
 @endsection
 @endsection

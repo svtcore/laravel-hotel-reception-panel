@@ -15,7 +15,7 @@
 <div class="container-fluid">
     <div class="content-container main-container">
         <div class="content-header">
-            <div class="container-fluid mt-4">
+            <div class="container-fluid">
                 <!-- Display success message if any -->
                 @if (session('success'))
                 <div class="alert alert-success">
@@ -24,8 +24,8 @@
                 @endif
                 <!-- Display error messages if any -->
                 @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
+                <div class="custom-error-message">
+                    <ul class="error-list">
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach
@@ -33,6 +33,7 @@
                 </div>
                 @endif
                 <div>
+                <h4 class="font-weight-bold text-center">Employees</h4>
                     <!-- Employees table -->
                     <table id="employees-table" class="table table-bordered table-striped">
                         <thead>

@@ -5,7 +5,7 @@
 @endsection
 @section('navbar_header_button')
 @role('admin')
-<a href="{{ route('admin.rooms.create') }}" style="width:400px;" class="add-new-button">Add New Room</a>
+<a href="{{ route('admin.rooms.create') }}" class="add-new-button">Add New Room</a>
 @endrole
 @role('receptionist')
 <span class="header-navbar">Rooms</span>
@@ -27,9 +27,8 @@
                 </div>
                 @endif
                 @if ($errors->any())
-                <div class="alert alert-danger">
-                    <!-- Error -->
-                    <ul>
+                <div class="custom-error-message">
+                    <ul class="error-list">
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach
@@ -67,11 +66,11 @@
                     <div class="form-row">
                         <div class="col-md-2 pt-2">
                             <label for="roomNumber"></label>
-                            <input type="text" class="form-control text-center" id="roomNumber" name="roomNumber" placeholder="Room number" @if (!isset($inputData['roomNumber'])) disabled @else value="{{ $inputData['roomNumber'] }}" @endif required>
+                            <input type="text" class="form-control text-center @error('roomNumber') is-invalid @enderror" id="roomNumber" name="roomNumber" placeholder="Room number" @if (!isset($inputData['roomNumber'])) disabled @else value="{{ $inputData['roomNumber'] }}" @endif required>
                         </div>
                         <div class="col-md-4 pt-2">
                             <label for="guestName"></label>
-                            <input type="text" class="form-control text-center" id="guestName" name="guestName" placeholder="Guest name" @if (!isset($inputData['guestName'])) disabled @else value="{{ $inputData['guestName'] }}" @endif required>
+                            <input type="text" class="form-control text-center @error('guestName') is-invalid @enderror" id="guestName" name="guestName" placeholder="Guest name" @if (!isset($inputData['guestName'])) disabled @else value="{{ $inputData['guestName'] }}" @endif required>
                         </div>
                         <div class="col-md-6 mt-2 @if (!isset($inputData['roomNumber']) || !isset($inputData['roomNumber'])) d-none @endif " id="searchTopBlock">
                             <label for="searchTopBlock"></label>
@@ -83,17 +82,17 @@
                         <div class="form-row">
                             <div class="col-md-2 mb-2 date-block">
                                 <label for="startDate">Start date</label>
-                                <input type="date" class="form-control" id="startDate" name="startDate" @if (isset($inputData['startDate'])) value="{{ $inputData['startDate'] }}" @else value="{{ \Carbon\Carbon::now()->toDateString() }}" @endif required>
+                                <input type="date" class="form-control @error('startDate') is-invalid @enderror" id="startDate" name="startDate" @if (isset($inputData['startDate'])) value="{{ $inputData['startDate'] }}" @else value="{{ \Carbon\Carbon::now()->toDateString() }}" @endif required>
                             </div>
                             <div class="col-md-2 mb-2 date-block">
                                 <label for="endDate">End date</label>
-                                <input type="date" class="form-control" id="endDate" name="endDate" @if (isset($inputData['endDate'])) value="{{ $inputData['endDate'] }}" @else value="{{ \Carbon\Carbon::now()->toDateString() }}" @endif required>
+                                <input type="date" class="form-control @error('endDate') is-invalid @enderror" id="endDate" name="endDate" @if (isset($inputData['endDate'])) value="{{ $inputData['endDate'] }}" @else value="{{ \Carbon\Carbon::now()->toDateString() }}" @endif required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col-md-2 pt-2">
                                 <label for="type">Type</label>
-                                <select class="form-select text-center" id="type" name="type" required>
+                                <select class="form-select text-center @error('type') is-invalid @enderror" id="type" name="type" required>
                                     <option value="0" @if (isset($inputData['type']) && $inputData['type']==0) selected @endif>Any</option>
                                     <option value="standard" @if (isset($inputData['type']) && $inputData['type']=='standard' ) selected @endif>Standard</option>
                                     <option value="deluxe" @if (isset($inputData['type']) && $inputData['type']=='deluxe' ) selected @endif>Deluxe</option>
@@ -103,7 +102,7 @@
                             </div>
                             <div class="col-md-2 pt-2">
                                 <label for="status">Status</label>
-                                <select class="form-select text-center" id="status" name="status" required>
+                                <select class="form-select text-center @error('status') is-invalid @enderror" id="status" name="status" required>
                                     <option value="0" @if (isset($inputData['status']) && $inputData['status']==0) selected @endif>Any</option>
                                     <option value="free" @if (isset($inputData['status']) && $inputData['status']=='free' ) selected @endif>Available</option>
                                     <option value="busy" @if (isset($inputData['status']) && $inputData['status']=='occupied' ) selected @endif>Occupied</option>
@@ -112,14 +111,14 @@
                             </div>
                             <div class="col-md-2 pt-2">
                                 <label for="adultsBedsCount">Adults</label>
-                                <select class="form-select text-center" id="adultsBedsCount" name="adultsBedsCount" required>
+                                <select class="form-select text-center @error('adultsBedsCount') is-invalid @enderror" id="adultsBedsCount" name="adultsBedsCount" required>
                                     <option value="0" @if (isset($inputData['adultsBedsCount']) && $inputData['adultsBedsCount']==0) selected @endif>Any</option>
                                     @for ($i = 1; $i <= 10; $i++) <option value="{{ $i }}" @if (isset($inputData['adultsBedsCount']) && $inputData['adultsBedsCount']==$i) selected @endif>{{ $i }} person{{ $i > 1 ? 's' : '' }}</option> @endfor
                                 </select>
                             </div>
                             <div class="col-md-2 pt-2">
                                 <label for="childrenBedsCount">Child bed</label>
-                                <select class="form-select text-center" id="childrenBedsCount" name="childrenBedsCount" required>
+                                <select class="form-select text-center @error('childrenBedsCount') is-invalid @enderror" id="childrenBedsCount" name="childrenBedsCount" required>
                                     <option value="-1" @if (isset($inputData['childrenBedsCount']) && $inputData['childrenBedsCount']==-1) selected @endif>Any</option>
                                     <option value="0" @if (isset($inputData['childrenBedsCount']) && $inputData['childrenBedsCount']==0) selected @endif>NO CHILD BED</option>
                                     @for ($i = 1; $i <= 10; $i++) <option value="{{ $i }}" @if (isset($inputData['childrenBedsCount']) && $inputData['childrenBedsCount']==$i) selected @endif>{{ $i }} child bed{{ $i > 1 ? 's' : '' }}</option> @endfor
@@ -231,10 +230,10 @@
                                         @endrole
                                         @endif
                                         @role('admin')
-                                        <a href="{{ route('admin.rooms.show', $room->id) }}" class="btn btn-primary">Details</a>
+                                        <a href="{{ route('admin.rooms.show', $room->id) }}" class="btn btn-secondary">Details</a>
                                         @endrole
                                         @role('receptionist')
-                                        <a href="{{ route('receptionist.rooms.show', $room->id) }}" class="btn btn-primary">Details</a>
+                                        <a href="{{ route('receptionist.rooms.show', $room->id) }}" class="btn btn-secondary">Details</a>
                                         @endrole
                                         @role('admin')
                                         @if (!isset($room->deleted_at))

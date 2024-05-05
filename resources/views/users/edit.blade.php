@@ -1,10 +1,11 @@
 @extends('layouts.header')
+@section('title', 'Edit user data')
 @section('users_navbar_state', 'active')
 @section('additional_style')
 @endsection
 @section('content')
 @section('navbar_header_button')
-<span class="header-navbar ml-5 mt-1 mb-1 p-0">Edit user data</span>
+<span class="header-navbar">Edit user data</span>
 @endsection
 
 <div class="container-fluid">
@@ -31,24 +32,24 @@
                         <div class="col-md-8">
                             <div class="card no-shadow">
                                 <div class="card-body">
-                                    <h4 class="card-title pl-4"><b>User data</b></h4><br /><br />
+                                    <h4 class="card-title pl-4"><b>User information</b></h4><br /><br />
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="user_id" value="{{ $user->id }}">
                                     <div class="row mb-3 ml-2 mr-2">
                                         <div class="col-sm-6">
-                                            <label for="name" class="form-label">Name</label>
-                                            <input type="text" class="form-control text-center" id="name" name="name" value="{{ $user->name }}" required maxlength="255">
+                                            <label for="name" class="form-label">Name:</label>
+                                            <input type="text" class="form-control text-center @error('name') is-invalid @enderror" id="name" name="name" value="{{ $user->name }}" required maxlength="255">
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="email" class="form-label">Email</label>
-                                            <input type="email" class="form-control text-center" id="email" name="email" value="{{ $user->email }}" required maxlength="255">
+                                            <label for="email" class="form-label">Email:</label>
+                                            <input type="email" class="form-control text-center @error('email') is-invalid @enderror" id="email" name="email" value="{{ $user->email }}" required maxlength="255">
                                         </div>
                                     </div>
                                     <div class="row mb-4 ml-2 mr-2">
                                         <div class="col-sm-6">
-                                            <label for="role" class="form-label">Role</label>
-                                            <select class="form-select text-center" id="role" name="role">
+                                            <label for="role" class="form-label">Role:</label>
+                                            <select class="form-select text-center @error('role') is-invalid @enderror" id="role" name="role" required>
                                                 @foreach ($roles as $role)
                                                 <option value="{{ $role->name }}" {{ $user->roles[0]->name == $role->name ? 'selected' : '' }}>{{ ucfirst($role->name) }}</option>
                                                 @endforeach
@@ -61,7 +62,7 @@
                         <div class="col-md-4">
                             <div class="card no-shadow">
                                 <div class="card-body">
-                                    <h4 class="card-title pl-4"><b>User data</b></h4><br /><br />
+                                    <h4 class="card-title pl-4"><b>Actions</b></h4><br /><br />
                                     <div class="row mb-4 ml-2 mr-2">
                                         <div class="col-sm-12">
                                             <button type="submit" class="btn btn-success w-100">Save changes</button>
