@@ -148,7 +148,7 @@
                                     <div class="additional-amenities">
                                         <ul class="list-group">
                                             @endif
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <li class="list-group-item d-flex justify-content-between align-items-center rounded-0">
                                                 <span class="text-center">{{ $property->name }}</span>
                                                 <span class="badge badge-success big-badge"><i class="fas fa-check"></i></span>
                                             </li>

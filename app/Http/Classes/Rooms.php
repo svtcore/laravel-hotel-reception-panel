@@ -103,6 +103,9 @@ class Rooms
                         if (!empty($properties)) {
                             $subQuery->whereHas('room_properties', function ($doubleSubQuery) use ($properties) {
                                 $doubleSubQuery->whereIn('id', $properties);
+                            }, '=', count($properties));
+                            $subQuery->whereHas('room_properties', function ($doubleSubQuery) use ($properties) {
+                                $doubleSubQuery->whereIn('id', $properties);
                             });
                         }
                     })
@@ -141,6 +144,9 @@ class Rooms
                         if (!empty($properties)) {
                             $subQuery->whereHas('room_properties', function ($doubleSubQuery) use ($properties) {
                                 $doubleSubQuery->whereIn('id', $properties);
+                            }, '=', count($properties));
+                            $subQuery->whereHas('room_properties', function ($doubleSubQuery) use ($properties) {
+                                $doubleSubQuery->whereIn('id', $properties);
                             });
                         }
                     })
@@ -173,6 +179,9 @@ class Rooms
                 })
                     ->where(function ($subQuery) use ($properties) {
                         if (!empty($properties)) {
+                            $subQuery->whereHas('room_properties', function ($doubleSubQuery) use ($properties) {
+                                $doubleSubQuery->whereIn('id', $properties);
+                            }, '=', count($properties));
                             $subQuery->whereHas('room_properties', function ($doubleSubQuery) use ($properties) {
                                 $doubleSubQuery->whereIn('id', $properties);
                             });

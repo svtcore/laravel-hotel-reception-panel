@@ -23,61 +23,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        AdditionalService::factory()->create([
-            'name' => 'Wi-Fi',
-        ]);
-        AdditionalService::factory()->create([
-            'name' => 'Air Conditioning',
-        ]);
-        AdditionalService::factory()->create([
-            'name' => 'Television',
-        ]);
-        AdditionalService::factory()->create([
-            'name' => 'Hair Dryer',
-        ]);
-        AdditionalService::factory()->create([
-            'name' => 'Iron',
-        ]);
-        AdditionalService::factory()->create([
-            'name' => 'Safe',
-        ]);
-        AdditionalService::factory()->create([
-            'name' => 'Mini-bar',
-        ]);
-        AdditionalService::factory()->create([
-            'name' => 'Kettle',
-        ]);
-        AdditionalService::factory()->create([
-            'name' => 'Extra Pillows or Blankets',
-        ]);
-        AdditionalService::factory()->create([
-            'name' => 'Alarm Clock',
-        ]);
-        AdditionalService::factory()->create([
-            'name' => 'Mini Refrigerator',
-        ]);
-        AdditionalService::factory()->create([
-            'name' => 'Press Conference Service',
-        ]);
-        AdditionalService::factory()->create([
-            'name' => 'Welcome Fruits or Snacks',
-        ]);
-        AdditionalService::factory()->create([
-            'name' => 'Laundry and Dry Cleaning Services',
-        ]);
-        AdditionalService::factory()->create([
-            'name' => 'Massage Chair',
-        ]);
-        AdditionalService::factory()->create([
-            'name' => 'Courier Services',
-        ]);
-        AdditionalService::factory()->create([
-            'name' => 'Taxi or Airport Transfer Services',
-        ]);
-
-        RoomProperty::factory()->create([
-            'name' => 'View on the Street',
-        ]);
+        $services = ['Wi-Fi', 'Air Conditioning', 'TV', 'Hair Dryer', 'Iron', 'Safe', 'Mini-bar', 'Kettle', 'Extra Pillows or Blankets',
+                     'Alarm Clock', 'Mini Refrigerator', 'Press Conference Service', 'Welcome Fruits or Snacks', 'Laundry and Dry Cleaning Services',
+                    'Massage Chair', 'Courier Services', 'Taxi or Airport Transfer Services'];
+        foreach($services as $service){
+            AdditionalService::factory()->create([
+                'name' => $service,
+            ]);
+        } 
+        $properties = ['View on the Street', 'Single bed', 'Double bed', 'Queen-size bed', 'King-size bed', 
+                        'Wardrob', 'Desk', 'Separate shower/bath', 'TV', 'Wi-Fi', 'Hair Dryer', 'Safe','Breakfast', 'Dinner', 'Transfer'];
+        foreach($properties as $propery)
+        {
+            RoomProperty::factory()->create([
+                'name' => $propery,
+            ]);
+        }
         $roles_list = ['admin', 'receptionist'];
         //Generate roles
         Role::create(['name' => 'admin']);
