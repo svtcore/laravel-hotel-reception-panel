@@ -134,31 +134,44 @@ class Guests
     public function store($inputData): ?int
     {
         try {
-            $result = Guest::create([
-                'first_name' => $inputData['firstName'],
-                'last_name' => $inputData['lastName'],
-                'gender' => $inputData['gender'],
-                'phone_number' => $inputData['phoneNumber'] ?? null,
-                'dob' => $inputData['dob'],
-            ]);
-            $guest = Guest::findOrFail($result->id);
-            if (isset($inputData['countryCode'])) {
-                $guest->guest_document()->create([
-                    'document_country' => $inputData['countryCode'],
-                    'document_serial' => $inputData['documentSerial'],
-                    'document_number' => $inputData['documentNumber'],
-                    'document_expired' => $inputData['documentExpired'],
-                    'document_issued_by' => $inputData['documentIssuedBy'],
-                    'document_issued_date' => $inputData['documentIssuedDate'],
+            //check if exist guest with fn ln dob
+            $guest_ex = Guest::where('first_name', $inputData['firstName'])
+                ->where('last_name', $inputData['lastName'])
+                ->where('dob', $inputData['dob'])->first();
+            if (!isset($guest_ex->id)) {
+                $result = Guest::create([
+                    'first_name' => $inputData['firstName'],
+                    'last_name' => $inputData['lastName'],
+                    'gender' => $inputData['gender'],
+                    'phone_number' => $inputData['phoneNumber'] ?? null,
+                    'dob' => $inputData['dob'],
                 ]);
+                $guest = Guest::findOrFail($result->id);
+            } else {
+                $guest = Guest::findOrFail($guest_ex->id);
+            }
+            if (isset($inputData['countryCode'])) {
+                $guest->guest_document()->updateOrCreate(
+                    ['guest_id' => $guest->id],
+                    [
+                        'document_country' => $inputData['countryCode'],
+                        'document_serial' => $inputData['documentSerial'],
+                        'document_number' => $inputData['documentNumber'],
+                        'document_expired' => $inputData['documentExpired'],
+                        'document_issued_by' => $inputData['documentIssuedBy'],
+                        'document_issued_date' => $inputData['documentIssuedDate'],
+                    ]
+                );
             }
             if (isset($inputData['selectedOrderId']) && $inputData['selectedOrderId'] != 0) {
                 $booking = Booking::findOrFail($inputData['selectedOrderId']);
                 $guest->bookings()->attach($booking);
             }
-            if ($result) {
+            if (isset($result)) {
                 return $result->id;
-            } else return null;
+            } elseif (isset($guest_ex)){
+                return $guest_ex->id;
+            }else return null;
         } catch (Exception $e) {
             return null;
         }
@@ -273,7 +286,7 @@ class Guests
             return null;
         }
     }
-    
+
     /**
      * Submits a relation between a guest and a booking.
      *

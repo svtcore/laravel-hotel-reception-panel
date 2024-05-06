@@ -18,6 +18,7 @@ export default defineConfig({
                 'resources/js/booking/calculate_price.js',
                 'resources/js/rooms/index.js',
                 'resources/js/rooms/show.js',
+                'resources/js/rooms/search.js',
                 'resources/js/guests/index.js',
                 'resources/js/guests/edit.js',
                 'resources/js/guests/search.js',

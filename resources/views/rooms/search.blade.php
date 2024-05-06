@@ -156,7 +156,7 @@
                 </div>
                 <div id="main-container">
                     <!-- Main table container -->
-                    <table id="free-rooms-table" class="table table-bordered">
+                    <table id="search-results-rooms-table" class="table table-bordered">
                         <thead>
                             <tr class="text-center">
                                 <th class="text-center">Room №</th>
@@ -263,5 +263,5 @@
 <!-- Main container end -->
 @endsection
 @section('custom-scripts')
-@vite(['resources/js/rooms/index.js'])
+@vite(['resources/js/rooms/search.js'])
 @endsection

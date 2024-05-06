@@ -169,8 +169,14 @@
     "src": "resources/js/rooms/properties/index.js",
     "isEntry": true
   },
+  "resources/js/rooms/search.js": {
+    "file": "assets/search--D4aeNsD.js",
+    "name": "search",
+    "src": "resources/js/rooms/search.js",
+    "isEntry": true
+  },
   "resources/js/rooms/show.js": {
-    "file": "assets/show-D8Yva4ka.js",
+    "file": "assets/show-B7O36WEx.js",
     "name": "show",
     "src": "resources/js/rooms/show.js",
     "isEntry": true

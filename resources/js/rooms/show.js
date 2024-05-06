@@ -1,6 +1,6 @@
 
 $(document).ready(function () {
-    $("#guests_table").DataTable({
+    $("#booking_table").DataTable({
         "responsive": true,
         "lengthChange": false,
         "autoWidth": false,
@@ -9,7 +9,7 @@ $(document).ready(function () {
         "ordering": true,
         "info": false,
         "order": [
-            [3, 'desc']
+            [2, 'asc']
         ]
     });
 });

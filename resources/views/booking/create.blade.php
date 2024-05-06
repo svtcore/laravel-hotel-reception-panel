@@ -158,7 +158,7 @@
                                                 <div class="form-check mt-2">
                                                     <input class="form-check-input additionalServices" type="checkbox" data-price="{{ $service->price }}" value="{{ $service->id }}" id="service{{ $service->id }}" name="additionalServices[]">
                                                     <label class="form-check-label" for="service{{ $service->id }}">
-                                                        {{ strtoupper($service->name) }} [ + {{ strtoupper($service->price) }}]
+                                                        {{ strtoupper($service->name) }} [<b>+{{ strtoupper($service->price)}}</b>]
                                                     </label>
                                                 </div>
                                             </div>

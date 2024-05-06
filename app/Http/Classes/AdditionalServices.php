@@ -18,7 +18,7 @@ class AdditionalServices
     public function getAll(): ?iterable
     {
         try {
-            $services = AdditionalService::all();
+            $services = AdditionalService::orderBy('name')->get();
             if ($services && $services->count() > 0) {
                 return $services;
             } else return null;
@@ -35,7 +35,7 @@ class AdditionalServices
     public function getAvailable(): ?iterable
     {
         try {
-            $services = AdditionalService::where('available', 1)->get();
+            $services = AdditionalService::where('available', 1)->orderBy('name')->get();
             if ($services && $services->count() > 0) {
                 return $services;
             } else return null;

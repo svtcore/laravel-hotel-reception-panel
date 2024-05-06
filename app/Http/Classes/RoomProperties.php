@@ -16,7 +16,7 @@ class RoomProperties
     public function getAll(): ?iterable
     {
         try {
-            $room_properties = RoomProperty::all();
+            $room_properties = RoomProperty::orderBy('name')->get();
             if ($room_properties->count() > 0) {
                 return $room_properties;
             } else {
@@ -29,22 +29,21 @@ class RoomProperties
 
     public function store($inputData): bool
     {
-        try{
+        try {
             $room_properties = RoomProperty::create([
                 'name' => $inputData['name'],
                 'available' => $inputData['status'],
             ]);
             if ($room_properties) return true;
             else return false;
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             return false;
         }
     }
 
     public function update($inputData, int $id): bool
     {
-        try{
+        try {
             $room_properties = RoomProperty::findOrFail($id);
             $result = $room_properties->update([
                 'name' => $inputData['name'],
@@ -52,34 +51,31 @@ class RoomProperties
             ]);
             if ($result) return true;
             else return false;
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             return false;
         }
     }
 
     public function destory(int $id): bool
     {
-        try{
+        try {
             $room_properties = RoomProperty::findOrFail($id);
             $room_properties->rooms()->detach();
             $room_properties->delete();
             return true;
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             return false;
         }
     }
 
     public function getById(int $id): ?object
     {
-        try{
+        try {
             $room_properties = RoomProperty::where('id', $id)->first();
-            if ($room_properties){
+            if ($room_properties) {
                 return $room_properties;
-            }else return null;
-        }
-        catch(Exception $e){
+            } else return null;
+        } catch (Exception $e) {
             return null;
         }
     }

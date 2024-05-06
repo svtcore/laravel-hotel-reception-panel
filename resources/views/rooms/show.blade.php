@@ -174,7 +174,7 @@
                         <div class="tab-content" id="myTabContent">
                             <!-- First Tab: Booking History Table -->
                             <div class="tab-pane fade show active" id="booking" role="tabpanel" aria-labelledby="booking-tab">
-                                <table class="table" id="guests_table">
+                                <table class="table" id="booking_table">
                                     <thead>
                                         <tr>
                                             <th>Guest Name</th>
