@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('room_id');
             $table->unsignedInteger('adults_count')->default(1);
             $table->unsignedInteger('children_count')->default(0);
-            $table->unsignedFloat('total_cost')->default(0);
+            $table->float('total_cost')->default(0)->unsigned();
             $table->enum('payment_type', ['credit_card', 'cash', 'discount']);
             $table->dateTime('check_in_date');
             $table->dateTime('check_out_date');

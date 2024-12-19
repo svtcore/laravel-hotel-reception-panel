@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedInteger('total_rooms');
             $table->unsignedInteger('adults_beds_count');
             $table->unsignedInteger('children_beds_count');
-            $table->unsignedFloat('price');
+            $table->float('price')->unsigned();
             $table->enum('status', ['occupied', 'available', 'under_maintenance']);
             $table->timestamps();
             $table->softDeletes();

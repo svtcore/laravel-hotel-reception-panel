@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('additional_services', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->unsignedFloat('price');
+            $table->float('price')->unsigned();
             $table->boolean('available')->default(1);
             $table->timestamps();
             $table->softDeletes();
