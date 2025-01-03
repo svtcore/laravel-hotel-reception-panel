@@ -4,7 +4,7 @@
 @section('additional_style')
 @endsection
 @section('navbar_header_button')
-<a href="{{ route('admin.users.create') }}" class="add-new-button">Add new user</a>
+<a href="{{ route('admin.users.create') }}" class="add-new-button">Add user</a>
 @endsection
 
 @section('content')
@@ -12,7 +12,6 @@
     <div class="content-container main-container">
         <div class="content-header">
             <div class="container-fluid mt-4">
-                <!-- Session Messages Handling -->
                 @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
@@ -27,7 +26,6 @@
                     </ul>
                 </div>
                 @endif
-                <!-- Users Table -->
                 <div class="mt-4 text-center">
                     <h4><b>Users</b></h4>
                 </div>
@@ -43,32 +41,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Iterate through users -->
                             @foreach ($users as $user)
                             <tr>
-                                <!-- Display user data -->
                                 <td class="text-center">{{ $user->name }}</td>
                                 <td class="text-center">{{ $user->email }}</td>
                                 <td class="text-center">{{ ucfirst($user->roles[0]->name) }}</td>
-                                <!-- Form to reset password -->
                                 <form action="{{ route('admin.users.reset_password') }}" method="POST">
                                     @csrf
-                                    <input type="hidden" value="{{ $user->email }}" id="email" name="email"/>
+                                    <input type="hidden" value="{{ $user->email }}" id="email" name="email" />
                                     <td class="text-center"><button type="submit" class="btn btn-primary">Reset password</button></td>
                                 </form>
-                                <!-- Form for user actions -->
                                 <td class="text-center">
                                     <form action="{{ route('admin.users.delete', $user->id) }}" method="POST">
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
-                                            <!-- Edit user button -->
                                             <a href="{{ route('admin.users.edit', $user->id) }}" type="button" class="btn btn-warning">
-                                                <i class="fas fa-pen"></i>
+                                                <i class="bi bi-pencil"></i>
                                             </a>
                                             @csrf
                                             @method('DELETE')
-                                            <!-- Delete user button -->
                                             <button type="submit" class="btn btn-danger">
-                                                <i class="fas fa-trash"></i>
+                                                <i class="bi bi-trash3"></i>
                                             </button>
                                         </div>
                                     </form>

@@ -89,3 +89,20 @@ body {
 .search-results li:hover {
     background-color: #e9ecef;
 }
+
+#header_booking{
+    color:white;
+    font-weight: bold;
+    margin-left:7em;
+    font-size:20px;
+    margin-top: 2%;
+    margin-bottom:1%;
+}
+#header_booking_show, #header_booking_edit, #header_booking_search, #header_booking_new{
+    color:white;
+    font-weight: bold;
+    margin-left:5em;
+    font-size:20px;
+    margin-top: 2%;
+    margin-bottom:1%;
+}

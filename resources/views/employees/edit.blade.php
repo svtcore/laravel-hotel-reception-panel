@@ -2,15 +2,23 @@
 @section('title', 'Edit employee data')
 @section('employees_navbar_state', 'active')
 @section('additional_style')
-@vite(['resources/css/guests-style.css'])
+<style>
+    #header_employees_edit{
+    color:white;
+    font-weight: bold;
+    margin-left:5em;
+    font-size:20px;
+    margin-top: 2%;
+    margin-bottom:1%;
+}
+</style>
 @endsection
 @section('content')
 @section('navbar_header_button')
-<span class="header-navbar">Edit employee data</span>
+<span id="header_employees_edit">Edit employee</span>
 @endsection
 <div class="container-fluid">
     <div class="content-container main-container">
-        <!-- Main content -->
         <section class="content">
             <div class="container-fluid mt-4">
                 @if (session('success'))
@@ -32,7 +40,6 @@
                         <div class="col-md-6">
                             <div class="card no-shadow">
                                 <div class="card-body">
-                                    <!-- Employee data -->
                                     <h4 class="card-title pl-4"><b>Employee information</b></h4><br /><br />
                                     @csrf
                                     @method('PUT')
@@ -64,7 +71,7 @@
                                     </div>
                                     <div class="row justify-content-center">
                                         <div class="col-sm-12">
-                                            <button type="submit" class="btn btn-primary w-100">Save changes</button>
+                                            <button type="submit" class="btn btn-success w-100">Save changes</button>
                                         </div>
                                     </div>
                                 </div>
@@ -73,7 +80,6 @@
                         <div class="col-md-6">
                             <div class="card no-shadow">
                                 <div class="card-body">
-                                    <!-- Details -->
                                     <h4 class="card-title pl-4"><b>Details</b></h4><br /><br />
                                     <div class="row ml-2 mr-2 mb-4">
                                         <div class="col-sm-12">
@@ -96,6 +102,6 @@
         </section>
     </div>
 </div>
-@section('custom-scripts')
 @endsection
+@section('custom-scripts')
 @endsection

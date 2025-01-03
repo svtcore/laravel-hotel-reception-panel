@@ -88,106 +88,102 @@ class Rooms
                 $startDate = $startDate . " 00:00:00";
                 $endDate = $endDate . " 23:59:59";
 
-                $rooms = Room::with('bookings')
-                    ->whereIn('status', ['occupied', 'available'])
-                    ->where(function ($query) use ($roomType, $roomAdult, $roomChildren, $startDate, $endDate) {
-                        if ($roomType != "0")
+                //search free rooms which occupied but will free inside in specific date range
+                $occupiedRooms = Room::with('bookings')
+                    ->whereIn('status', ['occupied'])
+                    ->where(function ($query) use ($roomType, $roomAdult, $roomChildren) {
+                        if ($roomType != "0") {
                             $query->where('type', $roomType);
-                        if ($roomAdult != "0")
+                        }
+                        if ($roomAdult != "0") {
                             $query->where('adults_beds_count', $roomAdult);
+                        }
                         if ($roomChildren != "-1") {
                             $query->where('children_beds_count', $roomChildren);
                         }
                     })
-                    ->where(function ($subQuery) use ($properties) {
-                        if (!empty($properties)) {
-                            $subQuery->whereHas('room_properties', function ($doubleSubQuery) use ($properties) {
-                                $doubleSubQuery->whereIn('id', $properties);
-                            }, '=', count($properties));
-                            $subQuery->whereHas('room_properties', function ($doubleSubQuery) use ($properties) {
-                                $doubleSubQuery->whereIn('id', $properties);
-                            });
-                        }
+                    ->when(!empty($properties), function ($query) use ($properties) {
+                        $query->whereHas('room_properties', function ($subQuery) use ($properties) {
+                            $subQuery->whereIn('id', $properties);
+                        });
                     })
-                    ->whereDoesntHave('bookings', function ($query) use ($startDate, $endDate) {
-                        $query->where(function ($subQuery) use ($startDate, $endDate) {
-                            $subQuery->where(function ($dateQuery) use ($startDate, $endDate) {
+                    ->where(function ($query) use ($startDate, $endDate) {
+                        if (!empty($startDate) && !empty($endDate)) {
+                            $query->whereHas('bookings', function ($dateQuery) use ($startDate, $endDate) {
                                 $dateQuery->where('check_in_date', '>=', $startDate)
-                                    ->where('check_in_date', '<=', $endDate)
-                                    ->whereIn('status', ['reserved', 'active', 'expired']);
-                            })->orWhere(function ($dateQuery) use ($startDate, $endDate) {
-                                $dateQuery->where('check_out_date', '>', $startDate)
                                     ->where('check_out_date', '<=', $endDate)
                                     ->whereIn('status', ['reserved', 'active', 'expired']);
-                            })->orWhere(function ($dateQuery) use ($startDate, $endDate) {
-                                $dateQuery->where('check_in_date', '<', $startDate)
-                                    ->where('check_out_date', '>', $endDate)
-                                    ->whereIn('status', ['reserved', 'active', 'expired']);
                             });
+                        }
+                    });
+
+                $availableRooms = Room::whereIn('status', ['available'])
+                    ->where(function ($query) use ($roomType, $roomAdult, $roomChildren) {
+                        if ($roomType != "0") {
+                            $query->where('type', $roomType);
+                        }
+                        if ($roomAdult != "0") {
+                            $query->where('adults_beds_count', $roomAdult);
+                        }
+                        if ($roomChildren != "-1") {
+                            $query->where('children_beds_count', $roomChildren);
+                        }
+                    })
+                    ->when(!empty($properties), function ($query) use ($properties) {
+                        $query->whereHas('room_properties', function ($subQuery) use ($properties) {
+                            $subQuery->whereIn('id', $properties);
                         });
-                    })->get();
+                    })
+                    ->whereDoesntHave('bookings');
+
+                $rooms = $occupiedRooms->union($availableRooms)->get();
             } elseif ($roomStatus == "occupied") {
                 $startDate = $startDate . " 00:00:00";
                 $endDate = $endDate . " 23:59:59";
-                $rooms = Room::with('bookings')->where(function ($query) use ($roomType, $roomAdult, $roomChildren, $roomStatus) {
-                    if ($roomType != "0")
-                        $query->where('type', $roomType);
-                    if ($roomAdult != "0")
-                        $query->where('adults_beds_count', $roomAdult);
-                    if ($roomChildren != "-1") {
-                        $query->where('children_beds_count', $roomChildren);
-                    }
-                    if ($roomStatus != "0")
-                        $query->where('status', $roomStatus);
-                })
-                    ->where(function ($subQuery) use ($properties) {
-                        if (!empty($properties)) {
-                            $subQuery->whereHas('room_properties', function ($doubleSubQuery) use ($properties) {
-                                $doubleSubQuery->whereIn('id', $properties);
-                            }, '=', count($properties));
-                            $subQuery->whereHas('room_properties', function ($doubleSubQuery) use ($properties) {
-                                $doubleSubQuery->whereIn('id', $properties);
-                            });
+
+                $rooms = Room::with('bookings')
+                    ->whereIn('status', ['occupied'])
+                    ->where(function ($query) use ($roomType, $roomAdult, $roomChildren) {
+                        if ($roomType != "0") {
+                            $query->where('type', $roomType);
+                        }
+                        if ($roomAdult != "0") {
+                            $query->where('adults_beds_count', $roomAdult);
+                        }
+                        if ($roomChildren != "-1") {
+                            $query->where('children_beds_count', $roomChildren);
                         }
                     })
-                    ->whereDoesntHave('bookings', function ($query) use ($startDate, $endDate) {
-                        $query->where(function ($subQuery) use ($startDate, $endDate) {
-                            $subQuery->where(function ($dateQuery) use ($startDate, $endDate) {
-                                $dateQuery->where('check_in_date', '>=', $startDate)
-                                    ->where('check_in_date', '<=', $endDate);
-                            })->orWhere(function ($dateQuery) use ($startDate, $endDate) {
-                                $dateQuery->where('check_out_date', '>', $startDate)
-                                    ->where('check_out_date', '<=', $endDate);
-                            })->orWhere(function ($dateQuery) use ($startDate, $endDate) {
-                                $dateQuery->where('check_in_date', '<', $startDate)
-                                    ->where('check_out_date', '>', $endDate);
-                            });
+                    ->when(!empty($properties), function ($query) use ($properties) {
+                        $query->whereHas('room_properties', function ($subQuery) use ($properties) {
+                            $subQuery->whereIn('id', $properties);
                         });
                     })
-                    ->get();
+                    ->where(function ($query) use ($startDate, $endDate) {
+                        if (!empty($startDate) && !empty($endDate)) {
+                            $query->whereHas('bookings', function ($dateQuery) use ($startDate, $endDate) {
+                                $dateQuery->where('check_in_date', '>=', $startDate)
+                                    ->where('check_out_date', '<=', $endDate);
+                            });
+                        }
+                    })->get();
             } else if ($roomStatus != "available" || $roomStatus != "occupied") {
                 $rooms = Room::where(function ($query) use ($roomType, $roomAdult, $roomChildren, $roomStatus) {
                     if ($roomType != "0")
                         $query->where('type', $roomType);
                     if ($roomAdult != "0")
                         $query->where('adults_beds_count', $roomAdult);
-                    if ($roomChildren != "-1") {
+                    if ($roomChildren != "-1")
                         $query->where('children_beds_count', $roomChildren);
-                    }
                     if ($roomStatus != "0")
                         $query->where('status', $roomStatus);
                 })
-                    ->where(function ($subQuery) use ($properties) {
-                        if (!empty($properties)) {
-                            $subQuery->whereHas('room_properties', function ($doubleSubQuery) use ($properties) {
-                                $doubleSubQuery->whereIn('id', $properties);
-                            }, '=', count($properties));
-                            $subQuery->whereHas('room_properties', function ($doubleSubQuery) use ($properties) {
-                                $doubleSubQuery->whereIn('id', $properties);
-                            });
-                        }
-                    })->get();
-                //for maintence no date required
+                ->when(!empty($properties), function ($query) use ($properties) {
+                    $query->whereHas('room_properties', function ($subQuery) use ($properties) {
+                        $subQuery->whereIn('id', $properties);
+                    });
+                })->get();
+                //for maintenence no date required
             }
             if ($rooms->count() > 0) {
                 return $rooms;

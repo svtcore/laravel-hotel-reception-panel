@@ -2,15 +2,24 @@
 @section('title', 'Edit user data')
 @section('users_navbar_state', 'active')
 @section('additional_style')
+<style>
+    #header_users_edit{
+    color:white;
+    font-weight: bold;
+    margin-left:5em;
+    font-size:20px;
+    margin-top: 2%;
+    margin-bottom:1%;
+}
+</style>
 @endsection
 @section('content')
 @section('navbar_header_button')
-<span class="header-navbar">Edit user data</span>
+<span id="header_users_edit">Edit user</span>
 @endsection
 
 <div class="container-fluid">
     <div class="content-container main-container">
-        <!-- Main content -->
         <section class="content">
             <div class="container-fluid mt-4">
                 @if (session('success'))
@@ -91,7 +100,6 @@
         </section>
     </div>
 </div>
-@section('custom-scripts')
 @endsection
-
+@section('custom-scripts')
 @endsection

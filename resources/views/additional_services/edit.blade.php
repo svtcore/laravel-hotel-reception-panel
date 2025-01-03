@@ -2,74 +2,88 @@
 @section('title', 'Edit service')
 @section('services_navbar_state', 'active')
 @section('additional_style')
+<style>
+    #header_edit_services{
+    color:white;
+    font-weight: bold;
+    margin-left:8em;
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+</style>
+@endsection
+
+@section('navbar_header_button')
+<span id="header_edit_services">Edit service</span>
 @endsection
 
 @section('content')
-@section('navbar_header_button')
-<span class="header-navbar">Edit service</span>
-@endsection
 <div class="container-fluid">
     <div class="content-container main-container">
-        <!-- Main content -->
         <section class="content">
-            <div class="container-fluid">
-                <!-- Session Messages Handling -->
+            <div class="container-fluid mt-4">
                 @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
+                <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
                 @if ($errors->any())
-                <div class="custom-error-message">
-                    <ul class="error-list">
+                <div class="alert alert-danger">
+                    <ul>
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach
                     </ul>
                 </div>
                 @endif
-                <form id="editForm" class="" action="{{ route('admin.services.update', $service->id) }}" method="POST">
-                    <div class="row justify-content-center ml-5 mr-5">
+
+                <form action="{{ route('admin.services.update', $service->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="row justify-content-center">
                         <div class="col-md-8">
-                            <div class="card no-shadow">
+                            <div class="card shadow-sm">
                                 <div class="card-body">
-                                    <h4 class="card-title pl-4"><b>Service information</b></h4><br /><br />
-                                    @csrf
-                                    @method('PUT')
-                                    <!-- Input fields for name and email -->
-                                    <div class="row mb-3 ml-2 mr-2">
-                                        <div class="col-sm-6">
-                                            <label for="name" class="form-label">Name:</label>
-                                            <input type="text" class="form-control text-center @error('name') is-invalid @enderror" id="name" name="name" required maxlength="255" value="{{ $service->name }}" >
+                                    <h4 class="card-title text-center"><b>Service Information</b></h4>
+                                    <br /><br />
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="name" class="form-label">Name</label>
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" 
+                                                   id="name" name="name" 
+                                                   value="{{ $service->name }}" 
+                                                   maxlength="255" required>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <label for="price" class="form-label">Price:</label>
-                                            <input type="number" class="form-control text-center @error('price') is-invalid @enderror" id="price" name="price" required maxlength="10" min="0" value="{{ $service->price }}">
+                                        <div class="col-md-6">
+                                            <label for="price" class="form-label">Price</label>
+                                            <input type="number" class="form-control @error('price') is-invalid @enderror" 
+                                                   id="price" name="price" 
+                                                   value="{{ $service->price }}" 
+                                                   min="0" maxlength="10" required>
                                         </div>
                                     </div>
-                                    <!-- Select field for role -->
-                                    <div class="row mb-4 ml-2 mr-2">
-                                        <div class="col-sm-6">
-                                            <label for="status" class="form-label">Available:</label>
-                                            <select class="form-select text-center @error('status') is-invalid @enderror" id="status" name="status">
-                                                <option value="" @if ($service->available != 1 && $service->available != 0) selected @endif > -- Select availability --</option>
-                                                <option value="1" @if ($service->available == 1) selected @endif >Yes</option>
-                                                <option value="0" @if ($service->available == 0) selected @endif >No</option>
+                                    <div class="row g-3 mt-2">
+                                        <div class="col-md-6">
+                                            <label for="status" class="form-label">Available</label>
+                                            <select class="form-select @error('status') is-invalid @enderror" 
+                                                    id="status" name="status" required>
+                                                <option value="" @if ($service->available != 1 && $service->available != 0) selected @endif>
+                                                    -- Select Availability --
+                                                </option>
+                                                <option value="1" @if ($service->available == 1) selected @endif>Yes</option>
+                                                <option value="0" @if ($service->available == 0) selected @endif>No</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- Save changes button -->
+
                         <div class="col-md-4">
-                            <div class="card no-shadow">
+                            <div class="card shadow-sm">
                                 <div class="card-body">
-                                    <h4 class="card-title pl-4"><b>Action</b></h4><br /><br />
-                                    <div class="row mb-4 ml-2 mr-2">
-                                        <div class="col-sm-12">
-                                            <button type="submit" class="btn btn-success w-100">Save changes</button>
-                                        </div>
+                                    <h4 class="card-title text-center"><b>Action</b></h4>
+                                    <div>
+                                        <button type="submit" class="btn btn-success w-100 mb-4 mt-4">Save Changes</button>
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +94,7 @@
         </section>
     </div>
 </div>
-@section('custom-scripts')
 @endsection
 
+@section('custom-scripts')
 @endsection

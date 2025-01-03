@@ -81,3 +81,11 @@ body {
 .highlight {
     background-color: #f4f4f4 !important;
 }
+#header_edit_room_data, #header_add_room_data{
+    color:white;
+    font-weight: bold;
+    margin-left:5em;
+    font-size: 20px;
+    margin-top: 2%;
+    margin-bottom: 1%;
+}

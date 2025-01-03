@@ -5,25 +5,18 @@
 @vite(['resources/css/guests-style.css'])
 @endsection
 @section('navbar_header_button')
-@role('admin')
-<a href="{{ route('admin.guests.create') }}" class="add-new-button">Add new guest</a>
-@endrole
-@role('receptionist')
-<a href="{{ route('receptionist.guests.create') }}" class="add-new-button">Add new guest</a>
-@endrole
+<a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.guests.create' : (auth()->user()->hasRole('receptionist') ? 'receptionist.guests.create' : '#')) }}" class="add-new-button">Add guest</a>
 @endsection
 @section('content')
 <div class="container-fluid">
     <div class="content-container main-container">
         <div class="content-header">
             <div class="container-fluid">
-                <!-- Display success message if any -->
                 @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
                 @endif
-                <!-- Display error messages if any -->
                 @if ($errors->any())
                 <div class="custom-error-message">
                     <ul class="error-list">
@@ -35,14 +28,7 @@
                 @endif
                 <div class="content-container text-center">
                     <h4 class="font-weight-bold">Search form</h4>
-                    <!-- Form for searching guests by admin -->
-                    @role('admin')
-                    <form id="searchForm" method="POST" action="{{ route('admin.guests.search') }}">
-                    @endrole
-                    <!-- Form for searching guests by receptionist -->
-                    @role('receptionist')
-                    <form id="searchForm" method="POST" action="{{ route('receptionist.guests.search') }}">
-                    @endrole
+                    <form id="searchForm" method="POST" action="{{ route(auth()->user()->hasRole('admin') ? 'admin.guests.search' : 'receptionist.guests.search') }}">
                         @csrf
                         <div class="row mt-5">
                             <div class="col-md-4">
@@ -61,18 +47,16 @@
                             </div>
                             <div class="col-md-2"></div>
                         </div>
-                        <div class="form-row">
+                        <div class="row">
                             <div class="col-md-4 pt-2">
-                                <label for="guestName">Guest name</label>
-                                <!-- Input for guest name -->
+                                <label for="guestName"></label>
                                 <input type="text" class="form-control @error('guestName') is-invalid @enderror" id="guestName" name="guestName" placeholder="Full name" required minlength="2" maxlength="255" @isset($inputData['guestName']) value="{{ $inputData['guestName'] }}" @endisset">
                                 <div class="invalid-feedback">
                                     Please provide a valid guest name.
                                 </div>
                             </div>
                             <div class="col-md-3 pt-2">
-                                <label for="phoneNumber">Phone number</label>
-                                <!-- Input for phone number -->
+                                <label for="phoneNumber"></label>
                                 <input type="text" class="form-control @error('phoneNumber') is-invalid @enderror" id="phoneNumber" name="phoneNumber" placeholder="Phone number" disabled required minlength="10" maxlength="15" @isset($inputData['phoneNumber']) value="{{ $inputData['phoneNumber'] }}" @endisset>
                                 <div class="invalid-feedback">
                                     Please provide a valid phone number.
@@ -80,7 +64,6 @@
                             </div>
                             <div class="col-md-5 pt-2 mt-2">
                                 <label for="searchButton"></label>
-                                <!-- Submit button for searching -->
                                 <button type="submit" class="btn btn-primary w-100">Search</button>
                             </div>
                         </div>
@@ -101,48 +84,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Loop through guests data and display them in table -->
                             @foreach ($guests as $guest)
                             <tr>
                                 <td class="text-center">{{ $guest->first_name }} {{ $guest->last_name }}</td>
                                 <td class="text-center">
-                                    <!-- Display gender -->
                                     @if ($guest->gender == "M") Male
                                     @elseif ($guest->gender == "F") Female
                                     @else Other
                                     @endif
                                 </td>
-                                <!-- Display date of birth -->
                                 <td class="text-center">{{ \Carbon\Carbon::parse($guest->dob)->format('d-m-Y') }}</td>
                                 <td class="text-center">{{ $guest->phone_number }}</td>
                                 <td class="text-center">
-                                    <!-- Action buttons for admin -->
-                                    @role('admin')
-                                    <form action="{{ route('admin.guests.delete', $guest->id) }}" method="POST">
+                                    <form action="{{ route(auth()->user()->hasRole('admin') ? 'admin.guests.delete' : 'receptionist.guests.delete', $guest->id) }}" method="POST">
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
-                                            <!-- Button for viewing guest details -->
-                                            <a href="{{ route('admin.guests.show', $guest->id) }}" class="btn btn-secondary">Details</a>
-                                            <!-- Button for editing guest details -->
-                                            <a href="{{ route('admin.guests.edit', $guest->id) }}" type="button" class="btn btn-warning">
-                                                <i class="fas fa-pen"></i>
+                                            <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.guests.show' : 'receptionist.guests.show', $guest->id) }}" class="btn btn-secondary">Details</a>
+                                            <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.guests.edit' : 'receptionist.guests.edit', $guest->id) }}" type="button" class="btn btn-warning">
+                                                <i class="bi bi-pencil"></i>
                                             </a>
-                                    @endrole
-                                    <!-- Action buttons for receptionist -->
-                                    @role('receptionist')
-                                    <form action="{{ route('receptionist.guests.delete', $guest->id) }}" method="POST">
-                                        <div class="btn-group mr-2" role="group" aria-label="First group">
-                                            <!-- Button for viewing guest details by receptionist -->
-                                            <a href="{{ route('receptionist.guests.show', $guest->id) }}" class="btn btn-secondary">Details</a>
-                                            <!-- Button for editing guest details by receptionist -->
-                                            <a href="{{ route('receptionist.guests.edit', $guest->id) }}" type="button" class="btn btn-warning">
-                                                <i class="fas fa-pen"></i>
-                                            </a>
-                                    @endrole
                                             @csrf
                                             @method('DELETE')
-                                            <!-- Button for deleting guest -->
                                             <button type="submit" class="btn btn-danger">
-                                                <i class="fas fa-trash"></i>
+                                                <i class="bi bi-trash3"></i>
                                             </button>
                                         </div>
                                     </form>
@@ -156,7 +119,7 @@
         </div>
     </div>
 </div>
+@endsection
 @section('custom-scripts')
 @vite(['resources/js/guests/index.js'])
-@endsection
 @endsection

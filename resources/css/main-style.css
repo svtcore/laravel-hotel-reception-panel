@@ -52,7 +52,7 @@ body {
     text-align: center;
     color: #fff;
     padding: 5px;
-    font-size: 18px;
+    font-size: 20px;
     display: block;
     font-weight: bold;
 }
@@ -107,7 +107,7 @@ a {
     box-shadow: none !important;
 }
 .stat-header{
-    background-color: #3498DB;
+    color: grey;
 }
 .main-container{
     margin-top:70px;
@@ -132,4 +132,12 @@ a {
 
 .custom-error-message ul.error-list li {
     color: #721c24;
+}
+.total-income, .today-income, .total-bookings, .today-bookings {
+    padding-left: 1em;
+    padding-bottom: 1em;
+}
+.nav-head-obj
+{
+    margin-left:45%;
 }

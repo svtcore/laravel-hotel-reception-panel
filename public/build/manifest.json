@@ -31,28 +31,39 @@
     "file": "assets/bootstrap-icons-BtvjY1KL.woff2",
     "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
   },
+  "resources/admin-lte-4.0/css/adminlte.css": {
+    "file": "assets/adminlte-DPwfPJjn.css",
+    "src": "resources/admin-lte-4.0/css/adminlte.css",
+    "isEntry": true
+  },
+  "resources/admin-lte-4.0/js/adminlte.js": {
+    "file": "assets/adminlte-CQi8Pxki.js",
+    "name": "adminlte",
+    "src": "resources/admin-lte-4.0/js/adminlte.js",
+    "isEntry": true
+  },
   "resources/css/bookings-style.css": {
-    "file": "assets/bookings-style-BNs7AKo2.css",
+    "file": "assets/bookings-style-C5ieY5bK.css",
     "src": "resources/css/bookings-style.css",
     "isEntry": true
   },
   "resources/css/forms.css": {
-    "file": "assets/forms-CAwKEmSL.css",
+    "file": "assets/forms-B6ztd57Y.css",
     "src": "resources/css/forms.css",
     "isEntry": true
   },
   "resources/css/guests-style.css": {
-    "file": "assets/guests-style-d7vovrA4.css",
+    "file": "assets/guests-style-0FFAZSUO.css",
     "src": "resources/css/guests-style.css",
     "isEntry": true
   },
   "resources/css/main-style.css": {
-    "file": "assets/main-style-Bnmu9I-h.css",
+    "file": "assets/main-style--TePp6ak.css",
     "src": "resources/css/main-style.css",
     "isEntry": true
   },
   "resources/css/rooms-style.css": {
-    "file": "assets/rooms-style-Vnp1jpIm.css",
+    "file": "assets/rooms-style-BLzXP56i.css",
     "src": "resources/css/rooms-style.css",
     "isEntry": true
   },
@@ -63,12 +74,12 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-lkUo2uVu.js",
+    "file": "assets/app-C2Hd2jtp.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-B2_SLc7X.css"
+      "assets/app-B8lkj7Zs.css"
     ],
     "assets": [
       "assets/fa-brands-400-C99Yv4gD.woff2",
@@ -157,6 +168,12 @@
     "src": "resources/js/guests/search.js",
     "isEntry": true
   },
+  "resources/js/guests/show.js": {
+    "file": "assets/show-aSg5JwGM.js",
+    "name": "show",
+    "src": "resources/js/guests/show.js",
+    "isEntry": true
+  },
   "resources/js/rooms/index.js": {
     "file": "assets/index-Cfy0m3JU.js",
     "name": "index",
@@ -188,7 +205,7 @@
     "isEntry": true
   },
   "resources/sass/app.scss": {
-    "file": "assets/app-DySRb4RP.css",
+    "file": "assets/app-BgIXlDsD.css",
     "src": "resources/sass/app.scss",
     "isEntry": true
   }
