@@ -159,13 +159,21 @@ class GuestController extends Controller
             $validatedData = $request->validated();
 
             $searchResult = $this->guests->searchByParams($validatedData, true);
-            if (is_countable($searchResult) > 0) {
-                return view('guests.search')->with(['guests' => $searchResult, 'inputData' => $validatedData]);
-            } else return redirect()->back()->withErrors(['error' => 'No records found']);
+            if (count($searchResult) > 0) {
+                return view('guests.search')->with([
+                    'guests' => $searchResult,
+                    'inputData' => $validatedData,
+                ]);
+            } else {
+                return redirect()->back()->withErrors(['error' => 'No records found']);
+            }
         } catch (ValidationException $e) {
-            return response()->back()->withErrors(['error' => 'Error occurred while processing your request']);
+            return redirect()->back()->withErrors(['error' => 'Validation error occurred: ' . $e->getMessage()]);
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Error occurred while processing your request: ' . $e->getMessage()]);
         }
     }
+
 
     /**
      * Delete relation between bookings and guests.

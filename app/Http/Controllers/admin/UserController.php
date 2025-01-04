@@ -8,6 +8,7 @@ use App\Http\Requests\admin\users\StoreRequest;
 use App\Http\Requests\admin\users\UpdateRequest;
 use App\Http\Requests\auth\MailRequest;
 use Exception;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -46,24 +47,27 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  StoreRequest  $request
+     * @param StoreRequest $request The validated request containing user data.
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreRequest $request)
     {
         try {
+            // Retrieve validated data from the request
             $validatedData = $request->validated();
 
-            if ($validatedData === null) {
-                return response()->withErrors(['errors' => 'Validation failed']);
-            }
             if ($this->users->store($validatedData)) {
                 return redirect()->route('admin.users.index')->with('success', 'The confirmation email has been sent');
-            } else return redirect()->back()->withErrors(['error' => 'There was an error while adding the record and sending the confirmation email']);
+            } else {
+                return redirect()->back()->withErrors(['error' => 'There was an error while adding the record and sending the confirmation email']);
+            }
+        } catch (ValidationException $e) {
+            return redirect()->back()->withErrors(['error' => 'Validation failed: ' . $e->getMessage()]);
         } catch (Exception $e) {
-            return response()->withErrors(['error' => 'Error occurred while processing your request']);
+            return redirect()->back()->withErrors(['error' => 'Error occurred while processing your request: ' . $e->getMessage()]);
         }
     }
+
 
     /**
      * Show the form for editing the specified resource.

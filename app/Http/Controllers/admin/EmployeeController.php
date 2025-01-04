@@ -47,7 +47,6 @@ class EmployeeController extends Controller
      * @param StoreRequest $request The request containing validated data for creating an employee.
      * @return \Illuminate\Http\RedirectResponse Returns a redirect response to the employee index page with success message upon successful addition, otherwise redirects back with error message.
      */
-
     public function store(StoreRequest $request)
     {
         try {
@@ -55,11 +54,14 @@ class EmployeeController extends Controller
 
             if ($this->employees->store($validatedData)) {
                 return redirect()->route('admin.employees.index')->with('success', 'Employee data successfully added');
-            } else return redirect()->back()->withErrors(['error' => 'There was an error while adding the record']);
+            } else {
+                return redirect()->back()->withErrors(['error' => 'There was an error while adding the record']);
+            }
         } catch (Exception $e) {
-            return response()->withErrors(['error' => 'Error occurred while processing your request']);
+            return redirect()->back()->withErrors(['error' => 'Error occurred while processing your request']);
         }
     }
+
 
     /**
      * Show the form for editing the specified employee.
@@ -81,7 +83,6 @@ class EmployeeController extends Controller
      * @param string $id The ID of the employee to be updated.
      * @return \Illuminate\Http\RedirectResponse Returns a redirect response to the employee index page with success message upon successful update, otherwise redirects back with error message.
      */
-
     public function update(UpdateRequest $request, string $id)
     {
         try {
@@ -89,11 +90,14 @@ class EmployeeController extends Controller
 
             if ($this->employees->update($validatedData, $id)) {
                 return redirect()->route('admin.employees.index')->with('success', 'Employee data successfully updated');
-            } else return redirect()->back()->withErrors(['error' => 'There was an error while updating the record']);
+            } else {
+                return redirect()->back()->withErrors(['error' => 'There was an error while updating the record']);
+            }
         } catch (Exception $e) {
-            return response()->withErrors(['error' => 'Error occurred while processing your request']);
+            return redirect()->back()->withErrors(['error' => 'Error occurred while processing your request']);
         }
     }
+
 
     /**
      * Remove the specified employee from storage.

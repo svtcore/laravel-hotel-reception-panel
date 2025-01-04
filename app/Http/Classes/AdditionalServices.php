@@ -67,61 +67,79 @@ class AdditionalServices
             return 0;
         }
     }
-    
+
+    /**
+     * Store a new additional service in the database.
+     *
+     * @param array $inputData The data for creating the additional service, including name, price, and availability status.
+     * @return bool Returns true if the service is successfully stored, otherwise false.
+     */
     public function store($inputData): bool
     {
-        try{
+        try {
             $result = AdditionalService::create([
                 'name' => $inputData['name'],
                 'price' => $inputData['price'],
-                'available' => $inputData['status']
+                'available' => $inputData['status'],
             ]);
-            if ($result) return true;
-            else return false;
-        }
-        catch(Exception $e){
+            return $result ? true : false;
+        } catch (Exception $e) {
             return false;
         }
     }
 
+    /**
+     * Retrieve an additional service by its ID.
+     *
+     * @param int $id The ID of the additional service to retrieve.
+     * @return object|null Returns the additional service object if found, otherwise null.
+     */
     public function getById(int $id): ?object
     {
-        try{
+        try {
             $service = AdditionalService::where('id', $id)->first();
-            if ($service) return $service;
-            else return null;
-        }
-        catch(Exception $e){
+            return $service ? $service : null;
+        } catch (Exception $e) {
             return null;
         }
     }
 
+    /**
+     * Update an existing additional service.
+     *
+     * @param array $inputData The updated data for the additional service, including name, price, and availability status.
+     * @param int $id The ID of the additional service to update.
+     * @return bool Returns true if the update is successful, otherwise false.
+     */
     public function update($inputData, int $id): bool
     {
-        try{
+        try {
             $service = AdditionalService::findOrFail($id);
             $result = $service->update([
                 'name' => $inputData['name'],
                 'price' => $inputData['price'],
-                'available' => $inputData['status']
+                'available' => $inputData['status'],
             ]);
-            if ($result) return true;
-            else false;
-        }
-        catch(Exception $e){
+            return $result ? true : false;
+        } catch (Exception $e) {
             return false;
         }
     }
 
+    /**
+     * Delete an additional service by its ID.
+     *
+     * @param int $id The ID of the additional service to delete.
+     * @return bool Returns true if the deletion is successful, otherwise false.
+     */
     public function destroy(int $id): bool
     {
-        try{
+        try {
             $service = AdditionalService::findOrFail($id);
             $service->bookings()->detach();
             $service->delete();
             return true;
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             return false;
         }
     }

@@ -27,6 +27,12 @@ class RoomProperties
         }
     }
 
+    /**
+     * Stores a new room property.
+     *
+     * @param array $inputData Data for creating the room property, including 'name' and 'status'.
+     * @return bool True if the room property was successfully created, otherwise false.
+     */
     public function store($inputData): bool
     {
         try {
@@ -41,6 +47,13 @@ class RoomProperties
         }
     }
 
+    /**
+     * Updates an existing room property by ID.
+     *
+     * @param array $inputData Data for updating the room property, including 'name' and 'status'.
+     * @param int $id The ID of the room property to update.
+     * @return bool True if the room property was successfully updated, otherwise false.
+     */
     public function update($inputData, int $id): bool
     {
         try {
@@ -56,6 +69,12 @@ class RoomProperties
         }
     }
 
+    /**
+     * Deletes a room property by ID.
+     *
+     * @param int $id The ID of the room property to delete.
+     * @return bool True if the room property was successfully deleted, otherwise false.
+     */
     public function destory(int $id): bool
     {
         try {
@@ -68,6 +87,12 @@ class RoomProperties
         }
     }
 
+    /**
+     * Retrieves a room property by ID.
+     *
+     * @param int $id The ID of the room property to retrieve.
+     * @return object|null The room property object if found, otherwise null.
+     */
     public function getById(int $id): ?object
     {
         try {
