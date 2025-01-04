@@ -1,0 +1,1 @@
+$(document).ready(function(){$("#employees-table").DataTable({responsive:!0,lengthChange:!1,autoWidth:!1,searching:!1,paging:!0,ordering:!0,info:!1,order:[[0,"asc"]]}),$(".dt-search").addClass("text-left mb-4 mt-4 mr-3"),$("#dt-search-1").removeClass("form-control-sm"),$("#dt-search-1").css("width","30%")});
