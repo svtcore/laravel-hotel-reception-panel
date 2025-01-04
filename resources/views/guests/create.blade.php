@@ -120,7 +120,7 @@
                                                 <div class="form-group">
                                                     <input type="text" class="form-control text-center font-weight-bold @error('roomNumber') is-invalid @enderror" id="roomNumber" placeholder="Room number" name="roomNumber">
                                                 </div>
-                                                <div id="searchResults" style="max-height: 200px; overflow-y: auto;">
+                                                <div id="searchResults">
                                                     <ul id="result" class="list-group"></ul>
                                                 </div>
                                                 <input type="hidden" id="selectedOrderId" name="selectedOrderId">

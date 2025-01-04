@@ -106,3 +106,23 @@ body {
     margin-top: 2%;
     margin-bottom:1%;
 }
+#additional-service-card-header{
+    border-bottom-left-radius:0;
+    border-bottom-right-radius:0;
+}
+#guest-card-header{
+    border-top-left-radius:0;
+    border-top-right-radius:0;
+    border-bottom-left-radius:0;
+    border-bottom-right-radius:0;
+}
+#available-dates-card-header{
+    border-top-left-radius:0;
+    border-top-right-radius:0;
+}
+#relate-guest-name{
+    height: 33px;
+}
+#room-number-link{
+    color:white;
+}

@@ -249,7 +249,7 @@
                                                 </span>
                                             </td>
                                             <td class="text-center">
-                                                <form action="{{ auth()->user()->hasRole('admin') ? route('admin.booking.delete', $book->id) : route('receptionist.booking.delete', $book->id) }}" method="POST" style="display:inline;">
+                                                <form action="{{ auth()->user()->hasRole('admin') ? route('admin.booking.delete', $book->id) : route('receptionist.booking.delete', $book->id) }}" method="POST">
                                                     <a href="{{ auth()->user()->hasRole('admin') ? route('admin.booking.show', $book->id) : route('receptionist.booking.show', $book->id) }}" class="btn btn-secondary fs-6">Details</a>
                                                     @csrf
                                                     @method('DELETE')

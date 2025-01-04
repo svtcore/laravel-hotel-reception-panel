@@ -1,16 +1,9 @@
 @extends('layouts.header')
 @section('title', 'Edit Room Property')
 @section('room_properties_navbar_state', 'active')
+
 @section('additional_style')
-<style>
-#header_edit_room_property{
-    color:white;
-    font-weight: bold;
-    margin-left:6em;
-    margin-top: 3%;
-    margin-bottom: 2%;
-}
-</style>
+@vite(['resources/css/rooms-properties-style.css'])
 @endsection
 
 @section('navbar_header_button')

@@ -2,17 +2,8 @@
 @section('title', 'Add Property')
 @section('room_properties_navbar_state', 'active')
 @section('additional_style')
-<style>
-#header_add_room_property{
-    color:white;
-    font-weight: bold;
-    margin-left:5em;
-    margin-top: 3%;
-    margin-bottom: 2%;
-}
-</style>
+@vite(['resources/css/rooms-properties-style.css'])
 @endsection
-
 @section('navbar_header_button')
 <span id="header_add_room_property">Add room property</span>
 @endsection

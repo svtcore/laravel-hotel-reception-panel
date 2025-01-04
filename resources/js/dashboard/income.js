@@ -1,5 +1,4 @@
 $(function () {
-    
     var currentDate = new Date();
     var currentDay = currentDate.getDate();
     var currentMonth = currentDate.getMonth();
@@ -16,6 +15,7 @@ $(function () {
     var revenueData = JSON.parse(revenueDataString);
     var totalRevenue = revenueData.reduce((acc, currentValue) => acc + currentValue, 0);
     var todayRevenue = revenueData[currentDay - 1];
+
     var data = {
         labels: labels,
         datasets: [{
@@ -29,12 +29,16 @@ $(function () {
     }
 
     var options = {
+        responsive: true,
         scales: {
-            yAxes: [{
+            y: {
+                beginAtZero: true,
                 ticks: {
-                    beginAtZero: true
+                    callback: function(value) {
+                        return value.toLocaleString();
+                    }
                 }
-            }]
+            }
         }
     };
 
@@ -44,6 +48,7 @@ $(function () {
         data: data,
         options: options
     });
+
     $('#total_income').html("Total for month: " + totalRevenue);
     $('#today_income').html("Total for today: " + todayRevenue);
 });

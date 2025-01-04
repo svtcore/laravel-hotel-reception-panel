@@ -39,7 +39,7 @@
                                                 Room Number:
                                                 <span class="badge bg-secondary badge-big fs-7">
                                                     @isset($booking_data->rooms->room_number)
-                                                    <a href="{{ route(Auth::user()->hasRole('admin') ? 'admin.rooms.show' : 'receptionist.rooms.show', $booking_data->rooms->id) }}" style="color:white;">
+                                                    <a id="room-number-link" href="{{ route(Auth::user()->hasRole('admin') ? 'admin.rooms.show' : 'receptionist.rooms.show', $booking_data->rooms->id) }}">
                                                         {{ $booking_data->rooms->room_number }}
                                                     </a>
                                                     @endisset

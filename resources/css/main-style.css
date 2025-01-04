@@ -141,3 +141,9 @@ a {
 {
     margin-left:45%;
 }
+#exit-button{
+    background-color: white; color:black;
+}
+#sum_by_day, #bookings_by_day, #rooms_availability_data, #room_data{
+    display:none;
+}

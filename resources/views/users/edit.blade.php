@@ -1,18 +1,11 @@
 @extends('layouts.header')
 @section('title', 'Edit user data')
 @section('users_navbar_state', 'active')
+
 @section('additional_style')
-<style>
-    #header_users_edit{
-    color:white;
-    font-weight: bold;
-    margin-left:5em;
-    font-size:20px;
-    margin-top: 2%;
-    margin-bottom:1%;
-}
-</style>
+@vite(['resources/css/users-style.css'])
 @endsection
+
 @section('content')
 @section('navbar_header_button')
 <span id="header_users_edit">Edit user</span>

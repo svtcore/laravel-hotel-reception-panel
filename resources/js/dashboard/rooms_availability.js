@@ -18,20 +18,13 @@ $(function () {
     }
 
     var options = {
-        scales: {
-            xAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        },
+        responsive: true,
         indexAxis: 'y',
         elements: {
             bar: {
                 borderWidth: 4,
             }
         },
-        responsive: true,
         plugins: {
             legend: {
                 display: false

@@ -284,7 +284,7 @@
                                         <form action="{{ route('admin.rooms.delete', $room->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger h-100" style="border-top-left-radius: 0; border-bottom-left-radius: 0;"><i class="bi bi-trash3"></i></button>
+                                            <button type="submit" class="btn btn-danger h-100" id="rooms-delete-button"><i class="bi bi-trash3"></i></button>
                                         </form>
                                         @endif
                                     </div>

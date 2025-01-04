@@ -1,5 +1,4 @@
 $(function () {
-
     var currentDate = new Date();
     var currentDay = currentDate.getDate();
     var currentMonth = currentDate.getMonth();
@@ -29,12 +28,16 @@ $(function () {
     }
 
     var options = {
+        responsive: true,
         scales: {
-            yAxes: [{
+            y: {
+                beginAtZero: true,
                 ticks: {
-                    beginAtZero: true
+                    callback: function(value) {
+                        return value.toLocaleString();
+                    }
                 }
-            }]
+            }
         }
     };
 

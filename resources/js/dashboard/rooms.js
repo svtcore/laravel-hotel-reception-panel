@@ -20,9 +20,10 @@ $(function () {
 
     var options = {
         responsive: true,
-        title: {
-            display: true,
-            text: ''
+        plugins: {
+            legend: {
+                display: true
+            }
         }
     };
 

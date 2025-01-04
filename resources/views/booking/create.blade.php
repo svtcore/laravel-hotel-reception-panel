@@ -122,7 +122,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <div class="card no-shadow" style="border-bottom-left-radius:0; border-bottom-right-radius:0;">
+                            <div class="card no-shadow" id="additional-service-card-header">
                                 <div class="card-body">
                                     <h4 class="card-title pl-4"><b>Additional services</b></h4>
                                     <br /><br />
@@ -144,7 +144,7 @@
                             </div>
 
 
-                            <div class="card no-shadow" style="border-top-left-radius:0; border-top-right-radius:0; border-bottom-left-radius:0; border-bottom-right-radius:0;">
+                            <div class="card no-shadow" id="guest-card-header">
                                 <div class="card-body">
                                     <h4 class="card-title mb-4 pl-4"><b>Guest (Main)</b></h4>
                                     <br /><br />
@@ -172,7 +172,7 @@
                                 </div>
                             </div>
 
-                            <div class="card no-shadow" style="border-top-left-radius:0; border-top-right-radius:0;">
+                            <div class="card no-shadow" id="available-dates-card-header">
                                 <div class="card-body">
                                     <h4 class="card-title mb-4 pl-4"><b>Available dates</b></h4>
                                     <br /><br />

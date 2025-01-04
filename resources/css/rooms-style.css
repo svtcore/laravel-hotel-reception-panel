@@ -89,3 +89,7 @@ body {
     margin-top: 2%;
     margin-bottom: 1%;
 }
+#rooms-delete-button{
+    border-top-left-radius: 0; 
+    border-bottom-left-radius: 0;
+}

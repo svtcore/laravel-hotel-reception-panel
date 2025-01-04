@@ -115,7 +115,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        <div class="card no-shadow" style="border-bottom-left-radius:0; border-bottom-right-radius:0;">
+                        <div class="card no-shadow" id="additional-service-card-header">
                             <div class="card-body">
                                 <h4 class="card-title pl-4"><b>Additional services</b></h4>
                                 <br /><br />
@@ -141,7 +141,7 @@
                             </div>
                         </div>
                         </form>
-                        <div class="card no-shadow" style="border-top-left-radius:0; border-top-right-radius:0; border-bottom-left-radius:0; border-bottom-right-radius:0;">
+                        <div class="card no-shadow" id="guest-card-header">
                             <div class="card-body">
                                 <h4 class="card-title mb-4 pl-4"><b>Guests</b></h4>
                                 <br /><br />
@@ -168,7 +168,7 @@
                                                             <input type="hidden" name="search_guest_url" id="search_guest_url" value="{{ route(auth()->user()->hasRole('admin') ? 'admin.guests.search.relation' : (auth()->user()->hasRole('receptionist') ? 'receptionist.guests.search.relation' : '#')) }}" />
                                                             <input type="hidden" name="related_guest_id" id="related_guest_id" />
                                                             <input type="hidden" name="booking_id" id="booking_id" value="{{ $booking_data->id }}" />
-                                                            <input type="text" class="form-control search-input text-center @error('guestName') is-invalid @enderror" name="guestName" style="height: 33px;" placeholder="Relate guest: Guest name">
+                                                            <input type="text" class="form-control search-input text-center @error('guestName') is-invalid @enderror" name="guestName" id="relate-guest-name" placeholder="Relate guest: Guest name">
                                                             <div class="search-results"></div>
                                                         </td>
                                                         <td class="text-right">
@@ -217,7 +217,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card no-shadow" style="border-top-left-radius:0; border-top-right-radius:0;">
+                        <div class="card no-shadow" id="available-dates-card-header">
                             <div class="card-body">
                                 <h4 class="card-title mb-4 pl-4"><b>Available dates</b></h4>
                                 <br /><br />

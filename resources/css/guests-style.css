@@ -81,3 +81,7 @@ body {
 #guests_table_action{
     width:10%;
 }
+#searchResult{
+    max-height: 200px; 
+    overflow-y: auto;
+}

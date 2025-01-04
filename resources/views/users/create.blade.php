@@ -1,17 +1,9 @@
 @extends('layouts.header')
 @section('title', 'Add new user')
 @section('users_navbar_state', 'active')
+
 @section('additional_style')
-<style>
-    #header_users_add{
-    color:white;
-    font-weight: bold;
-    margin-left:5em;
-    font-size:20px;
-    margin-top: 2%;
-    margin-bottom:1%;
-}
-</style>
+@vite(['resources/css/users-style.css'])
 @endsection
 @section('content')
 @section('navbar_header_button')

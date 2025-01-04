@@ -2,16 +2,7 @@
 @section('title', 'Add service')
 @section('services_navbar_state', 'active')
 @section('additional_style')
-<style>
-    #header_new_service{
-    color:white;
-    font-weight: bold;
-    margin-left:5em;
-    font-size: 20px;
-    margin-top: 2%;
-    margin-bottom: 1%;
-}
-</style>
+@vite(['resources/css/additional-services-style.css'])
 @endsection
 
 @section('navbar_header_button')

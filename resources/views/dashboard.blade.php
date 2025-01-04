@@ -1,15 +1,9 @@
 @extends('layouts.header')
 @section('title', 'Dashboard')
 @section('dashboard_navbar_state', 'active')
+
 @section('additional_style')
-<style>
- #dashboard_header{
-    margin-left:7em;
-    color:white;
-    font-weight: bold;
-    margin-top: 2%;
- }    
-</style>
+@vite(['resources/css/dashboard-style.css'])
 @endsection
 @section('navbar_header_button')
 <h5 id="dashboard_header">Dashboard</h5>
@@ -40,7 +34,7 @@
                             <h3 class="card-title mb-0">Income for current month</h3>
                         </div>
                         <div class="card-body">
-                            <textarea style="display:none;" id="sum_by_day" name="sum_by_day">{{ $sum_by_day }}</textarea>
+                            <textarea id="sum_by_day" name="sum_by_day">{{ $sum_by_day }}</textarea>
                             <canvas id="lineChart"></canvas>
                         </div>
                         <div class="total-income stat-header font-weight-bold" id="total_income">
@@ -55,7 +49,7 @@
                             <h3 class="card-title mb-0">Bookings for current month</h3>
                         </div>
                         <div class="card-body">
-                            <textarea style="display:none;" id="bookings_by_day" name="bookings_by_day">{{ $bookings_by_day }}</textarea>
+                            <textarea id="bookings_by_day" name="bookings_by_day">{{ $bookings_by_day }}</textarea>
                             <canvas id="lineChartBookings"></canvas>
                         </div>
                         <div class="total-bookings stat-header pl-3 pt-2 pb-2 font-weight-bold" id="total_bookings">
@@ -72,7 +66,7 @@
                             <h3 class="card-title mb-0">Rooms availability</h3>
                         </div>
                         <div class="card-body mx-auto">
-                            <textarea style="display:none;" id="rooms_availability_data" name="rooms_availability_data">{{ $rooms_availability_data }}</textarea>
+                            <textarea id="rooms_availability_data" name="rooms_availability_data">{{ $rooms_availability_data }}</textarea>
                             <canvas id="lineChartAvailability"></canvas>
                         </div>
                     </div>
@@ -83,7 +77,7 @@
                             <h3 class="card-title mb-0">Room type statistics</h3>
                         </div>
                         <div class="card-body mx-auto">
-                            <textarea style="display:none;" id="room_data" name="room_data">{{ $room_data }}</textarea>
+                            <textarea id="room_data" name="room_data">{{ $room_data }}</textarea>
                             <canvas id="roomSalesChart"></canvas>
                         </div>
                     </div>
@@ -94,7 +88,7 @@
 </div>
 @endsection
 @section('custom-scripts')
-<script src="https://cdn.jsdelivr.net/npm/chart.js" integrity="sha256-IGtui7APx7uix+6AykHbPp4FunvgqjWr66nP1TV/XQ4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" integrity="sha256-IGtui7APx7uix+6AykHbPp4FunvgqjWr66nP1TV/XQ4=" crossorigin="anonymous"></script>
 @vite(['resources/js/dashboard/income.js'])
 @vite(['resources/js/dashboard/rooms.js'])
 @vite(['resources/js/dashboard/rooms_availability.js'])

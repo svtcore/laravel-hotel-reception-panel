@@ -43,7 +43,7 @@
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <button type="submit" class="btn btn-secondary btn-sm" style="background-color: white; color:black;"><i class="nav-icon bi bi-box-arrow-right"></i></button>
+                            <button type="submit" class="btn btn-secondary btn-sm" id="exit-button"><i class="nav-icon bi bi-box-arrow-right"></i></button>
                         </form>
                     </li>
                 </ul>
@@ -164,8 +164,8 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha256-CDOy6cOibCWEdsRiZuaHf8dSGGJRYuBGC+mjoJimHGw=" crossorigin="anonymous"></script>
     
-    @vite(['resources/admin-lte-4.0/js/adminlte.js'])
-    
+    <script src="https://adminlte.io/themes/v3/dist/js/adminlte.js?v=3.2.0" integrity="sha256-yHI4iVjUrlyiZDXoV0HXkB3S5ssSW5G5zqhXokKVWbQ=" crossorigin="anonymous"></script>
+
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js" integrity="sha256-aTBve1VKWozmjo9Nb2E73RvP4t8xOWLn/IPPX2vl4IU=" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.min.js" integrity="sha256-U3zt3BGRnSBU8GxdNWp9CGmrMKBUthlz2ia7LERbiNc=" crossorigin="anonymous"></script>
