@@ -18,7 +18,7 @@ class AddPermissionsPolicyHeader
     {
         $response = $next($request);
 
-        $response->headers->set('Permissions-Policy', '*');
+        $response->headers->set('Permissions-Policy', 'geolocation=(), microphone=(), camera=(), fullscreen=(), payment=()');
 
         return $response;
     }

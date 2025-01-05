@@ -120,6 +120,7 @@
                                 <h4 class="card-title pl-4"><b>Additional services</b></h4>
                                 <br /><br />
                                 <div class="row">
+                                    @if(!empty($available_services))
                                     @foreach ($available_services->chunk(2) as $chunk)
                                     <div class="row">
                                         @foreach ($chunk as $service)
@@ -137,6 +138,7 @@
                                         @endforeach
                                     </div>
                                     @endforeach
+                                    @endif
                                 </div>
                             </div>
                         </div>

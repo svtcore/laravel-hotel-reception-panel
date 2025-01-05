@@ -39,6 +39,7 @@ return [
      * and cannot add inline nonces. 
      * Note that this will make your CSP policy less secure.
      */
-    'nonce_enabled' => env('CSP_NONCE_ENABLED', true),
+    'nonce_enabled' => env('CSP_NONCE_ENABLED', false),
+    
     'nonce_generator' => App\CSP\ViteNonceGenerator::class,
 ];

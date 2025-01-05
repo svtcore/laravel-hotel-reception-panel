@@ -24,6 +24,7 @@ class CustomPolicy extends Basic
 
         $this->addDirective(Directive::STYLE, [
             'self',
+            'unsafe-inline',
             'https://cdn.jsdelivr.net',
             'https://cdn.datatables.net',
         ]);
