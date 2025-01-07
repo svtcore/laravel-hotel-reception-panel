@@ -94,13 +94,15 @@
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                                     <a href="{{ auth()->user()->hasRole('admin') ? route('admin.guests.edit', $guest->id) : (auth()->user()->hasRole('receptionist') ? route('receptionist.guests.edit', $guest->id) : '#') }}" class="btn btn-warning w-100">Edit data</a>
                                                 </li>
+                                                @role('admin')
                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <form action="{{ auth()->user()->hasRole('admin') ? route('admin.guests.delete', $guest->id) : (auth()->user()->hasRole('receptionist') ? route('receptionist.guests.delete', $guest->id) : '#') }}" method="POST" class="w-100">
+                                                    <form action="{{ route('admin.guests.delete', $guest->id) }}" method="POST" class="w-100">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="btn btn-danger w-100" type="submit">Delete</button>
                                                     </form>
                                                 </li>
+                                                @endrole
                                             </ul>
                                         </div>
                                     </div>

@@ -60,7 +60,7 @@
                                 <div class="card-body">
                                     <h4 class="card-title text-center"><b>Action</b></h4>
                                     <div>
-                                    <button type="submit" class="btn btn-success w-100 mb-4 mt-4">Confirm Property Data</button>
+                                    <button type="submit" class="btn btn-success w-100 mb-4 mt-4 pb-2">Confirm Property Data</button>
                                     </div>
                                 </div>
                             </div>

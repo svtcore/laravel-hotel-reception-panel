@@ -26,7 +26,7 @@
                 </div>
                 @endif
                 <div class="text-center mb-4">
-                    <h4>Additional services</h4>
+                    <h4><b>Additional services</b></h4>
                 </div>
                 <table id="services-table" class="table table-bordered table-striped">
                     <thead>

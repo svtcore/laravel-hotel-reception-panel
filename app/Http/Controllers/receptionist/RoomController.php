@@ -52,6 +52,7 @@ class RoomController extends Controller
         return view('rooms.show')->with([
             'room' => $this->rooms->getById($id, true) ?? abort(404),
             'booking' => $this->booking->getByRoomId($id) ?? array(),
+            'available_dates' => $this->booking->getAvailableDate($id) ?? array()
         ]);
     }
 

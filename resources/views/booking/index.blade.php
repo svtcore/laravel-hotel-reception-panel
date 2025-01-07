@@ -27,7 +27,7 @@
                 </div>
                 @endif
                 <div class="content-container text-center">
-                    <h4 class="font-weight-bold">Search form</h4>
+                    <h4><b>Search form</b></h4>
                     <form id="searchForm" method="POST" action="{{ route(auth()->user()->hasRole('admin') ? 'admin.booking.search' : (auth()->user()->hasRole('receptionist') ? 'receptionist.booking.search' : '#')) }}">
                         @csrf
                         <div class="row mt-5">
@@ -135,54 +135,56 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($check_in_bookings as $booking)
-                                    <tr class="text-center">
-                                        <td class="text-center">
-                                            <a href="{{ route(Auth::user()->hasRole('admin') ? 'admin.rooms.show' : (Auth::user()->hasRole('receptionist') ? 'receptionist.rooms.show' : '#'), $booking->room_id) }}">
-                                                {{ $booking->rooms->room_number ?? '' }}
-                                            </a>
-                                        </td>
-                                        <td class="text-center">
-                                            @isset($booking->guests[0])
-                                            <a href="{{ route(Auth::user()->hasRole('admin') ? 'admin.guests.show' : (Auth::user()->hasRole('receptionist') ? 'receptionist.guests.show' : '#'), $booking->guests[0]->id) }}">
-                                                {{ $booking->guests[0]->first_name }} {{ $booking->guests[0]->last_name }}
-                                            </a>
-                                            @endisset
-                                        </td>
-                                        <td class="text-center">
-                                            <b>{{ $booking->adults_count }}</b>
-                                            @if ($booking->children_count > 0)
-                                            <span class="badge badge-success badge-big"><i class="fa-solid fa-baby"></i></span>
-                                            @endif
-                                        </td>
-                                        <td class="text-center">{{ $booking->guests[0]->phone_number ?? '' }}</td>
-                                        <td class="text-center">{{ $booking->total_cost }}</td>
-                                        <td class="text-center">
-                                            {{ \Carbon\Carbon::parse($booking->check_in_date)->format('d-m-Y') }}
-                                        </td>
-                                        <td class="text-center">
-                                            {{ \Carbon\Carbon::parse($booking->check_out_date)->format('d-m-Y') }}
-                                        </td>
-                                        <td class="text-center">
-                                            {{ \Carbon\Carbon::parse($booking->check_out_date)->diffInDays(\Carbon\Carbon::parse($booking->check_in_date), true) }}
-                                        </td>
-                                        <td class="text-center">
-                                            <form action="{{ route(Auth::user()->hasRole('admin') ? 'admin.booking.delete' : (Auth::user()->hasRole('receptionist') ? 'receptionist.booking.delete' : '#'), $booking->id) }}" method="POST">
-                                                <div class="btn-group mr-2" role="group" aria-label="First group">
-                                                    <a href="{{ route(Auth::user()->hasRole('admin') ? 'admin.booking.show' : (Auth::user()->hasRole('receptionist') ? 'receptionist.booking.show' : '#'), $booking->id) }}" class="btn btn-secondary">Details</a>
-                                                    <a href="{{ route(Auth::user()->hasRole('admin') ? 'admin.booking.edit' : (Auth::user()->hasRole('receptionist') ? 'receptionist.booking.edit' : '#'), $booking->id) }}" type="button" class="btn btn-warning">
-                                                        <i class="bi bi-pencil"></i>
-                                                    </a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">
-                                                        <i class="bi bi-trash3"></i>
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    @endforeach
+                                    @if (!empty($check_in_bookings))
+                                        @foreach ($check_in_bookings as $booking)
+                                        <tr class="text-center">
+                                            <td class="text-center">
+                                                <a href="{{ route(Auth::user()->hasRole('admin') ? 'admin.rooms.show' : (Auth::user()->hasRole('receptionist') ? 'receptionist.rooms.show' : '#'), $booking->room_id) }}">
+                                                    {{ $booking->rooms->room_number ?? '' }}
+                                                </a>
+                                            </td>
+                                            <td class="text-center">
+                                                @isset($booking->guests[0])
+                                                <a href="{{ route(Auth::user()->hasRole('admin') ? 'admin.guests.show' : (Auth::user()->hasRole('receptionist') ? 'receptionist.guests.show' : '#'), $booking->guests[0]->id) }}">
+                                                    {{ $booking->guests[0]->first_name }} {{ $booking->guests[0]->last_name }}
+                                                </a>
+                                                @endisset
+                                            </td>
+                                            <td class="text-center">
+                                                <b>{{ $booking->adults_count }}</b>
+                                                @if ($booking->children_count > 0)
+                                                <span class="badge badge-success badge-big"><i class="fa-solid fa-baby"></i></span>
+                                                @endif
+                                            </td>
+                                            <td class="text-center">{{ $booking->guests[0]->phone_number ?? '' }}</td>
+                                            <td class="text-center">{{ $booking->total_cost }}</td>
+                                            <td class="text-center">
+                                                {{ \Carbon\Carbon::parse($booking->check_in_date)->format('d-m-Y') }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ \Carbon\Carbon::parse($booking->check_out_date)->format('d-m-Y') }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ \Carbon\Carbon::parse($booking->check_out_date)->diffInDays(\Carbon\Carbon::parse($booking->check_in_date), true) }}
+                                            </td>
+                                            <td class="text-center">
+                                                <form action="{{ route(Auth::user()->hasRole('admin') ? 'admin.booking.delete' : (Auth::user()->hasRole('receptionist') ? 'receptionist.booking.delete' : '#'), $booking->id) }}" method="POST">
+                                                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                                                        <a href="{{ route(Auth::user()->hasRole('admin') ? 'admin.booking.show' : (Auth::user()->hasRole('receptionist') ? 'receptionist.booking.show' : '#'), $booking->id) }}" class="btn btn-secondary">Details</a>
+                                                        <a href="{{ route(Auth::user()->hasRole('admin') ? 'admin.booking.edit' : (Auth::user()->hasRole('receptionist') ? 'receptionist.booking.edit' : '#'), $booking->id) }}" type="button" class="btn btn-warning">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </a>
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger">
+                                                            <i class="bi bi-trash3"></i>
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -200,50 +202,52 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($check_out_bookings as $booking)
-                                    <tr>
-                                        <td class="text-center">
-                                            @isset($booking->rooms->room_number)
-                                            <a href="{{ route(Auth::user()->hasRole('admin') ? 'admin.rooms.show' : 'receptionist.rooms.show', $booking->room_id) }}">
-                                                {{ $booking->rooms->room_number }}
-                                            </a>
-                                            @endisset
-                                        </td>
-                                        <td class="text-center">
-                                            @isset($booking->guests[0])
-                                            {{ $booking->guests[0]->first_name }} {{ $booking->guests[0]->last_name }}
-                                            @endisset
-                                        </td>
-                                        <td class="text-center">
-                                            <b>{{ $booking->adults_count }}</b>
-                                            @if ($booking->children_count > 0)
-                                            <span class="badge badge-success badge-big">
-                                                <i class="fa-solid fa-baby"></i>
-                                            </span>
-                                            @endif
-                                        </td>
-                                        <td class="text-center">
-                                            {{ $booking->guests[0]->phone_number ?? '' }}
-                                        </td>
-                                        <td class="text-center">{{ $booking->total_cost }}</td>
-                                        <td class="text-center">
-                                            {{ \Carbon\Carbon::parse($booking->check_out_date)->format('d-m-Y') }}
-                                        </td>
-                                        <td class="text-center">
-                                            <form action="{{ route(Auth::user()->hasRole('admin') ? 'admin.booking.status' : 'receptionist.booking.status', $booking->id) }}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="btn-group mr-2" role="group" aria-label="First group">
-                                                    <input type="hidden" name="status" value="completed" />
-                                                    <button type="submit" class="btn btn-success">Complete check-out</button>
-                                                    <a href="{{ route(Auth::user()->hasRole('admin') ? 'admin.booking.edit' : 'receptionist.booking.edit', $booking->id) }}" class="btn btn-warning">
-                                                        <i class="bi bi-pencil"></i>
-                                                    </a>
-                                                </div>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    @endforeach
+                                    @if (!empty($check_out_bookings))
+                                        @foreach ($check_out_bookings as $booking)
+                                        <tr>
+                                            <td class="text-center">
+                                                @isset($booking->rooms->room_number)
+                                                <a href="{{ route(Auth::user()->hasRole('admin') ? 'admin.rooms.show' : 'receptionist.rooms.show', $booking->room_id) }}">
+                                                    {{ $booking->rooms->room_number }}
+                                                </a>
+                                                @endisset
+                                            </td>
+                                            <td class="text-center">
+                                                @isset($booking->guests[0])
+                                                {{ $booking->guests[0]->first_name }} {{ $booking->guests[0]->last_name }}
+                                                @endisset
+                                            </td>
+                                            <td class="text-center">
+                                                <b>{{ $booking->adults_count }}</b>
+                                                @if ($booking->children_count > 0)
+                                                <span class="badge badge-success badge-big">
+                                                    <i class="fa-solid fa-baby"></i>
+                                                </span>
+                                                @endif
+                                            </td>
+                                            <td class="text-center">
+                                                {{ $booking->guests[0]->phone_number ?? '' }}
+                                            </td>
+                                            <td class="text-center">{{ $booking->total_cost }}</td>
+                                            <td class="text-center">
+                                                {{ \Carbon\Carbon::parse($booking->check_out_date)->format('d-m-Y') }}
+                                            </td>
+                                            <td class="text-center">
+                                                <form action="{{ route(Auth::user()->hasRole('admin') ? 'admin.booking.status' : 'receptionist.booking.status', $booking->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                                                        <input type="hidden" name="status" value="completed" />
+                                                        <button type="submit" class="btn btn-success">Complete check-out</button>
+                                                        <a href="{{ route(Auth::user()->hasRole('admin') ? 'admin.booking.edit' : 'receptionist.booking.edit', $booking->id) }}" class="btn btn-warning">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </a>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

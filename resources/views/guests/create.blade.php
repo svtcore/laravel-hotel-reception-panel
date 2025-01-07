@@ -109,7 +109,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-12 mt-2">
                             <div class="card no-shadow">
                                 <div class="card-body">
                                     <h4 class="card-title pl-4"><b>Relate booking</b></h4><br /></br />

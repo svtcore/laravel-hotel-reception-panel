@@ -8,7 +8,7 @@
 
 @section('content')
 @section('navbar_header_button')
-    <span id="header_edit_room_data">Edit room</span>
+    <span class="header-text">Edit room</span>
 @endsection
 
 <div class="container-fluid">

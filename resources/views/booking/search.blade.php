@@ -27,7 +27,7 @@
                 </div>
                 @endif
                 <div class="content-container text-center">
-                    <h4 class="font-weight-bold">Search form</h4>
+                    <h4><b>Search form</b></h4>
                     <form id="searchForm" method="POST" action="{{ route(Auth::user()->hasRole('admin') ? 'admin.booking.search' : 'receptionist.booking.search') }}">
                         @csrf
                         <div class="row mt-5">

@@ -27,7 +27,7 @@
                 </div>
                 @endif
                 <div class="content-container text-center">
-                    <h4 class="font-weight-bold">Search form</h4>
+                    <h4><b>Search form</b></h4>
                     <form id="searchForm" method="POST" action="{{ route(auth()->user()->hasRole('admin') ? 'admin.guests.search' : (auth()->user()->hasRole('receptionist') ? 'receptionist.guests.search' : '#')) }}">
                         @csrf
                         <div class="row mt-5">
@@ -96,20 +96,27 @@
                                 <td class="text-center">{{ \Carbon\Carbon::parse($guest->dob)->format('d-m-Y') }}</td>
                                 <td class="text-center">{{ $guest->phone_number }}</td>
                                 <td class="text-center">
-                                    <form action="{{ route(auth()->user()->hasRole('admin') ? 'admin.guests.delete' : (auth()->user()->hasRole('receptionist') ? 'receptionist.guests.delete' : '#'), $guest->id) }}" method="POST">
+                                    @role('admin')
+                                        <form action="{{ route(admin.guests.delete, $guest->id) }}" method="POST">
+                                    @endrole
                                         <div class="btn-group w-100" role="group" aria-label="First group">
                                             <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.guests.show' : (auth()->user()->hasRole('receptionist') ? 'receptionist.guests.show' : '#'), $guest->id) }}" class="btn btn-secondary">Details</a>
 
                                             <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.guests.edit' : (auth()->user()->hasRole('receptionist') ? 'receptionist.guests.edit' : '#'), $guest->id) }}" type="button" class="btn btn-warning">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">
-                                                <i class="bi bi-trash3"></i>
-                                            </button>
+
+                                            @role('admin')
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">
+                                                    <i class="bi bi-trash3"></i>
+                                                </button>
+                                            @endrole
                                         </div>
-                                    </form>
+                                    @role('admin')
+                                        </form>
+                                    @endrole
                                 </td>
                             </tr>
                             @endforeach

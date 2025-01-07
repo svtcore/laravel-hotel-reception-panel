@@ -83,7 +83,7 @@
                                             <input type="hidden" id="documentCountry" @isset($guest->guest_document->document_country) value="{{ $guest->guest_document->document_country }}" @endisset >
                                             <label for="countryCode" class="form-label">Country:</label>
                                             <select class="form-select @error('countryCode') is-invalid @enderror" id="countryCode" name="countryCode">
-                                                <option value="">Select Country Code</option>
+                                                <option value="">Select country</option>
                                             </select>
                                         </div>
                                     </div>

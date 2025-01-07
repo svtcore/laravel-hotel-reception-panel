@@ -12,7 +12,7 @@
 <div class="container-fluid">
     <div class="content-container main-container">
         <section class="content">
-            <div class="container-fluid mt-4">
+            <div class="container-fluid">
                 @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
@@ -27,7 +27,7 @@
                     </ul>
                 </div>
                 @endif
-                <form id="editForm" class="ml-4 mr-4 mt-5" action="{{ route('admin.employees.update', $employee->id) }}" method="POST">
+                <form id="editForm" class="ml-4 mr-4" action="{{ route('admin.employees.update', $employee->id) }}" method="POST">
                     <div class="row justify-content-center ml-5 mr-5">
                         <div class="col-md-6">
                             <div class="card no-shadow">

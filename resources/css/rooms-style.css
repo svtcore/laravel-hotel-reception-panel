@@ -81,15 +81,16 @@ body {
 .highlight {
     background-color: #f4f4f4 !important;
 }
-#header_edit_room_data, #header_add_room_data{
-    color:white;
-    font-weight: bold;
-    margin-left:5em;
-    font-size: 20px;
-    margin-top: 2%;
-    margin-bottom: 1%;
-}
 #rooms-delete-button{
     border-top-left-radius: 0; 
     border-bottom-left-radius: 0;
+}
+
+.header-text{
+    color:white;
+    font-weight: bold;
+    margin-left:8em;
+    font-size: 18px;
+    margin-top: 3%;
+    margin-bottom: 3%;
 }

@@ -115,20 +115,7 @@ class GuestController extends Controller
             return redirect()->back()->withErrors(['error' => 'Error occurred while processing your request']);
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  string  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function destroy(string $id)
-    {
-        if ($this->guests->deleteById($id)) {
-            return redirect()->route('receptionist.guests.index')->with('success', 'The record has been successfully deleted');
-        } else return redirect()->back()->withErrors(['error' => 'The requested resource could not be found.']);
-    }
-
+    
     /**
      * Search for related bookings by room number.
      *

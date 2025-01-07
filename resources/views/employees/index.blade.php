@@ -7,7 +7,7 @@
 <a href="{{ route('admin.employees.create') }}" class="add-new-button">Add new employee</a>
 @endrole
 @role('receptionist')
-<span class="header-navbar">Employees</span>
+<span class="header-navbar"></span>
 @endrole
 @endsection
 @section('content')
@@ -30,17 +30,19 @@
                 </div>
                 @endif
                 <div>
-                    <h4 class="font-weight-bold text-center">Employees</h4>
-                    <table id="employees-table" class="table table-bordered table-striped">
+                    <h4 class="text-center"><b>Employees</b></h4>
+                    <table id="employees-table" class="table table-bordered table-striped mt-4">
                         <thead>
                             <tr>
                                 <th class="text-center">Full name</th>
-                                <th class="text-center">DOB</th>
+                                @role('admin')
+                                    <th class="text-center">DOB</th>
+                                @endrole
                                 <th class="text-center">Phone number</th>
                                 <th class="text-center">Position</th>
-                                <th class="text-center">Status</th>
                                 @role('admin')
-                                <th class="text-center">Action</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Action</th>
                                 @endrole
                             </tr>
                         </thead>
@@ -48,11 +50,13 @@
                             @foreach ($employees as $employee)
                             <tr>
                                 <td class="text-center">{{ $employee->first_name }} {{ $employee->last_name }}</td>
-                                <td class="text-center">{{ \Carbon\Carbon::parse($employee->dob)->format('d-m-Y') }}</td>
+                                @role('admin')
+                                    <td class="text-center">{{ \Carbon\Carbon::parse($employee->dob)->format('d-m-Y') }}</td>
+                                @endrole
                                 <td class="text-center">{{ $employee->phone_number }}</td>
                                 <td class="text-center">{{ ucfirst($employee->position) }}</td>
-                                <td class="text-center">{{ ucfirst($employee->status) }}</td>
                                 @role('admin')
+                                <td class="text-center">{{ ucfirst($employee->status) }}</td>
                                 <td class="text-center">
                                     <form action="{{ route('admin.employees.delete', $employee->id) }}" method="POST">
                                         <div class="btn-group mr-2" role="group" aria-label="First group">

@@ -26,7 +26,7 @@
                     </ul>
                 </div>
                 @endif
-                <form id="editForm" class="ml-4 mr-4 mt-5" action="{{ route('admin.employees.store') }}" method="POST">
+                <form id="editForm" class="ml-4 mr-4" action="{{ route('admin.employees.store') }}" method="POST">
                     <div class="row justify-content-center ml-5 mr-5">
                         <div class="col-md-6">
                             <div class="card no-shadow">
@@ -60,7 +60,7 @@
                                     </div>
                                     <div class="row justify-content-center">
                                         <div class="col-sm-12">
-                                            <button type="submit" class="btn btn-success w-100">Confirm employee data</button>
+                                            <button type="submit" class="btn btn-success w-100">Confirm data</button>
                                         </div>
                                     </div>
                                 </div>

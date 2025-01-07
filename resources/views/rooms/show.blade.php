@@ -11,7 +11,7 @@
 <a href="{{ route('admin.rooms.create') }}" class="add-new-button">Add room</a>
 @endrole
 @role('receptionist')
-<span class="header-navbar">Rooms</span>
+<span class="header-text">Rooms</span>
 @endrole
 @endsection
 

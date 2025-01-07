@@ -8,7 +8,7 @@
 <a href="{{ route('admin.rooms.create') }}" class="add-new-button">Add room</a>
 @endrole
 @role('receptionist')
-<span class="header-navbar">Rooms</span>
+<span class="header-text">Rooms</span>
 @endrole
 @endsection
 @section('content')
@@ -31,7 +31,7 @@
                 </div>
                 @endif
                 <div class="content-container text-center">
-                    <h4 class="font-weight-bold">Search form</h4>
+                    <h4><b>Search form</b></h4>
                     <form id="searchForm" method="POST" action="{{ auth()->user()->hasRole('admin') ? route('admin.rooms.search') : (auth()->user()->hasRole('receptionist') ? route('receptionist.rooms.search') : '#') }}">
                         @csrf
                         <div class="row mt-4">

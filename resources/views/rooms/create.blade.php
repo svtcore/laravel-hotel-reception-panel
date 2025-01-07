@@ -7,7 +7,7 @@
 @endsection
 
 @section('navbar_header_button')
-<span id="header_add_room_data">Add room</span>
+<span class="header-text">Add room</span>
 @endsection
 
 @section('content')

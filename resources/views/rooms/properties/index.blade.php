@@ -12,7 +12,7 @@
 <div class="container-fluid">
     <div class="content-container main-container">
         <div class="content-header">
-            <div class="container-fluid mt-4">
+            <div class="container-fluid">
                 @if (session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
@@ -26,8 +26,8 @@
                 </div>
                 @endif
 
-                <div class="text-center mt-4">
-                    <h4><b>Room Additional Properties</b></h4>
+                <div class="text-center">
+                    <h4><b>Room additional properties</b></h4>
                 </div>
 
                 <div class="table-responsive">

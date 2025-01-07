@@ -11,7 +11,7 @@
 <div class="container-fluid">
     <div class="content-container main-container">
         <div class="content-header">
-            <div class="container-fluid mt-4">
+            <div class="container-fluid">
                 @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
@@ -26,7 +26,7 @@
                     </ul>
                 </div>
                 @endif
-                <div class="mt-4 text-center">
+                <div class="text-center mb-4">
                     <h4><b>Users</b></h4>
                 </div>
                 <div>

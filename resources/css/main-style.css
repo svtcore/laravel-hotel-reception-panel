@@ -1,5 +1,5 @@
 body {
-    font-family: 'Source Sans Pro', 'Helvetica Neue', sans-serif;
+    font-family: "Source Sans Pro", "Helvetica Neue", sans-serif;
     background-color: #f4f6f9;
 }
 
@@ -41,14 +41,15 @@ body {
     border: 0;
     padding: 6px;
     border-radius: 0;
-    font-size: 16px;
+    font-size: 18px;
     display: block;
     transition: background-color 0.3s ease;
     border-radius: 30px;
-    width:400px;
+    width: 400px;
     font-weight: bold;
+    margin-top: 1px;
 }
-.header-navbar{
+.header-navbar {
     text-align: center;
     color: #fff;
     padding: 5px;
@@ -96,21 +97,21 @@ a {
     border-radius: 8px;
     margin-bottom: 20px;
 }
-.main-header{
+.main-header {
     background-color: #343a40 !important;
     border-bottom: 1px solid #4b545c;
 }
-.main-sidebar{
+.main-sidebar {
     border-right: 1px solid #4b545c;
 }
-.no-shadow{
+.no-shadow {
     box-shadow: none !important;
 }
-.stat-header{
+.stat-header {
     color: grey;
 }
-.main-container{
-    margin-top:70px;
+.main-container {
+    margin-top: 70px;
 }
 .is-invalid {
     border-color: rgb(212, 48, 48);
@@ -133,17 +134,34 @@ a {
 .custom-error-message ul.error-list li {
     color: #721c24;
 }
-.total-income, .today-income, .total-bookings, .today-bookings {
+.total-income,
+.today-income,
+.total-bookings,
+.today-bookings {
     padding-left: 1em;
     padding-bottom: 1em;
 }
-.nav-head-obj
-{
-    margin-left:45%;
+.nav-head-obj {
+    margin-left: 45%;
 }
-#exit-button{
-    background-color: white; color:black;
+#logout-button {
+    background-color: white;
+    color: black;
 }
-#sum_by_day, #bookings_by_day, #rooms_availability_data, #room_data{
-    display:none;
+#sum_by_day,
+#bookings_by_day,
+#rooms_availability_data,
+#room_data {
+    display: none;
+}
+.btn-logout {
+    color: #333;
+    background-color: #fff;
+    border: 2px solid #333;
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }

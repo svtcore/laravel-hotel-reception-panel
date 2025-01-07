@@ -27,7 +27,7 @@
                 </div>
                 @endif
                 <div class="content-container text-center">
-                    <h4 class="font-weight-bold">Search form</h4>
+                    <h4><b>Search form</b></h4>
                     <form id="searchForm" method="POST" action="{{ route(auth()->user()->hasRole('admin') ? 'admin.guests.search' : 'receptionist.guests.search') }}">
                         @csrf
                         <div class="row mt-5">
@@ -62,7 +62,7 @@
                                     Please provide a valid phone number.
                                 </div>
                             </div>
-                            <div class="col-md-5 pt-2 mt-2">
+                            <div class="col-md-5 pt-2">
                                 <label for="searchButton"></label>
                                 <button type="submit" class="btn btn-primary w-100">Search</button>
                             </div>
@@ -96,19 +96,27 @@
                                 <td class="text-center">{{ \Carbon\Carbon::parse($guest->dob)->format('d-m-Y') }}</td>
                                 <td class="text-center">{{ $guest->phone_number }}</td>
                                 <td class="text-center">
-                                    <form action="{{ route(auth()->user()->hasRole('admin') ? 'admin.guests.delete' : 'receptionist.guests.delete', $guest->id) }}" method="POST">
-                                        <div class="btn-group mr-2" role="group" aria-label="First group">
-                                            <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.guests.show' : 'receptionist.guests.show', $guest->id) }}" class="btn btn-secondary">Details</a>
-                                            <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.guests.edit' : 'receptionist.guests.edit', $guest->id) }}" type="button" class="btn btn-warning">
+                                    @role('admin')
+                                        <form action="{{ route(admin.guests.delete, $guest->id) }}" method="POST">
+                                    @endrole
+                                        <div class="btn-group w-100" role="group" aria-label="First group">
+                                            <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.guests.show' : (auth()->user()->hasRole('receptionist') ? 'receptionist.guests.show' : '#'), $guest->id) }}" class="btn btn-secondary">Details</a>
+
+                                            <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.guests.edit' : (auth()->user()->hasRole('receptionist') ? 'receptionist.guests.edit' : '#'), $guest->id) }}" type="button" class="btn btn-warning">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">
-                                                <i class="bi bi-trash3"></i>
-                                            </button>
+
+                                            @role('admin')
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">
+                                                    <i class="bi bi-trash3"></i>
+                                                </button>
+                                            @endrole
                                         </div>
-                                    </form>
+                                    @role('admin')
+                                        </form>
+                                    @endrole
                                 </td>
                             </tr>
                             @endforeach

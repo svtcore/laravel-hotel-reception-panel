@@ -10,7 +10,9 @@
 
     <!-- AdminLTE CSS -->
     @vite(['resources/admin-lte-4.0/css/adminlte.css'])
+    <!-- Main styles -->
     @vite(['resources/css/main-style.css'])
+    <!-- Additional local styles -->
     @yield('additional_style')
 
     <!-- Bootstrap -->
@@ -31,7 +33,7 @@
 
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="app-wrapper">
-        <nav class="app-header navbar navbar-expand navbar-dark navbar-primary fixed-top"> <!--begin::Container-->
+        <nav class="app-header navbar navbar-expand navbar-dark navbar-primary fixed-top">
             <div class="container-fluid">
                 <ul class="navbar-nav nav-head-obj">
                     <li class="nav-item w-100 d-flex justify-content-center">
@@ -43,7 +45,7 @@
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <button type="submit" class="btn btn-secondary btn-sm" id="exit-button"><i class="nav-icon bi bi-box-arrow-right"></i></button>
+                            <button type="submit" class="btn btn-logout btn-sm" id="logout-button">Logout</i></button>
                         </form>
                     </li>
                 </ul>
@@ -82,7 +84,7 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.services.index') }}" class="nav-link @yield('services_navbar_state')">
                                 <i class="nav-icon bi bi-bag-check"></i>
-                                <p>Additional Services</p>
+                                <p>Additional services</p>
                             </a>
                         </li>
                         @endrole
@@ -153,17 +155,19 @@
         </main>
     </div>
     <footer class="app-footer">
-            <div class="float-end d-none d-sm-inline">Somethng</div><strong>
-                2025
-            </strong>
-        </footer>
+        <div class="float-end d-none d-sm-inline"><a href="https://github.com/svtcore">Github</a></div>
+        <strong>
+            Hotel reception panel {{ date('Y') }}
+        </strong>
+    </footer>
+
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha256-CDOy6cOibCWEdsRiZuaHf8dSGGJRYuBGC+mjoJimHGw=" crossorigin="anonymous"></script>
-    
+
     <script src="https://adminlte.io/themes/v3/dist/js/adminlte.js?v=3.2.0" integrity="sha256-yHI4iVjUrlyiZDXoV0HXkB3S5ssSW5G5zqhXokKVWbQ=" crossorigin="anonymous"></script>
 
     <!-- DataTables JS -->
@@ -178,7 +182,7 @@
     <!-- Responsive extension for DataTables -->
     <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.min.js" integrity="sha256-fgKMuTMhdhI9JaA6XdUSrgkOY41nWaeN5eH1ctK4yog=" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap5.min.js" integrity="sha256-Ml0aZ+BzTKuF3cSJIyCElyJjEVFJjqoFucYGL6/hsmI=" crossorigin="anonymous"></script>
-    
+
     @yield('custom-scripts')
 </body>
 

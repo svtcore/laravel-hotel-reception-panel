@@ -117,7 +117,6 @@ Route::middleware(['role:receptionist'])->group(function () {
             Route::get('/{id}/edit', 'GuestController@edit')->name('receptionist.guests.edit')->where('id', '^[1-9][0-9]{0,9}$');
             Route::put('/{id}', 'GuestController@update')->name('receptionist.guests.update')->where('id', '^[1-9][0-9]{0,9}$');
             Route::get('/{id}', 'GuestController@show')->name('receptionist.guests.show')->where('id', '^[1-9][0-9]{0,9}$');
-            Route::delete('/{id}', 'GuestController@destroy')->name('receptionist.guests.delete')->where('id', '^[1-9][0-9]{0,9}$');
             Route::get('/create', 'GuestController@create')->name('receptionist.guests.create');
             Route::post('/', 'GuestController@store')->name('receptionist.guests.store');
             Route::post('/search', 'GuestController@searchByParams')->name('receptionist.guests.search');

@@ -9,7 +9,7 @@
 @if(auth()->user()->hasRole('admin'))
 <a href="{{ route('admin.rooms.create') }}" class="add-new-button">Add room</a>
 @else
-<span class="header-navbar">Rooms</span>
+<span class="header-text">Rooms</span>
 @endif
 @endsection
 
@@ -35,7 +35,7 @@
                 @endif
 
                 <div class="content-container text-center">
-                    <h4 class="font-weight-bold">Search form</h4>
+                    <h4><b>Search form</b></h4>
                     <form id="searchForm" method="POST" action="{{ route(auth()->user()->hasRole('admin') ? 'admin.rooms.search' : (auth()->user()->hasRole('receptionist') ? 'receptionist.rooms.search' : '#')) }}">
                         @csrf
                         <div class="row mt-4">
