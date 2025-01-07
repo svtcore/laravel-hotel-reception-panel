@@ -38,18 +38,20 @@ class ConfirmationAccountController extends Controller
     }
 
     public function confirm(ConfirmationRequest $request)
-    {
-        try {
-            $validatedData = $request->validated();
+{
+    try {
+        $validatedData = $request->validated();
 
-            if ($validatedData === null) {
-                return response()->withErrors(['errors' => 'Validation failed']);
-            }
-            if ($this->users->confirmRegistration($validatedData)) {
-                return redirect()->route('home')->with('success', 'You are confirmed, now you can use panel');
-            } else return abort(500);
-        } catch (Exception $e) {
-            return abort(500);
+        if (empty($validatedData)) {
+            return redirect()->back()->withErrors(['errors' => 'Validation failed']);
         }
+        if ($this->users->confirmRegistration($validatedData)) {
+            return redirect()->route('home')->with('success', 'You are confirmed, now you can use the panel');
+        }
+        return redirect()->back()->withErrors(['errors' => 'Registration confirmation failed']);
+    } catch (Exception $e) {
+        return redirect()->back()->withErrors(['errors' => 'An unexpected error occurred, please try again later.']);
     }
+}
+
 }
