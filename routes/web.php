@@ -131,9 +131,10 @@ Route::middleware(['role:receptionist'])->group(function () {
         });
     });
 });
-Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
-Route::get('account/confim/{token}', 'Auth\ConfirmationAccountController@index')->name('confirm.registration');
-Route::post('account/confim/', 'Auth\ConfirmationAccountController@confirm')->name('confirm.submit');
 
-
-Auth::routes();
+Auth::routes([
+    'register' => false,
+    'reset' => false,
+    'verify' => false,
+    'password.confirm' => false,
+]);
